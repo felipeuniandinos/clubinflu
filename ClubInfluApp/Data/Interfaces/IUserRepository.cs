@@ -4,6 +4,8 @@ namespace ClubInfluApp.Data.Interfaces
 {
     public interface IUserRepository
     {
-        List<User> GetAllUsers();
+        public Task<User> GetUserByEmailAsync(string email);
+
+        public Task<int> CreateUserAsync(User user);
     }
 }

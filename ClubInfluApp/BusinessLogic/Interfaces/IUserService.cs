@@ -4,6 +4,7 @@ namespace ClubInfluApp.BusinessLogic.Interfaces
 {
     public interface IUserService
     {
-        public List<User> GetAllUsers();
+        public Task<User> GetUserByEmailAsync(string email);
+        public Task<bool> CreateUserAsync(string email, string name, string role);
     }
 }
