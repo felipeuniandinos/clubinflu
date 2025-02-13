@@ -1,3 +1,6 @@
+using ClubInfluApp.Data.Interfaces;
+using ClubInfluApp.Data.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,7 @@ builder.Services.AddControllersWithViews();
 
 
 //Add repositories to the container.
+builder.Services.AddScoped<IUsuarioEmpresaRepository, UsuarioEmpresaRepository>();
 
 
 var app = builder.Build();
