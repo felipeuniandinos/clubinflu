@@ -25,23 +25,23 @@ namespace ClubInfluApp.Controllers
 
         public IActionResult Privacy()
         {
-            Empresa empresa = new Empresa();
-            empresa.idCiudad = 1;
-            empresa.nombre = "Empresa 1";
-            empresa.url = "www.empresa1.com";
-            empresa.numeroContacto = "123456789";
-            empresa.sector = "Tecnología";
-            empresa.direccion = "Calle 123";
+            //Empresa empresa = new Empresa();
+            //empresa.idCiudad = 1;
+            //empresa.nombre = "Empresa 1";
+            //empresa.url = "www.empresa1.com";
+            //empresa.numeroContacto = "123456789";
+            //empresa.sector = "Tecnología";
+            //empresa.direccion = "Calle 123";
             
-            UsuarioEmpresa usuarioEmpresa = new UsuarioEmpresa();
-            usuarioEmpresa.idEstadoUsuario = 3;
-            usuarioEmpresa.idEmpresa = 0;
-            usuarioEmpresa.correo = "demo@test.com";
-            usuarioEmpresa.clave = "123456";
-            usuarioEmpresa.fechaCreacion = DateTime.Now;
-            usuarioEmpresa.fechaActualizacion = DateTime.Now;
+            //UsuarioEmpresa usuarioEmpresa = new UsuarioEmpresa();
+            //usuarioEmpresa.idEstadoUsuario = 3;
+            //usuarioEmpresa.idEmpresa = 0;
+            //usuarioEmpresa.correo = "demo@test.com";
+            //usuarioEmpresa.clave = "123456";
+            //usuarioEmpresa.fechaCreacion = DateTime.Now;
+            //usuarioEmpresa.fechaActualizacion = DateTime.Now;
 
-            _usuarioEmpresaRepository.CrearUsuarioEmpresa(usuarioEmpresa, empresa);
+            //_usuarioEmpresaRepository.CrearUsuarioEmpresa(usuarioEmpresa, empresa);
 
 
             return View();

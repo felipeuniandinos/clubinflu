@@ -1,8 +1,112 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["BodyClass"] = "home-page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+}
+
+<!-- banner -->
+<div class="banner">
+    <div class="banner-content">
+        <br><br><br>
+        <h1>ÚNETE A LA RED DE CONEXIONES MÁS PODEROSA ENTRE MARCAS E INFLUENCERS</h1>
+        <br><br>
+        <div class="banner-buttons">
+            <a href="#" class="btn btn-success-custom">Eres creador de contenido</a>
+            <br><br>
+            <a href="#" class="btn btn-transparent">Eres empresa</a>
+        </div>
+    </div>
 </div>
+
+<!-- Sección de funcionalidades después del banner -->
+<section class="features-section">
+    <div class="container">
+        <div class="row">
+            <!-- Tarjeta 1 -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <img src="~/imagenes/imagen1.png" alt="Aumenta tu alcance">
+                    </div>
+                    <h3>Aumenta tu alcance</h3>
+                    <a href="#" class="feature-link">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <img src="~/imagenes/imagen2.png" alt="Conecta con marcas">
+                    </div>
+                    <h3>Conecta con marcas que resuenen contigo</h3>
+                    <a href="#" class="feature-link">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <img src="~/imagenes/imagen3.png" alt="Sin intermediarios">
+                    </div>
+                    <h3>Sin intermediarios: Fácil y rápido</h3>
+                    <a href="#" class="feature-link">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de conectar después de funcionalidades -->
+<section class="connect-section">
+    <div class="container-fluid">
+        <div class="row align-items-center justify-content-between text-center">
+            <!-- Contenedor del título -->
+            <div class="col-md-6">
+                <h2 class="connect-title">
+                    Representa la conexión <br> entre influencers y marcas
+                </h2>
+            </div>
+
+            <!-- Contenedor de las métricas -->
+            <div class="col-md-6">
+                <div class="connect-metrics d-flex justify-content-center">
+                    <div class="metric">
+                        <span class="metric-value">+700</span>
+                        <span class="metric-label">Influencers</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">+2000</span>
+                        <span class="metric-label">Colaboraciones</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">+100</span>
+                        <span class="metric-label">Experiencias</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br /> <br />
+        <div class="row">
+            <!-- Imagen -->
+            <div class="col-md-12">
+                <div class="image-container">
+                    <img src="~/imagenes/conexion.png" alt="Conexión Influencers" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
