@@ -17,8 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BusinessLogic\Interfaces\" />
-    <Folder Include="BusinessLogic\Services\" />
     <Folder Include="Helpers\" />
   </ItemGroup>
 
