@@ -1,4 +1,4 @@
-namespace ClubInfluApp.Models
+namespace ClubInfluApp.ViewModels
 {
     public class ErrorViewModel
     {
