@@ -23,17 +23,41 @@ namespace ClubInfluApp.Data.Repositories
 
             try
             {
-                string insertarEmpresa = 
+                if(empresa.idEmpresa == 0)
+                {
+                    string insertarEmpresa =
                     @"
                         INSERT INTO Empresa 
-                        (idCiudad, nombre, url, numeroContacto, sector, direccion) 
+                        (idCiudad, idCiudad2, idCiudad3, idCiudad4, nombre, nif, url, numeroContacto, sector, direccion) 
                         VALUES 
-                        (@idCiudad, @nombre, @url, @numeroContacto, @sector, @direccion) 
+                        (@idCiudad, @idCiudad2, @idCiudad3, @idCiudad4, @nombre, @nif, @url, @numeroContacto, @sector, @direccion) 
                         RETURNING idEmpresa;
                     ";
 
-                int idEmpresaCreada = connection.QuerySingle<int>(insertarEmpresa, empresa, transaction);
-                usuarioEmpresa.idEmpresa = idEmpresaCreada;
+                    int idEmpresaCreada = connection.QuerySingle<int>(insertarEmpresa, empresa, transaction);
+                    usuarioEmpresa.idEmpresa = idEmpresaCreada;
+                }
+                else
+                {
+                    string actualizarEmpresa = 
+                    @"
+                        UPDATE Empresa
+                        SET 
+                            idCiudad = COALESCE(@idCiudad, idCiudad),
+                            idCiudad2 = COALESCE(@idCiudad2, idCiudad2),
+                            idCiudad3 = COALESCE(@idCiudad3, idCiudad3),
+                            idCiudad4 = COALESCE(@idCiudad4, idCiudad4),
+                            nombre = COALESCE(@nombre, nombre),
+                            nif = COALESCE(@nif, nif),
+                            url = COALESCE(@url, url),
+                            numeroContacto = COALESCE(@numeroContacto, numeroContacto),
+                            sector = COALESCE(@sector, sector),
+                            direccion = COALESCE(@direccion, direccion)
+                        WHERE idEmpresa = @idEmpresa;
+                    ";
+
+                    connection.Execute(actualizarEmpresa, empresa, transaction);
+                }
 
 
                 string insertarUsuarioEmpresa =
@@ -54,6 +78,39 @@ namespace ClubInfluApp.Data.Repositories
                 transaction.Rollback();
                 throw;
             }
+        }
+
+        public UsuarioEmpresa ObtenerUsuarioEmpresaValidoPorCorreoYEmpresa(string correo, int idEmpresa)
+        {
+            using var connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+
+            try
+            {
+                string query = "SELECT * FROM UsuarioEmpresa WHERE correo = @correo and idEmpresa = @idEmpresa";
+                return connection.QueryFirstOrDefault<UsuarioEmpresa>(query, new { correo, idEmpresa });
+            }
+            catch
+            {
+                throw;
+            }
+  
+        }
+
+        public Empresa ObtenerEmpresaPorNif(string nif)
+        {
+            using var connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+
+            try
+            {
+                string query = "SELECT * FROM Empresa WHERE nif = @nif";
+                return connection.QueryFirstOrDefault<Empresa>(query, new { nif });
+            }
+            catch
+            {
+                throw;
+            }           
         }
     }
 }

@@ -37,6 +37,12 @@
         </div>
 
         <div class="mb-3">
+            <label asp-for="nifEmpresa" class="form-label">Nif</label>
+            <input asp-for="nifEmpresa" class="form-control" required />
+            <span asp-validation-for="nifEmpresa" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
             <label asp-for="urlEmpresa" class="form-label">Página Web</label>
             <input asp-for="urlEmpresa" class="form-control" />
             <span asp-validation-for="urlEmpresa" class="text-danger"></span>
@@ -58,6 +64,21 @@
             <label asp-for="idCiudadEmpresa" class="form-label">Ciudad</label>
             <input asp-for="idCiudadEmpresa" class="form-control" required />
             <span asp-validation-for="idCiudadEmpresa" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="idCiudad2Empresa" class="form-label">Ciudad 2</label>
+            <input asp-for="idCiudad2Empresa" class="form-control"/>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="idCiudad3Empresa" class="form-label">Ciudad 3</label>
+            <input asp-for="idCiudad3Empresa" class="form-control"/>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="idCiudad4Empresa" class="form-label">Ciudad 4</label>
+            <input asp-for="idCiudad4Empresa" class="form-control"/>
         </div>
 
         <div class="mb-3">

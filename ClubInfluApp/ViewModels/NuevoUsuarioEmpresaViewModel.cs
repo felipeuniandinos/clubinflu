@@ -16,9 +16,19 @@ namespace ClubInfluApp.ViewModels
         [Required(ErrorMessage = "La ciudad de la empresa es obligatoria.")]
         public int idCiudadEmpresa { get; set; }
 
+        public int? idCiudad2Empresa { get; set; }
+
+        public int? idCiudad3Empresa { get; set; }
+
+        public int? idCiudad4Empresa { get; set; }
+
         [Required(ErrorMessage = "El nombre de la empresa es obligatorio.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "El nombre de la empresa debe tener entre 3 y 100 caracteres.")]
         public string nombreEmpresa { get; set; }
+
+        [Required(ErrorMessage = "El nif de la empresa es obligatorio.")]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "El nif de la empresa debe tener entre 3 y 20 caracteres.")]
+        public string nifEmpresa { get; set; }
 
         [Url(ErrorMessage = "Ingrese una URL válida (ej.: https://www.ejemplo.com).")]
         [StringLength(100, MinimumLength = 6, ErrorMessage = "La URL debe tener entre 6 y 100 caracteres.")]

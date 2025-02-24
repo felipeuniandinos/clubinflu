@@ -29,12 +29,19 @@ CREATE TABLE Ciudad (
 CREATE TABLE Empresa (
     idEmpresa BIGSERIAL PRIMARY KEY,
     idCiudad BIGINT NOT NULL,
+    idCiudad2 BIGINT NULL,
+    idCiudad3 BIGINT NULL,
+    idCiudad4 BIGINT NULL,
     nombre VARCHAR(100) NOT NULL,
+    nif VARCHAR(20) NOT NULL,
     url VARCHAR(100),
     numeroContacto VARCHAR(10),
     sector TEXT NOT NULL,
     direccion VARCHAR(500) NOT NULL,
-    FOREIGN KEY (idCiudad) REFERENCES Ciudad(idCiudad)
+    FOREIGN KEY (idCiudad) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad2) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad3) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad4) REFERENCES Ciudad(idCiudad)
 );
 
 CREATE TABLE UsuarioEmpresa (
@@ -72,21 +79,21 @@ INSERT INTO Ciudad (idPais, ciudad) VALUES
 
 
 INSERT INTO EstadoUsuario (estadoUsuario) VALUES 
+('Pendiente'),
 ('Activo'),
 ('Inactivo'),
-('Pendiente'),
 ('Suspendido');
 
 
-INSERT INTO Empresa 
-(idCiudad, nombre, url, numeroContacto, sector, direccion)
+/*INSERT INTO Empresa 
+(idCiudad, nombre, nif, url, numeroContacto, sector, direccion)
 VALUES 
-(1, 'TechCorp', 'https://techcorp.com', '1234567890', 'Tecnología', 'Calle 123, Ciudad Ejemplo');
+(1, 'TechCorp', '123456', 'https://techcorp.com', '1234567890', 'Tecnología', 'Calle 123, Ciudad Ejemplo');
 
 INSERT INTO UsuarioEmpresa 
 (idEmpresa, idEstadoUsuario, correo, clave, fechaCreacion, fechaActualizacion)
 VALUES 
-(1, 3, 'usuario@example.com', 'claveSegura123', CURRENT_DATE, CURRENT_DATE);
+(1, 1, 'usuario@example.com', 'claveSegura123', CURRENT_DATE, CURRENT_DATE);*/
 
 
 select * from Empresa;
