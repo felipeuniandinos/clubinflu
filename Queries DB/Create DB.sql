@@ -1,8 +1,13 @@
-drop table UsuarioEmpresa;
-drop table Empresa;
-drop table EstadoUsuario;
-drop table Ciudad;
-drop table Pais;
+drop table UsuarioEmpresa
+drop table InfluencerRedSocial
+drop table UsuarioInfluencer
+drop table Influencer
+drop table RedSocial
+drop table Empresa
+drop table EstadoUsuario
+drop table Ciudad
+drop table Pais
+drop table Genero;
 
 
 CREATE TABLE EstadoUsuario (
@@ -23,6 +28,18 @@ CREATE TABLE Ciudad (
     ciudad VARCHAR(100) NOT NULL,
     activo BOOLEAN DEFAULT true,
     FOREIGN KEY (idPais) REFERENCES Pais(idPais)
+);
+
+CREATE TABLE Genero (
+    idGenero BIGSERIAL PRIMARY KEY,
+    genero VARCHAR(100) NOT NULL,
+    activo BOOLEAN DEFAULT true
+);
+
+CREATE TABLE RedSocial (
+    idRedSocial BIGSERIAL PRIMARY KEY,
+    redSocial VARCHAR(100) NOT NULL,
+    activo BOOLEAN DEFAULT true
 );
 
 
@@ -57,6 +74,53 @@ CREATE TABLE UsuarioEmpresa (
 );
 
 
+CREATE TABLE Influencer (
+    idInfluencer BIGSERIAL PRIMARY KEY,
+    idCiudad BIGINT NOT NULL,
+    idCiudad2 BIGINT NULL,
+    idCiudad3 BIGINT NULL,
+    idCiudad4 BIGINT NULL,
+    idGenero BIGINT NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    fechaNacimineto DATE NOT NULL,
+    numeroContacto VARCHAR(10),
+    FOREIGN KEY (idCiudad) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad2) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad3) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad4) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idGenero) REFERENCES Genero(idGenero)
+);
+
+
+CREATE TABLE UsuarioInfluencer (
+    idUsuarioInfluencer BIGSERIAL PRIMARY KEY,
+    idInfluencer BIGINT NOT NULL,
+    idEstadoUsuario BIGINT NOT NULL,
+    correo VARCHAR(500) NOT NULL,
+    clave VARCHAR(500) NOT NULL,
+    fechaCreacion DATE NOT NULL,
+    fechaActualizacion DATE NOT NULL,
+    FOREIGN KEY (idInfluencer) REFERENCES Influencer(idInfluencer),
+    FOREIGN KEY (idEstadoUsuario) REFERENCES EstadoUsuario(idEstadoUsuario)
+);
+
+
+CREATE TABLE InfluencerRedSocial (
+    idInfluencerRedSocial BIGSERIAL PRIMARY KEY,
+    idInfluencer BIGINT NOT NULL,
+    idRedSocial BIGINT NOT NULL,
+    numeroSeguidores INT NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    fechaCreacion DATE NOT NULL,
+    fechaActualizacion DATE NOT NULL,
+    FOREIGN KEY (idInfluencer) REFERENCES Influencer(idInfluencer),
+    FOREIGN KEY (idRedSocial) REFERENCES RedSocial(idRedSocial)
+);
+
+
+-- INSERTS
+
+
 INSERT INTO Pais (pais) VALUES 
 ('Colombia'),
 ('México'),
@@ -84,8 +148,21 @@ INSERT INTO EstadoUsuario (estadoUsuario) VALUES
 ('Inactivo'),
 ('Suspendido');
 
+INSERT INTO Genero (genero) VALUES 
+  ('Masculino'),
+  ('Femenino'),
+  ('No Binario');
 
-/*INSERT INTO Empresa 
+
+INSERT INTO RedSocial (redSocial) VALUES 
+  ('Facebook'),
+  ('Twitter'),
+  ('Instagram');
+
+
+
+
+INSERT INTO Empresa 
 (idCiudad, nombre, nif, url, numeroContacto, sector, direccion)
 VALUES 
 (1, 'TechCorp', '123456', 'https://techcorp.com', '1234567890', 'Tecnología', 'Calle 123, Ciudad Ejemplo');
@@ -93,10 +170,42 @@ VALUES
 INSERT INTO UsuarioEmpresa 
 (idEmpresa, idEstadoUsuario, correo, clave, fechaCreacion, fechaActualizacion)
 VALUES 
-(1, 1, 'usuario@example.com', 'claveSegura123', CURRENT_DATE, CURRENT_DATE);*/
+(1, 1, 'usuario@example.com', 'claveSegura123', CURRENT_DATE, CURRENT_DATE);
+
+INSERT INTO Influencer 
+(idCiudad, idCiudad2, idCiudad3, idCiudad4, idGenero, nombre, fechaNacimineto, numeroContacto)
+VALUES
+  (1, NULL, NULL, NULL, 1, 'Juan Pérez', '1990-05-20', '5551234567');
+
+INSERT INTO UsuarioInfluencer (idInfluencer, idEstadoUsuario, correo, clave, fechaCreacion, fechaActualizacion)
+VALUES
+  (1, 1, 'usuario1@ejemplo.com', 'clave_secreta1', '2023-02-01', '2023-02-01');
+
+INSERT INTO InfluencerRedSocial (idInfluencer, idRedSocial, numeroSeguidores, activo, fechaCreacion, fechaActualizacion)
+VALUES
+  (1, 1, 50000, true, '2023-01-01', '2023-01-01'),
+  (1, 2, 120000, true, '2023-02-15', '2023-02-15'),
+  (1, 3, 75000, false, '2023-03-10', '2023-03-10');
+
 
 
 select * from Empresa;
 
 select * from UsuarioEmpresa;
 
+select * from Influencer;
+
+select * from UsuarioInfluencer;
+
+select * from InfluencerRedSocial;
+
+
+-- Usuario Empresa
+SELECT ue.idUsuarioEmpresa, ue.correo, eu.estadoUsuario, ue.fechaCreacion
+FROM UsuarioEmpresa ue
+JOIN EstadoUsuario eu ON ue.idEstadoUsuario = eu.idEstadoUsuario;
+
+-- Usuario Influencer
+SELECT ui.idUsuarioInfluencer, ui.correo, eu.estadoUsuario, ui.fechaCreacion
+FROM UsuarioInfluencer ui
+JOIN EstadoUsuario eu ON ui.idEstadoUsuario = eu.idEstadoUsuario;

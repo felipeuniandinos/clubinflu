@@ -1,5 +1,6 @@
 ﻿using ClubInfluApp.Data.Interfaces;
 using ClubInfluApp.Models;
+using ClubInfluApp.ViewModels;
 using Dapper;
 using Npgsql;
 
@@ -111,6 +112,12 @@ namespace ClubInfluApp.Data.Repositories
             {
                 throw;
             }           
+        }
+
+        public List<UsuarioEmpresaViewModel> ObtenerUsuariosEmpresa()
+        {
+            //TODO: Implementar
+            throw new NotImplementedException();
         }
     }
 }

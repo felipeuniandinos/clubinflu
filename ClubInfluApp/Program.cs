@@ -8,10 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUsuarioEmpresaService, UsuarioEmpresaService>();
+builder.Services.AddScoped<IUsuarioInfluencerService, UsuarioInfluencerService>();
 
 
 //Add repositories to the container.
 builder.Services.AddScoped<IUsuarioEmpresaRepository, UsuarioEmpresaRepository>();
+builder.Services.AddScoped<IUsuarioInfluencerRepository, UsuarioInfluencerRepository>();
 
 
 var app = builder.Build();
