@@ -19,8 +19,6 @@
   <ItemGroup>
     <Folder Include="BusinessLogic\Interfaces\" />
     <Folder Include="BusinessLogic\Services\" />
-    <Folder Include="Data\Interfaces\" />
-    <Folder Include="Data\Repositories\" />
     <Folder Include="Helpers\" />
   </ItemGroup>
 

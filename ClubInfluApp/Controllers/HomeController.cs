@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using ClubInfluApp.Models;
+using ClubInfluApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClubInfluApp.Controllers
