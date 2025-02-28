@@ -1,0 +1,37 @@
+﻿@using ClubInfluApp.ViewModels
+@model List<UsuarioEmpresaViewModel>
+
+    @{
+    ViewData["BodyClass"] = "ListadoUsuariosEmpresa-page";
+    }
+
+    @if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-success">@ViewBag.Mensaje</div>
+}
+   
+
+
+        <div class="container mt-5">
+            <table class="table table-bordered" style="background-color: white; color: black;">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Id Usuario Empresa</th>
+                        <th>Correo</th>
+                        <th>Estado Usuario</th>
+                        <th>Fecha Creación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var usuarioEmpresa in Model)
+            {
+                    <tr>
+                        <td>@usuarioEmpresa.idUsuarioEmpresa</td>
+                        <td>@usuarioEmpresa.correo</td>
+                        <td>@usuarioEmpresa.estadoUsuario</td>
+                        <td>@usuarioEmpresa.fechaCreacion</td>
+                    </tr>
+            }
+                </tbody>
+            </table>
+        </div>
