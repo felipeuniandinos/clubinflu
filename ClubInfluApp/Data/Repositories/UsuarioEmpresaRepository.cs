@@ -116,7 +116,6 @@ namespace ClubInfluApp.Data.Repositories
 
         public List<UsuarioEmpresaViewModel> ObtenerUsuariosEmpresa()
         {
-            //TODO: Implementar
 
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
@@ -135,8 +134,9 @@ namespace ClubInfluApp.Data.Repositories
                 return listaListaUsuarioEmpresa;
 
             }
-            catch { 
-                throw; 
+            catch
+            {
+                throw;
             }
 
 
