@@ -91,8 +91,7 @@ namespace ClubInfluApp.BusinessLogic.Services
 
         List<UsuarioEmpresaViewModel> IUsuarioEmpresaService.ObtenerUsuariosEmpresa()
         {
-            //TODO: Implementar
-            throw new NotImplementedException();
+            return _usuarioEmpresaRepository.ObtenerUsuariosEmpresa();
         }
     }
 }

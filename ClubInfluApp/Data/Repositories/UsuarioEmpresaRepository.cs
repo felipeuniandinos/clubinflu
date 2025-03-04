@@ -24,7 +24,7 @@ namespace ClubInfluApp.Data.Repositories
 
             try
             {
-                if(empresa.idEmpresa == 0)
+                if (empresa.idEmpresa == 0)
                 {
                     string insertarEmpresa =
                     @"
@@ -40,7 +40,7 @@ namespace ClubInfluApp.Data.Repositories
                 }
                 else
                 {
-                    string actualizarEmpresa = 
+                    string actualizarEmpresa =
                     @"
                         UPDATE Empresa
                         SET 
@@ -68,10 +68,10 @@ namespace ClubInfluApp.Data.Repositories
                         VALUES 
                         (@idEmpresa, @idEstadoUsuario, @correo, @clave, @fechaCreacion, @fechaActualizacion)
                         RETURNING idUsuarioEmpresa;
-                    "; 
+                    ";
 
                 int idUsuarioEmpresa = connection.QuerySingle<int>(insertarUsuarioEmpresa, usuarioEmpresa, transaction);
-                transaction.Commit(); 
+                transaction.Commit();
                 return idUsuarioEmpresa;
             }
             catch
@@ -95,7 +95,7 @@ namespace ClubInfluApp.Data.Repositories
             {
                 throw;
             }
-  
+
         }
 
         public Empresa ObtenerEmpresaPorNif(string nif)
@@ -111,13 +111,36 @@ namespace ClubInfluApp.Data.Repositories
             catch
             {
                 throw;
-            }           
+            }
         }
 
         public List<UsuarioEmpresaViewModel> ObtenerUsuariosEmpresa()
         {
-            //TODO: Implementar
-            throw new NotImplementedException();
+
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+
+            try
+            {
+
+                string informacionListaUsuarioEmpresa =
+                    @"  SELECT ue.idUsuarioEmpresa, ue.correo, eu.estadoUsuario, ue.fechaCreacion
+                        FROM UsuarioEmpresa ue
+                        JOIN EstadoUsuario eu ON ue.idEstadoUsuario = eu.idEstadoUsuario;
+                    ";
+
+                List<UsuarioEmpresaViewModel> listaListaUsuarioEmpresa = connection.Query<UsuarioEmpresaViewModel>(informacionListaUsuarioEmpresa).ToList();
+
+                return listaListaUsuarioEmpresa;
+
+            }
+            catch
+            {
+                throw;
+            }
+
+
+
         }
     }
 }
