@@ -1,15 +1,16 @@
-drop table UsuarioEmpresa
-drop table InfluencerRedSocial
-drop table UsuarioInfluencer
-drop table Influencer
-drop table RedSocial
-drop table Empresa
-drop table EstadoUsuario
-drop table Ciudad
-drop table Pais
-drop table Genero;
+-- Eliminar tablas en orden inverso para evitar errores de referencia
+DROP TABLE IF EXISTS UsuarioEmpresa;
+DROP TABLE IF EXISTS InfluencerRedSocial;
+DROP TABLE IF EXISTS UsuarioInfluencer;
+DROP TABLE IF EXISTS Influencer;
+DROP TABLE IF EXISTS RedSocial;
+DROP TABLE IF EXISTS Empresa;
+DROP TABLE IF EXISTS EstadoUsuario;
+DROP TABLE IF EXISTS Ciudad;
+DROP TABLE IF EXISTS Pais;
+DROP TABLE IF EXISTS Genero;
 
-
+-- Crear tablas
 CREATE TABLE EstadoUsuario (
     idEstadoUsuario BIGSERIAL PRIMARY KEY,
     estadoUsuario VARCHAR(100) NOT NULL,
@@ -26,22 +27,21 @@ CREATE TABLE Ciudad (
     idCiudad BIGSERIAL PRIMARY KEY,
     idPais BIGINT NOT NULL,
     ciudad VARCHAR(100) NOT NULL,
-    activo BOOLEAN DEFAULT true,
+    activo BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (idPais) REFERENCES Pais(idPais)
 );
 
 CREATE TABLE Genero (
     idGenero BIGSERIAL PRIMARY KEY,
     genero VARCHAR(100) NOT NULL,
-    activo BOOLEAN DEFAULT true
+    activo BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE RedSocial (
     idRedSocial BIGSERIAL PRIMARY KEY,
     redSocial VARCHAR(100) NOT NULL,
-    activo BOOLEAN DEFAULT true
+    activo BOOLEAN DEFAULT TRUE
 );
-
 
 CREATE TABLE Empresa (
     idEmpresa BIGSERIAL PRIMARY KEY,
@@ -73,7 +73,6 @@ CREATE TABLE UsuarioEmpresa (
     FOREIGN KEY (idEstadoUsuario) REFERENCES EstadoUsuario(idEstadoUsuario)
 );
 
-
 CREATE TABLE Influencer (
     idInfluencer BIGSERIAL PRIMARY KEY,
     idCiudad BIGINT NOT NULL,
@@ -91,7 +90,6 @@ CREATE TABLE Influencer (
     FOREIGN KEY (idGenero) REFERENCES Genero(idGenero)
 );
 
-
 CREATE TABLE UsuarioInfluencer (
     idUsuarioInfluencer BIGSERIAL PRIMARY KEY,
     idInfluencer BIGINT NOT NULL,
@@ -103,7 +101,6 @@ CREATE TABLE UsuarioInfluencer (
     FOREIGN KEY (idInfluencer) REFERENCES Influencer(idInfluencer),
     FOREIGN KEY (idEstadoUsuario) REFERENCES EstadoUsuario(idEstadoUsuario)
 );
-
 
 CREATE TABLE InfluencerRedSocial (
     idInfluencerRedSocial BIGSERIAL PRIMARY KEY,
@@ -117,17 +114,13 @@ CREATE TABLE InfluencerRedSocial (
     FOREIGN KEY (idRedSocial) REFERENCES RedSocial(idRedSocial)
 );
 
-
--- INSERTS
-
-
+-- Inserts
 INSERT INTO Pais (pais) VALUES 
 ('Colombia'),
 ('México'),
 ('Argentina'),
 ('España'),
 ('Estados Unidos');
-
 
 INSERT INTO Ciudad (idPais, ciudad) VALUES 
 (1, 'Bogotá'),
@@ -141,7 +134,6 @@ INSERT INTO Ciudad (idPais, ciudad) VALUES
 (5, 'Nueva York'),
 (5, 'Los Ángeles');
 
-
 INSERT INTO EstadoUsuario (estadoUsuario) VALUES 
 ('Pendiente'),
 ('Activo'),
@@ -153,14 +145,10 @@ INSERT INTO Genero (genero) VALUES
   ('Femenino'),
   ('No Binario');
 
-
 INSERT INTO RedSocial (redSocial) VALUES 
   ('Facebook'),
   ('Twitter'),
   ('Instagram');
-
-
-
 
 INSERT INTO Empresa 
 (idCiudad, nombre, nif, url, numeroContacto, sector, direccion)
@@ -186,26 +174,3 @@ VALUES
   (1, 1, 50000, true, '2023-01-01', '2023-01-01'),
   (1, 2, 120000, true, '2023-02-15', '2023-02-15'),
   (1, 3, 75000, false, '2023-03-10', '2023-03-10');
-
-
-
-select * from Empresa;
-
-select * from UsuarioEmpresa;
-
-select * from Influencer;
-
-select * from UsuarioInfluencer;
-
-select * from InfluencerRedSocial;
-
-
--- Usuario Empresa
-SELECT ue.idUsuarioEmpresa, ue.correo, eu.estadoUsuario, ue.fechaCreacion
-FROM UsuarioEmpresa ue
-JOIN EstadoUsuario eu ON ue.idEstadoUsuario = eu.idEstadoUsuario;
-
--- Usuario Influencer
-SELECT ui.idUsuarioInfluencer, ui.correo, eu.estadoUsuario, ui.fechaCreacion
-FROM UsuarioInfluencer ui
-JOIN EstadoUsuario eu ON ui.idEstadoUsuario = eu.idEstadoUsuario;

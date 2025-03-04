@@ -14,7 +14,7 @@ namespace ClubInfluApp.BusinessLogic.Services
         {
             _usuarioEmpresaRepository = usuarioEmpresaRepository;
         }
-        //
+
         public int CrearUsuarioEmpresa(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel)
         {
             
@@ -91,7 +91,7 @@ namespace ClubInfluApp.BusinessLogic.Services
 
         List<UsuarioEmpresaViewModel> IUsuarioEmpresaService.ObtenerUsuariosEmpresa()
         {
-            throw new NotImplementedException();
+            return _usuarioEmpresaRepository.ObtenerUsuariosEmpresa();
         }
     }
 }

@@ -16,7 +16,24 @@ namespace ClubInfluApp.Controllers
             _usuarioEmpresaService = usuarioEmpresaService;
         }
 
-        //TODO: Implementar GET ObtenerUsuariosEmpresa, recordar pasar como parametro a la vista, la lista de usuarios empresa que optienen en el servicio.
+        
+        [HttpGet]
+        public IActionResult ListarUsuariosEmpresa()
+        {
+            try {
+
+                List<UsuarioEmpresaViewModel> usuariosEmpresa = _usuarioEmpresaService.ObtenerUsuariosEmpresa();
+                return View(usuariosEmpresa);
+
+            } catch (Exception e) {
+            
+                _logger.LogError($"Error al obtener listado de Usuarios Empresa: ", (e.Message));
+                return View("Error");
+
+            }
+        }
+
+
 
         [HttpGet]
         public IActionResult CrearUsuarioEmpresa()

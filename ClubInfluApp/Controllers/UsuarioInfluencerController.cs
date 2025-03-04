@@ -16,7 +16,7 @@ namespace ClubInfluApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult ListarUsuarioInfluencer()
+        public IActionResult ListarUsuariosInfluencer()
         {
             try
             {
