@@ -1,5 +1,5 @@
 ﻿using ClubInfluApp.Data.Interfaces;
-using ClubInfluApp.Models;
+//using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
 using Dapper;
 using Npgsql;
@@ -8,7 +8,7 @@ namespace ClubInfluApp.Data.Repositories
 {
     public class UsuarioInfluencerRepository : IUsuarioInfluencerRepository
     {
-        private readonly string dbConnectionString; //es una cadena de conexión que se usa para establecer la comunicación con la base de datos PostgreSQL.
+        private readonly string dbConnectionString; 
 
         public UsuarioInfluencerRepository(IConfiguration configuration)
         {

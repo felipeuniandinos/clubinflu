@@ -15,7 +15,6 @@ namespace ClubInfluApp.BusinessLogic.Services
 
         public List<UsuarioInfluencerViewModel> ObtenerUsuariosInfluencer()
         {
-            //TODO: Implementar
             return _usuarioInfluencerRepository.ObtenerUsuariosInfluencer();
         }
     }
