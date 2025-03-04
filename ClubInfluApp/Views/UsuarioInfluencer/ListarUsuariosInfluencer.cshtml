@@ -1,0 +1,35 @@
+﻿@using ClubInfluApp.ViewModels 
+@model List<UsuarioInfluencerViewModel>
+
+@{
+    ViewData["BodyClass"] = "ListaUsuarioInfluencer-page";
+}
+
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-success">@ViewBag.Mensaje</div>
+}
+
+<div class="container mt-5">
+    <table class="table table-bordered" style="background-color: white; color: black;">
+        <thead class="thead-light">
+            <tr>
+                <th>Id Usuario Influencer</th>
+                <th>Correo</th>
+                <th>Estado Usuario</th>
+                <th>Fecha Creación</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuarioInfluencer in Model)
+            {
+                <tr>
+                    <td>@usuarioInfluencer.idUsuarioInfluencer</td>
+                    <td>@usuarioInfluencer.correo</td>
+                    <td>@usuarioInfluencer.estadoUsuario</td>
+                    <td>@usuarioInfluencer.fechaCreacion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
