@@ -32,7 +32,7 @@ namespace ClubInfluApp.Controllers
                 return View(usuarioViewModel);
             }
 
-            int idUsuarioAutenticado = _usuarioService.ObtenerIdUsuario(usuarioViewModel);
+             int idUsuarioAutenticado = _usuarioService.ObtenerIdUsuario(usuarioViewModel);
             if (idUsuarioAutenticado == 0)
             {
                 ViewBag.Mensaje = "Usuario incorrecto";

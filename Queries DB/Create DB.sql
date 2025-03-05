@@ -2,6 +2,7 @@
 DROP TABLE IF EXISTS UsuarioEmpresa;
 DROP TABLE IF EXISTS InfluencerRedSocial;
 DROP TABLE IF EXISTS UsuarioInfluencer;
+DROP TABLE IF EXISTS UsuarioAdministrador;
 DROP TABLE IF EXISTS Influencer;
 DROP TABLE IF EXISTS RedSocial;
 DROP TABLE IF EXISTS Empresa;
