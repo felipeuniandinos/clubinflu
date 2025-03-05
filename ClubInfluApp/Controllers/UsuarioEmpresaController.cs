@@ -40,7 +40,7 @@ namespace ClubInfluApp.Controllers
 
             int idUsuarioEmpresa = _usuarioEmpresaService.CrearUsuarioEmpresa(nuevoUsuarioEmpresaViewModel);
 
-            ViewBag.Mensaje = "Usuario creado exitosamente. Con el id:" + idUsuarioEmpresa;
+            ViewBag.Mensaje = "Registro completado. Revisaremos tu información y nos pondremos en contacto pronto.El equipo de Club Influ";
             return View();
         }
     }

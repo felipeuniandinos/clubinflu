@@ -2,12 +2,8 @@
 @model List<UsuarioInfluencerViewModel>
 
 @{
-    ViewData["BodyClass"] = "ListaUsuarioInfluencer-page";
-}
-
-@if (ViewBag.Mensaje != null)
-{
-    <div class="alert alert-success">@ViewBag.Mensaje</div>
+    ViewData["BodyClass"] = "application-admin";
+    ViewData["Title"] = "Usuarios Influencer";
 }
 
 <div class="container mt-5">
