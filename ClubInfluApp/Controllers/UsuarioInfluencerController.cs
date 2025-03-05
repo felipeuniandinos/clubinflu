@@ -1,33 +1,47 @@
 ﻿using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClubInfluApp.Controllers
 {
     public class UsuarioInfluencerController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<InicioController> _logger;
         private readonly IUsuarioInfluencerService _usuarioInfluencerService;
 
-        public UsuarioInfluencerController(ILogger<HomeController> logger, IUsuarioInfluencerService usuarioInfluencerService)
+        public UsuarioInfluencerController(ILogger<InicioController> logger, IUsuarioInfluencerService usuarioInfluencerService)
         {
             _logger = logger;
             _usuarioInfluencerService = usuarioInfluencerService;
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult ListarUsuariosInfluencer()
         {
-            try
+            List<UsuarioInfluencerViewModel> influencers = _usuarioInfluencerService.ObtenerUsuariosInfluencer();
+            return View(influencers);
+        }
+
+        [HttpGet]
+        public IActionResult CrearUsuarioInfluencer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CrearUsuarioInfluencer(NuevoUsuarioInfluencerViewModel nuevoUsuarioInfluencerViewModel)
+        {
+            if (!ModelState.IsValid)
             {
-                List<UsuarioInfluencerViewModel> influencers = _usuarioInfluencerService.ObtenerUsuariosInfluencer();
-                return View(influencers);
+                return View(nuevoUsuarioInfluencerViewModel);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error al obtener los usuarios influencers: {ex.Message}");
-                return View("Error");
-            }
+
+            int idUsuarioEmpresa = _usuarioInfluencerService.CrearUsuarioEmpresa(nuevoUsuarioInfluencerViewModel);
+
+            ViewBag.Mensaje = "Usuario creado exitosamente. Con el id:" + idUsuarioEmpresa;
+            return View();
         }
     }
 }

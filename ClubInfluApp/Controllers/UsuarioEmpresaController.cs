@@ -1,39 +1,28 @@
 ﻿using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace ClubInfluApp.Controllers
 {
     public class UsuarioEmpresaController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<InicioController> _logger;
         private readonly IUsuarioEmpresaService _usuarioEmpresaService;
 
-        public UsuarioEmpresaController(ILogger<HomeController> logger, IUsuarioEmpresaService usuarioEmpresaService)
+        public UsuarioEmpresaController(ILogger<InicioController> logger, IUsuarioEmpresaService usuarioEmpresaService)
         {
             _logger = logger;
             _usuarioEmpresaService = usuarioEmpresaService;
         }
 
-        
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult ListarUsuariosEmpresa()
         {
-            try {
-
-                List<UsuarioEmpresaViewModel> usuariosEmpresa = _usuarioEmpresaService.ObtenerUsuariosEmpresa();
-                return View(usuariosEmpresa);
-
-            } catch (Exception e) {
-            
-                _logger.LogError($"Error al obtener listado de Usuarios Empresa: ", (e.Message));
-                return View("Error");
-
-            }
+            List<UsuarioEmpresaViewModel> usuariosEmpresa = _usuarioEmpresaService.ObtenerUsuariosEmpresa();
+            return View(usuariosEmpresa);
         }
-
-
 
         [HttpGet]
         public IActionResult CrearUsuarioEmpresa()
@@ -44,10 +33,9 @@ namespace ClubInfluApp.Controllers
         [HttpPost]
         public IActionResult CrearUsuarioEmpresa(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel)
         {
-
             if (!ModelState.IsValid)
             {
-                return View(nuevoUsuarioEmpresaViewModel); 
+                return View(nuevoUsuarioEmpresaViewModel);
             }
 
             int idUsuarioEmpresa = _usuarioEmpresaService.CrearUsuarioEmpresa(nuevoUsuarioEmpresaViewModel);

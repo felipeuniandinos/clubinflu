@@ -1,8 +1,8 @@
 ﻿@using ClubInfluApp.ViewModels
-@model NuevoUsuarioEmpresaViewModel
+@model NuevoUsuarioInfluencerViewModel
 
 @{
-    ViewData["BodyClass"] = "CrearUsuarioEmpresa-page";
+    ViewData["BodyClass"] = "CrearUsuarioInfluencer-page";
 }
 
 @if (ViewBag.Mensaje != null)
@@ -10,7 +10,7 @@
     <div class="alert alert-success">@ViewBag.Mensaje</div>
 }
 
-<form asp-controller="UsuarioEmpresa" asp-action="CrearUsuarioEmpresa" method="post">
+<form asp-controller="UsuarioInfluencer" asp-action="CrearUsuarioInfluencer" method="post">
     <fieldset>
         <legend>Información del Usuario</legend>
 
@@ -28,7 +28,7 @@
     </fieldset>
 
     <fieldset>
-        <legend>Información de la Empresa</legend>
+        <legend>Información del Influencer</legend>
 
         <div class="mb-3">
             <label asp-for="nombre" class="form-label">Nombre</label>
@@ -37,15 +37,9 @@
         </div>
 
         <div class="mb-3">
-            <label asp-for="nif" class="form-label">Nif</label>
-            <input asp-for="nif" class="form-control" required />
-            <span asp-validation-for="nif" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="url" class="form-label">Página Web</label>
-            <input asp-for="url" class="form-control" />
-            <span asp-validation-for="url" class="text-danger"></span>
+            <label asp-for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+            <input asp-for="fechaNacimiento" type="date" class="form-control" required />
+            <span asp-validation-for="fechaNacimiento" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
@@ -55,43 +49,56 @@
         </div>
 
         <div class="mb-3">
-            <label asp-for="direccion" class="form-label">Dirección</label>
-            <input asp-for="direccion" class="form-control" required />
-            <span asp-validation-for="direccion" class="text-danger"></span>
+            <label asp-for="idGenero" class="form-label">Género</label>
+            <select asp-for="idGenero" class="form-select" required>
+                <option value="">Seleccione un género</option>
+                <option value="1">Masculino</option>
+                <option value="2">Femenino</option>
+                <option value="3">Otro</option>
+            </select>
+            <span asp-validation-for="idGenero" class="text-danger"></span>
         </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Ciudades de Influencia</legend>
 
         <div class="mb-3">
-            <label asp-for="idCiudad" class="form-label">Ciudad</label>
+            <label asp-for="idCiudad" class="form-label">Ciudad Principal</label>
             <input asp-for="idCiudad" class="form-control" required />
             <span asp-validation-for="idCiudad" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label asp-for="idCiudad2" class="form-label">Ciudad 2</label>
-            <input asp-for="idCiudad2" class="form-control"/>
+            <label asp-for="idCiudad2" class="form-label">Ciudad Secundaria</label>
+            <input asp-for="idCiudad2" class="form-control" />
         </div>
 
         <div class="mb-3">
             <label asp-for="idCiudad3" class="form-label">Ciudad 3</label>
-            <input asp-for="idCiudad3" class="form-control"/>
+            <input asp-for="idCiudad3" class="form-control" />
         </div>
 
         <div class="mb-3">
             <label asp-for="idCiudad4" class="form-label">Ciudad 4</label>
-            <input asp-for="idCiudad4" class="form-control"/>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="sector" class="form-label">Sector</label>
-            <input asp-for="sector" class="form-control" required />
-            <span asp-validation-for="sector" class="text-danger"></span>
+            <input asp-for="idCiudad4" class="form-control" />
         </div>
     </fieldset>
 
-    <button type="submit" class="btn btn-primary">Crear Usuario Empresa</button>
+    <fieldset>
+        <legend>Redes Sociales</legend>
+
+        <div id="redesSocialesContainer">
+            <!-- Contenedor dinámico para redes sociales -->
+        </div>
+
+        <button type="button" class="btn btn-secondary" id="addRedSocial">Agregar Red Social</button>
+    </fieldset>
+
+    <button type="submit" class="btn btn-primary mt-3">Crear Usuario Influencer</button>
 </form>
 
-<!-- Activa la validación en el cliente -->
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/usuarioinfluencer/crearusuarioinfluencer.js"></script>
 }

@@ -33,7 +33,7 @@ namespace ClubInfluApp.BusinessLogic.Services
         private Empresa ObtenerEmpresaParaNuevoUsuario(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel)
         {
             Empresa empresa = CrearNuevaEmpresa(nuevoUsuarioEmpresaViewModel);
-            Empresa empresaEnSistema = _usuarioEmpresaRepository.ObtenerEmpresaPorNif(nuevoUsuarioEmpresaViewModel.nifEmpresa);
+            Empresa empresaEnSistema = _usuarioEmpresaRepository.ObtenerEmpresaPorNif(nuevoUsuarioEmpresaViewModel.nif);
 
             if (empresaEnSistema != null)
             {
@@ -44,7 +44,7 @@ namespace ClubInfluApp.BusinessLogic.Services
         }
         
 
-        private UsuarioEmpresa CrearNuevoUsuario(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresa, int idEmpresa)
+        private UsuarioEmpresa CrearNuevoUsuario(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel, int idEmpresa)
         {
             return
             new UsuarioEmpresa
@@ -54,28 +54,27 @@ namespace ClubInfluApp.BusinessLogic.Services
                 idEstadoUsuario = ESTADO_USUARIO_PENDIENTE,
                 fechaCreacion = System.DateTime.Now,
                 fechaActualizacion = System.DateTime.Now,
-                correo = nuevoUsuarioEmpresa.correo,
-                clave = nuevoUsuarioEmpresa.clave,
-
+                correo = nuevoUsuarioEmpresaViewModel.correo,
+                clave = nuevoUsuarioEmpresaViewModel.clave,
             };
         }
 
-        private Empresa CrearNuevaEmpresa(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresa)
+        private Empresa CrearNuevaEmpresa(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel)
         {
             return
             new Empresa
             {
                 idEmpresa = 0,
-                idCiudad = nuevoUsuarioEmpresa.idCiudadEmpresa,
-                idCiudad2 = nuevoUsuarioEmpresa.idCiudad2Empresa,
-                idCiudad3 = nuevoUsuarioEmpresa.idCiudad3Empresa,
-                idCiudad4 = nuevoUsuarioEmpresa.idCiudad4Empresa,
-                nif = nuevoUsuarioEmpresa.nifEmpresa,
-                nombre = nuevoUsuarioEmpresa.nombreEmpresa,
-                url = nuevoUsuarioEmpresa.urlEmpresa,
-                numeroContacto = nuevoUsuarioEmpresa.numeroContactoEmpresa,
-                sector = nuevoUsuarioEmpresa.sectorEmpresa,
-                direccion = nuevoUsuarioEmpresa.direccionEmpresa
+                idCiudad = nuevoUsuarioEmpresaViewModel.idCiudad,
+                idCiudad2 = nuevoUsuarioEmpresaViewModel.idCiudad2,
+                idCiudad3 = nuevoUsuarioEmpresaViewModel.idCiudad3,
+                idCiudad4 = nuevoUsuarioEmpresaViewModel.idCiudad4,
+                nif = nuevoUsuarioEmpresaViewModel.nif,
+                nombre = nuevoUsuarioEmpresaViewModel.nombre,
+                url = nuevoUsuarioEmpresaViewModel.url,
+                numeroContacto = nuevoUsuarioEmpresaViewModel.numeroContacto,
+                sector = nuevoUsuarioEmpresaViewModel.sector,
+                direccion = nuevoUsuarioEmpresaViewModel.direccion
             };
         }
 

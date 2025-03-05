@@ -14,35 +14,35 @@ namespace ClubInfluApp.ViewModels
         public string clave { get; set; }
 
         [Required(ErrorMessage = "La ciudad de la empresa es obligatoria.")]
-        public int idCiudadEmpresa { get; set; }
+        public int idCiudad { get; set; }
 
-        public int? idCiudad2Empresa { get; set; }
+        public int? idCiudad2 { get; set; }
 
-        public int? idCiudad3Empresa { get; set; }
+        public int? idCiudad3 { get; set; }
 
-        public int? idCiudad4Empresa { get; set; }
+        public int? idCiudad4 { get; set; }
 
         [Required(ErrorMessage = "El nombre de la empresa es obligatorio.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "El nombre de la empresa debe tener entre 3 y 100 caracteres.")]
-        public string nombreEmpresa { get; set; }
+        public string nombre { get; set; }
 
         [Required(ErrorMessage = "El nif de la empresa es obligatorio.")]
         [StringLength(20, MinimumLength = 3, ErrorMessage = "El nif de la empresa debe tener entre 3 y 20 caracteres.")]
-        public string nifEmpresa { get; set; }
+        public string nif { get; set; }
 
         [Url(ErrorMessage = "Ingrese una URL válida (ej.: https://www.ejemplo.com).")]
         [StringLength(100, MinimumLength = 6, ErrorMessage = "La URL debe tener entre 6 y 100 caracteres.")]
-        public string urlEmpresa { get; set; }
+        public string url { get; set; }
 
         [RegularExpression(@"^\d{10}$", ErrorMessage = "El número de contacto debe tener exactamente 10 dígitos.")]
-        public string numeroContactoEmpresa { get; set; }
+        public string numeroContacto { get; set; }
 
         [Required(ErrorMessage = "El sector de la empresa es obligatorio.")]
         [StringLength(500, MinimumLength = 10, ErrorMessage = "El sector debe tener entre 10 y 500 caracteres.")]
-        public string sectorEmpresa { get; set; }
+        public string sector { get; set; }
 
         [Required(ErrorMessage = "La dirección de la empresa es obligatoria.")]
         [StringLength(500, MinimumLength = 10, ErrorMessage = "La dirección debe tener entre 10 y 500 caracteres.")]
-        public string direccionEmpresa { get; set; }
+        public string direccion { get; set; }
     }
 }

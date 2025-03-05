@@ -17,10 +17,10 @@ namespace ClubInfluApp.Data.Repositories
 
         public int CrearUsuarioEmpresa(UsuarioEmpresa usuarioEmpresa, Empresa empresa)
         {
-            using var connection = new NpgsqlConnection(dbConnectionString);
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
 
-            using var transaction = connection.BeginTransaction();
+            using NpgsqlTransaction transaction = connection.BeginTransaction();
 
             try
             {
@@ -83,7 +83,7 @@ namespace ClubInfluApp.Data.Repositories
 
         public UsuarioEmpresa ObtenerUsuarioEmpresaValidoPorCorreoYEmpresa(string correo, int idEmpresa)
         {
-            using var connection = new NpgsqlConnection(dbConnectionString);
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
 
             try
@@ -100,7 +100,7 @@ namespace ClubInfluApp.Data.Repositories
 
         public Empresa ObtenerEmpresaPorNif(string nif)
         {
-            using var connection = new NpgsqlConnection(dbConnectionString);
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
 
             try
@@ -116,7 +116,6 @@ namespace ClubInfluApp.Data.Repositories
 
         public List<UsuarioEmpresaViewModel> ObtenerUsuariosEmpresa()
         {
-
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
 
@@ -138,9 +137,6 @@ namespace ClubInfluApp.Data.Repositories
             {
                 throw;
             }
-
-
-
         }
     }
 }

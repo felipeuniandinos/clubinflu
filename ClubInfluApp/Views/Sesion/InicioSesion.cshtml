@@ -1,0 +1,41 @@
+﻿@using ClubInfluApp.ViewModels
+@model UsuarioViewModel
+
+@{
+    ViewData["BodyClass"] = "InicioSesion-page";
+}
+
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-danger">@ViewBag.Mensaje</div>
+}
+
+<form asp-controller="Sesion" asp-action="InicioSesion" method="post">
+    <fieldset>
+        <legend>Inicio de Sesión</legend>
+
+        <div class="mb-3">
+            <label asp-for="correo" class="form-label">Correo</label>
+            <input asp-for="correo" class="form-control" required />
+            <span asp-validation-for="correo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="clave" class="form-label">Clave</label>
+            <input asp-for="clave" type="password" class="form-control" required />
+            <span asp-validation-for="clave" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="tipo" class="form-label">Tipo de Usuario</label>
+            <select asp-for="tipo" asp-items="Html.GetEnumSelectList<TipoUsuario>()" class="form-select" required></select>
+            <span asp-validation-for="tipo" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+    </fieldset>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

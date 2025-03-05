@@ -81,7 +81,7 @@ CREATE TABLE Influencer (
     idCiudad4 BIGINT NULL,
     idGenero BIGINT NOT NULL,
     nombre VARCHAR(100) NOT NULL,
-    fechaNacimineto DATE NOT NULL,
+    fechaNacimiento DATE NOT NULL,
     numeroContacto VARCHAR(10),
     FOREIGN KEY (idCiudad) REFERENCES Ciudad(idCiudad),
     FOREIGN KEY (idCiudad2) REFERENCES Ciudad(idCiudad),
@@ -99,6 +99,16 @@ CREATE TABLE UsuarioInfluencer (
     fechaCreacion DATE NOT NULL,
     fechaActualizacion DATE NOT NULL,
     FOREIGN KEY (idInfluencer) REFERENCES Influencer(idInfluencer),
+    FOREIGN KEY (idEstadoUsuario) REFERENCES EstadoUsuario(idEstadoUsuario)
+);
+
+CREATE TABLE UsuarioAdministrador (
+    idUsuarioAdministrador BIGSERIAL PRIMARY KEY,
+    idEstadoUsuario BIGINT NOT NULL,
+    correo VARCHAR(500) NOT NULL,
+    clave VARCHAR(500) NOT NULL,
+    fechaCreacion DATE NOT NULL,
+    fechaActualizacion DATE NOT NULL,
     FOREIGN KEY (idEstadoUsuario) REFERENCES EstadoUsuario(idEstadoUsuario)
 );
 
@@ -158,19 +168,24 @@ VALUES
 INSERT INTO UsuarioEmpresa 
 (idEmpresa, idEstadoUsuario, correo, clave, fechaCreacion, fechaActualizacion)
 VALUES 
-(1, 1, 'usuario@example.com', 'claveSegura123', CURRENT_DATE, CURRENT_DATE);
+(1, 2, 'usuario@example.com', 'claveSegura123', CURRENT_DATE, CURRENT_DATE);
 
 INSERT INTO Influencer 
-(idCiudad, idCiudad2, idCiudad3, idCiudad4, idGenero, nombre, fechaNacimineto, numeroContacto)
+(idCiudad, idCiudad2, idCiudad3, idCiudad4, idGenero, nombre, fechaNacimiento, numeroContacto)
 VALUES
   (1, NULL, NULL, NULL, 1, 'Juan Pérez', '1990-05-20', '5551234567');
 
 INSERT INTO UsuarioInfluencer (idInfluencer, idEstadoUsuario, correo, clave, fechaCreacion, fechaActualizacion)
 VALUES
-  (1, 1, 'usuario1@ejemplo.com', 'clave_secreta1', '2023-02-01', '2023-02-01');
+  (1, 2, 'usuario1@ejemplo.com', 'clave_secreta1', '2023-02-01', '2023-02-01');
+
+INSERT INTO UsuarioAdministrador (idEstadoUsuario, correo, clave, fechaCreacion, fechaActualizacion)
+VALUES
+  (2, 'usuario1@ejemplo.com', 'clave_secreta1', '2023-02-01', '2023-02-01');
 
 INSERT INTO InfluencerRedSocial (idInfluencer, idRedSocial, numeroSeguidores, activo, fechaCreacion, fechaActualizacion)
 VALUES
   (1, 1, 50000, true, '2023-01-01', '2023-01-01'),
   (1, 2, 120000, true, '2023-02-15', '2023-02-15'),
   (1, 3, 75000, false, '2023-03-10', '2023-03-10');
+
