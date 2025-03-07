@@ -29,5 +29,10 @@ namespace ClubInfluApp.Controllers
                 return View("Error");
             }
         }
+
+        public IActionResult GestionarSolicitudesUsuarioInfluencer(GestionarUsuarioInfluencerViewModel gestionarUsuarioInfluencerViewModel)
+        {
+            return View();
+        }
     }
 }

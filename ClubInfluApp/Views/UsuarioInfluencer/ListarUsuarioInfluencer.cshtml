@@ -18,6 +18,7 @@
                 <th>Correo</th>
                 <th>Estado Usuario</th>
                 <th>Fecha Creación</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +29,9 @@
                     <td>@usuarioInfluencer.correo</td>
                     <td>@usuarioInfluencer.estadoUsuario</td>
                     <td>@usuarioInfluencer.fechaCreacion</td>
+                    <td>
+                        <a href="@Url.Action("GestionarSolicitudesUsuarioInfluencer", "UsuarioInfluencer", new { id = usuarioInfluencer.idUsuarioInfluencer })" class="btn btn-primary">Ver Detalles</a>
+                    </td>
                 </tr>
             }
         </tbody>

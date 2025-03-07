@@ -5,5 +5,7 @@ namespace ClubInfluApp.Data.Interfaces
     public interface IUsuarioInfluencerRepository
     {
         public List<UsuarioInfluencerViewModel> ObtenerUsuariosInfluencer();
+        public GestionarUsuarioInfluencerViewModel GestionarUsuarioInfluencer(int idUsuarioInfluencer);
+
     }
 }

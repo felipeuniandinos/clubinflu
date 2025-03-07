@@ -35,5 +35,35 @@ namespace ClubInfluApp.Data.Repositories
                 throw;
             }
         }
+
+        public GestionarUsuarioInfluencerViewModel GestionarUsuarioInfluencer(int idUsuarioInfluencer)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open(); 
+             try
+            {
+                string InformacionGestionarInfluencer =
+                @"
+                    SELECT t1.correo, t2.estadousuario, t3.nombre, t3.numerocontacto, t3.fechanacimineto, t4.genero, t5.ciudad
+                    FROM UsuarioInfluencer t1
+                    JOIN EstadoUsuario t2 ON t1.idEstadoUsuario = t2.idEstadoUsuario
+                    JOIN influencer t3 ON t1.idinfluencer  = t3.idinfluencer
+                    JOIN genero t4 ON t3.idgenero  = t4.idgenero
+                    JOIN ciudad t5 ON t3.idciudad  = t5.idciudad
+                    WHERE ui.idUsuarioInfluencer = @idUsuarioInfluencer;
+                ";
+                GestionarUsuarioInfluencerViewModel? GestionarUsuarioInfluencer = connection.Query<GestionarUsuarioInfluencerViewModel>(InformacionGestionarInfluencer).FirstOrDefault();
+                
+                if (GestionarUsuarioInfluencer == null)
+                {
+                    throw new Exception("No se encontró el usuario influencer.");
+                }
+
+                return GestionarUsuarioInfluencer;
+            }
+            catch {
+                throw;
+            }
+        }
     }
 }
