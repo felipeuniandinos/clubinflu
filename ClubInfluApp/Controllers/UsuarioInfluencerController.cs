@@ -16,7 +16,7 @@ namespace ClubInfluApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult ListarUsuariosInfluencer()
+        public IActionResult ListarUsuarioInfluencer()
         {
             try
             {
@@ -28,6 +28,11 @@ namespace ClubInfluApp.Controllers
                 _logger.LogError($"Error al obtener los usuarios influencers: {ex.Message}");
                 return View("Error");
             }
+        }
+
+        public IActionResult GestionarSolicitudesUsuarioInfluencer(GestionarUsuarioInfluencerViewModel gestionarUsuarioInfluencerViewModel)
+        {
+            return View();
         }
     }
 }
