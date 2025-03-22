@@ -6,5 +6,6 @@ namespace ClubInfluApp.BusinessLogic.Interfaces
     {
         public List<UsuarioInfluencerViewModel> ObtenerUsuariosInfluencer();
         public GestionarUsuarioInfluencerViewModel GestionarUsuarioInfluencer(int idUsuarioInfluencer);
+        public void ActualizarEstadoUsuarioInfluencer(int idUsuarioInfluencer, int idEstadoUsuarioInfluencer);
     }
 }

@@ -30,10 +30,11 @@
                     <td>@usuarioInfluencer.estadoUsuario</td>
                     <td>@usuarioInfluencer.fechaCreacion</td>
                     <td>
-                        <a href="@Url.Action("GestionarSolicitudesUsuarioInfluencer", "UsuarioInfluencer", new { id = usuarioInfluencer.idUsuarioInfluencer })" class="btn btn-primary">Ver Detalles</a>
+                        <a href="@Url.Action("GestionarSolicitudesUsuarioInfluencer", "UsuarioInfluencer", new { idUsuarioInfluencer  = usuarioInfluencer.idUsuarioInfluencer })" class="btn btn-primary">Gestionar Estado Usuario</a>
                     </td>
                 </tr>
+            
             }
         </tbody>
     </table>
-</div>
+</div>2

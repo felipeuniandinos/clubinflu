@@ -22,5 +22,10 @@ namespace ClubInfluApp.BusinessLogic.Services
         {
             return _usuarioInfluencerRepository.GestionarUsuarioInfluencer(idUsuarioInfluencer);
         }
+
+        public void ActualizarEstadoUsuarioInfluencer(int idUsuarioInfluencer, int idEstadoUsuarioInfluencer)
+        {
+            _usuarioInfluencerRepository.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
+        }
     }
 }

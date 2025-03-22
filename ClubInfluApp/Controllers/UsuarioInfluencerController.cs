@@ -30,9 +30,28 @@ namespace ClubInfluApp.Controllers
             }
         }
 
-        public IActionResult GestionarSolicitudesUsuarioInfluencer(GestionarUsuarioInfluencerViewModel gestionarUsuarioInfluencerViewModel)
+        [HttpGet]
+        public IActionResult GestionarSolicitudesUsuarioInfluencer(int idUsuarioInfluencer)
         {
-            return View();
+            
+            
+            GestionarUsuarioInfluencerViewModel detalleUsuarioInfluencer = _usuarioInfluencerService.GestionarUsuarioInfluencer(idUsuarioInfluencer);
+
+            if (detalleUsuarioInfluencer == null)
+            {
+                return NotFound();
+            }
+
+            return View(detalleUsuarioInfluencer);
+
+        }
+
+        [HttpPut]
+        public IActionResult ActualizarEstadoUsuarioInfluencer (int idUsuarioInfluencer, int idEstadoUsuarioInfluencer)
+        {
+            _usuarioInfluencerService.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
+
+            return Json(new { mensaje = "El usuario influencer esta actualizado con exito" });
         }
     }
 }
