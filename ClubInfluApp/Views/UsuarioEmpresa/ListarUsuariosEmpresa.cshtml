@@ -13,6 +13,7 @@
 				<th>Correo</th>
 				<th>Estado Usuario</th>
 				<th>Fecha Creación</th>
+				<th>Acciones</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -23,6 +24,12 @@
 					<td>@usuarioEmpresa.correo</td>
 					<td>@usuarioEmpresa.estadoUsuario</td>
 					<td>@usuarioEmpresa.fechaCreacion</td>
+					<td>
+						<a href="@Url.Action("GestionarUsuarioEmpresa", "UsuarioEmpresa", new { idUsuarioEmpresa = @usuarioEmpresa.idUsuarioEmpresa })" class="btn btn-primary">
+							Gestionar Estado Usuario
+						</a>
+					</td>
+
 				</tr>
 			}
 		</tbody>

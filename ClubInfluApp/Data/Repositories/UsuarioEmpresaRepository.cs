@@ -27,7 +27,7 @@ namespace ClubInfluApp.Data.Repositories
                 if (empresa.idEmpresa == 0)
                 {
                     string insertarEmpresa =
-                    @"
+                        @"
                         INSERT INTO Empresa 
                         (idCiudad, idCiudad2, idCiudad3, idCiudad4, nombre, nif, url, numeroContacto, sector, direccion) 
                         VALUES 
@@ -35,13 +35,17 @@ namespace ClubInfluApp.Data.Repositories
                         RETURNING idEmpresa;
                     ";
 
-                    int idEmpresaCreada = connection.QuerySingle<int>(insertarEmpresa, empresa, transaction);
+                    int idEmpresaCreada = connection.QuerySingle<int>(
+                        insertarEmpresa,
+                        empresa,
+                        transaction
+                    );
                     usuarioEmpresa.idEmpresa = idEmpresaCreada;
                 }
                 else
                 {
                     string actualizarEmpresa =
-                    @"
+                        @"
                         UPDATE Empresa
                         SET 
                             idCiudad = COALESCE(@idCiudad, idCiudad),
@@ -60,7 +64,6 @@ namespace ClubInfluApp.Data.Repositories
                     connection.Execute(actualizarEmpresa, empresa, transaction);
                 }
 
-
                 string insertarUsuarioEmpresa =
                     @"
                         INSERT INTO UsuarioEmpresa 
@@ -70,7 +73,11 @@ namespace ClubInfluApp.Data.Repositories
                         RETURNING idUsuarioEmpresa;
                     ";
 
-                int idUsuarioEmpresa = connection.QuerySingle<int>(insertarUsuarioEmpresa, usuarioEmpresa, transaction);
+                int idUsuarioEmpresa = connection.QuerySingle<int>(
+                    insertarUsuarioEmpresa,
+                    usuarioEmpresa,
+                    transaction
+                );
                 transaction.Commit();
                 return idUsuarioEmpresa;
             }
@@ -81,21 +88,27 @@ namespace ClubInfluApp.Data.Repositories
             }
         }
 
-        public UsuarioEmpresa ObtenerUsuarioEmpresaValidoPorCorreoYEmpresa(string correo, int idEmpresa)
+        public UsuarioEmpresa ObtenerUsuarioEmpresaValidoPorCorreoYEmpresa(
+            string correo,
+            int idEmpresa
+        )
         {
             using var connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
 
             try
             {
-                string query = "SELECT * FROM UsuarioEmpresa WHERE correo = @correo and idEmpresa = @idEmpresa";
-                return connection.QueryFirstOrDefault<UsuarioEmpresa>(query, new { correo, idEmpresa });
+                string query =
+                    "SELECT * FROM UsuarioEmpresa WHERE correo = @correo and idEmpresa = @idEmpresa";
+                return connection.QueryFirstOrDefault<UsuarioEmpresa>(
+                    query,
+                    new { correo, idEmpresa }
+                );
             }
             catch
             {
                 throw;
             }
-
         }
 
         public Empresa ObtenerEmpresaPorNif(string nif)
@@ -116,31 +129,94 @@ namespace ClubInfluApp.Data.Repositories
 
         public List<UsuarioEmpresaViewModel> ObtenerUsuariosEmpresa()
         {
-
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
 
             try
             {
-
                 string informacionListaUsuarioEmpresa =
                     @"  SELECT ue.idUsuarioEmpresa, ue.correo, eu.estadoUsuario, ue.fechaCreacion
                         FROM UsuarioEmpresa ue
                         JOIN EstadoUsuario eu ON ue.idEstadoUsuario = eu.idEstadoUsuario;
                     ";
 
-                List<UsuarioEmpresaViewModel> listaListaUsuarioEmpresa = connection.Query<UsuarioEmpresaViewModel>(informacionListaUsuarioEmpresa).ToList();
+                List<UsuarioEmpresaViewModel> listaListaUsuarioEmpresa = connection
+                    .Query<UsuarioEmpresaViewModel>(informacionListaUsuarioEmpresa)
+                    .ToList();
 
                 return listaListaUsuarioEmpresa;
-
             }
             catch
             {
                 throw;
             }
+        }
 
+        public DetalleUsuarioEmpresaViewModel ObtenerDetalleUsuarioEmpresa(int idUsuarioEmpresa)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+            try
+            {
+                string queryDetalleUsuarioEmpresa =
+                    @"  SELECT ue.idUsuarioEmpresa, ue.correo, eu.estadoUsuario, ue.fechaCreacion, e.nombre, e.nif, e.url, e.numeroContacto, e.sector, e.direccion
+                        FROM UsuarioEmpresa ue
+                        JOIN EstadoUsuario eu ON ue.idEstadoUsuario = eu.idEstadoUsuario
+                        JOIN Empresa e ON ue.idEmpresa = e.idEmpresa
+                        WHERE ue.idUsuarioEmpresa = @idUsuarioEmpresa;
+                    ";
+                DetalleUsuarioEmpresaViewModel detalleUsuarioEmpresa =
+                    connection.QueryFirstOrDefault<DetalleUsuarioEmpresaViewModel>(
+                        queryDetalleUsuarioEmpresa,
+                        new { idUsuarioEmpresa }
+                    );
+                string queryEstadosUsuario =
+                    @"  SELECT ue.idEstadoUsuario, ue.estadousuario FROM EstadoUsuario ue;";
 
+                detalleUsuarioEmpresa.estadosUsuarios = connection
+                    .Query<EstadoUsuario>(queryEstadosUsuario)
+                    .ToList();
+                return detalleUsuarioEmpresa;
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
+        public void ModificarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+
+            using var transaction = connection.BeginTransaction();
+
+            try
+            {
+                string queryActualizacionEstadoUsuarioEmpresa =
+                    @"  UPDATE UsuarioEmpresa 
+                        SET idEstadoUsuario = @idNuevoEstadoUsuario
+                        WHERE idUsuarioEmpresa = @idUsuarioEmpresa
+                    ";
+
+                connection.Execute(
+                    queryActualizacionEstadoUsuarioEmpresa,
+                    new
+                    {
+                        idUsuarioEmpresa = idUsuarioEmpresa,
+                        idNuevoEstadoUsuario = idNuevoEstadoUsuario,
+                    },
+                    transaction
+                );
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                throw new Exception("Error al modificar el estado del usuario empresa.", ex);
+                ;
+            }
         }
     }
 }
