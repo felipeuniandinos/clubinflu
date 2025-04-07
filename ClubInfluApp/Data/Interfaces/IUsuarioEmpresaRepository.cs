@@ -12,5 +12,9 @@ namespace ClubInfluApp.Data.Interfaces
         public Empresa ObtenerEmpresaPorNif(string nif);
 
         public List<UsuarioEmpresaViewModel> ObtenerUsuariosEmpresa();
+
+        public void ModificarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario);
+
+        public DetalleUsuarioEmpresaViewModel ObtenerDetalleUsuarioEmpresa(int idUsuarioEmpresa);
     }
 }
