@@ -18,7 +18,7 @@ namespace ClubInfluApp.Controllers
 
         [Authorize(Roles = "Administrador")]
         [HttpGet]
-        public IActionResult ListarUsuariosInfluencer()
+        public IActionResult ListarUsuarioInfluencer()
         {
             List<UsuarioInfluencerViewModel> influencers = _usuarioInfluencerService.ObtenerUsuariosInfluencer();
             return View(influencers);
@@ -42,6 +42,30 @@ namespace ClubInfluApp.Controllers
 
             ViewBag.Mensaje = "Registro completado. Revisaremos tu información y nos pondremos en contacto pronto. El equipo de Club influ.";
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult GestionarSolicitudesUsuarioInfluencer(int idUsuarioInfluencer)
+        {
+            
+            
+            GestionarUsuarioInfluencerViewModel detalleUsuarioInfluencer = _usuarioInfluencerService.GestionarUsuarioInfluencer(idUsuarioInfluencer);
+
+            if (detalleUsuarioInfluencer == null)
+            {
+                return NotFound();
+            }
+
+            return View(detalleUsuarioInfluencer);
+
+        }
+
+        [HttpPut]
+        public IActionResult ActualizarEstadoUsuarioInfluencer (int idUsuarioInfluencer, int idEstadoUsuarioInfluencer)
+        {
+            _usuarioInfluencerService.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
+
+            return Json(new { mensaje = "El usuario influencer esta actualizado con exito" });
         }
     }
 }

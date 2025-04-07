@@ -10,5 +10,7 @@ namespace ClubInfluApp.Data.Interfaces
         public UsuarioInfluencer ObtenerUsuarioInfluencerValidoPorCorreo(string correo);
 
         public List<UsuarioInfluencerViewModel> ObtenerUsuariosInfluencer();
+        public GestionarUsuarioInfluencerViewModel GestionarUsuarioInfluencer(int idUsuarioInfluencer);
+        public void ActualizarEstadoUsuarioInfluencer(int idUsuarioInfluencer, int idEstadoUsuarioInfluencer);
     }
 }
