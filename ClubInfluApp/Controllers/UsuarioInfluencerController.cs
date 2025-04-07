@@ -18,7 +18,7 @@ namespace ClubInfluApp.Controllers
 
         [Authorize(Roles = "Administrador")]
         [HttpGet]
-        public IActionResult ListarUsuarioInfluencer()
+        public IActionResult ListarUsuariosInfluencer()
         {
             List<UsuarioInfluencerViewModel> influencers = _usuarioInfluencerService.ObtenerUsuariosInfluencer();
             return View(influencers);

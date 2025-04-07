@@ -117,7 +117,7 @@ namespace ClubInfluApp.Data.Repositories
             try
             {
               
-            string queryUsuarioInfluencer = 
+            string queryUsuarioInfluencer =
             @"
                 SELECT
                     ui.idUsuarioInfluencer,
@@ -126,7 +126,7 @@ namespace ClubInfluApp.Data.Repositories
                     ui.fechaActualizacion AS usuarioFechaActualizacion,
                     eu.estadoUsuario,
                     i.nombre,
-                    i.fechaNacimineto,
+                    i.fechaNacimiento,
                     i.numeroContacto,
                     c1.ciudad AS ciudadPrincipal,
                     p1.pais AS paisCiudadPrincipal,
