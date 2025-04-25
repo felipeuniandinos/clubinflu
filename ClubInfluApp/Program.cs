@@ -2,8 +2,7 @@ using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.BusinessLogic.Services;
 using ClubInfluApp.Data.Interfaces;
 using ClubInfluApp.Data.Repositories;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
+using ClubInfluApp.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,12 +11,19 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUsuarioEmpresaService, UsuarioEmpresaService>();
 builder.Services.AddScoped<IUsuarioInfluencerService, UsuarioInfluencerService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<ICiudadService, CiudadService>();
+builder.Services.AddScoped<IPaisService, PaisService>();
 
 
 //Add repositories to the container.
 builder.Services.AddScoped<IUsuarioEmpresaRepository, UsuarioEmpresaRepository>();
 builder.Services.AddScoped<IUsuarioInfluencerRepository, UsuarioInfluencerRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<ICiudadRepository, CiudadRepository>();
+builder.Services.AddScoped<IPaisRepository, PaisRepository>();
+
+//Add Helpers to the container.
+NotificacionesCorreoHelper.Configurar(builder.Configuration);
 
 
 // Add authentication

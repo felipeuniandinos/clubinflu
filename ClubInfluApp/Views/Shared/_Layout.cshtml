@@ -16,22 +16,25 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
+    <!-- Select2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+
     @await RenderSectionAsync("Styles", required: false)
 
     <style>
         body {
-            background-color: #05091B;
+        background-color: #05091B;
         }
 
         .btn-success {
-            background-color: #4AF5A5 !important;
-            border-color: #4AF5A5 !important;
-            color: black !important; /* Para asegurar que el texto sea visible */
+        background-color: #4AF5A5 !important;
+        border-color: #4AF5A5 !important;
+        color: black !important; /* Para asegurar que el texto sea visible */
         }
 
         .btn-success:hover {
-            background-color: #3ACD88 !important; /* Un tono más oscuro para efecto hover */
-            border-color: #3ACD88 !important;
+        background-color: #3ACD88 !important; /* Un tono más oscuro para efecto hover */
+        border-color: #3ACD88 !important;
         }
     </style>
 </head>
@@ -41,6 +44,14 @@
     @if (bodyClass == "application-admin")
     {
         @await Html.PartialAsync("_NavbarApplicationAdmin")
+    }
+    else if (bodyClass == "application-influencer")
+    {
+        @await Html.PartialAsync("_NavbarApplicationInfluencer")
+    }
+    else if (bodyClass == "application-empresa")
+    {
+        @await Html.PartialAsync("_NavbarApplicationEmpresa")
     }
     else
     {
@@ -67,6 +78,7 @@
     <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>

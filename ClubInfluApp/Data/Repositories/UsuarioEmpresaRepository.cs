@@ -15,7 +15,7 @@ namespace ClubInfluApp.Data.Repositories
             dbConnectionString = configuration.GetConnectionString("PostgresConnection");
         }
 
-        public int CrearUsuarioEmpresa(UsuarioEmpresa usuarioEmpresa, Empresa empresa)
+        public int CrearUsuarioEmpresa(UsuarioEmpresa usuarioEmpresa, Empresa empresa, TarjetaPago tarjetaPago)
         {
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
@@ -41,6 +41,7 @@ namespace ClubInfluApp.Data.Repositories
                         transaction
                     );
                     usuarioEmpresa.idEmpresa = idEmpresaCreada;
+                    tarjetaPago.idEmpresa = idEmpresaCreada;
                 }
                 else
                 {
@@ -64,6 +65,17 @@ namespace ClubInfluApp.Data.Repositories
                     connection.Execute(actualizarEmpresa, empresa, transaction);
                 }
 
+                string insertarTarjetaPagoEmpresa =
+                    @"
+                        INSERT INTO TarjetaPago 
+                        (idEmpresa, numeroTarjeta, nombreTitular, fechaExpiracion, codigoSeguridad, activo)
+                        VALUES 
+                        (@idEmpresa, @numeroTarjeta, @nombreTitular, @fechaExpiracion, @codigoSeguridad, @activo)
+                        RETURNING idTarjetaPago;
+                    ";
+
+                int idTarjetaPago = connection.QuerySingle<int>(insertarTarjetaPagoEmpresa, tarjetaPago, transaction);
+
                 string insertarUsuarioEmpresa =
                     @"
                         INSERT INTO UsuarioEmpresa 
@@ -73,11 +85,7 @@ namespace ClubInfluApp.Data.Repositories
                         RETURNING idUsuarioEmpresa;
                     ";
 
-                int idUsuarioEmpresa = connection.QuerySingle<int>(
-                    insertarUsuarioEmpresa,
-                    usuarioEmpresa,
-                    transaction
-                );
+                int idUsuarioEmpresa = connection.QuerySingle<int>(insertarUsuarioEmpresa, usuarioEmpresa, transaction);
                 transaction.Commit();
                 return idUsuarioEmpresa;
             }
@@ -88,10 +96,7 @@ namespace ClubInfluApp.Data.Repositories
             }
         }
 
-        public UsuarioEmpresa ObtenerUsuarioEmpresaValidoPorCorreoYEmpresa(
-            string correo,
-            int idEmpresa
-        )
+        public UsuarioEmpresa ObtenerUsuarioEmpresaValidoPorCorreoYEmpresa(string correo, int idEmpresa)
         {
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
@@ -100,10 +105,7 @@ namespace ClubInfluApp.Data.Repositories
             {
                 string query =
                     "SELECT * FROM UsuarioEmpresa WHERE correo = @correo and idEmpresa = @idEmpresa";
-                return connection.QueryFirstOrDefault<UsuarioEmpresa>(
-                    query,
-                    new { correo, idEmpresa }
-                );
+                return connection.QueryFirstOrDefault<UsuarioEmpresa>(query, new { correo, idEmpresa });
             }
             catch
             {
@@ -159,10 +161,13 @@ namespace ClubInfluApp.Data.Repositories
             try
             {
                 string queryDetalleUsuarioEmpresa =
-                    @"  SELECT ue.idUsuarioEmpresa, ue.correo, eu.estadoUsuario, ue.fechaCreacion, e.nombre, e.nif, e.url, e.numeroContacto, e.sector, e.direccion
+                    @"  SELECT ue.idUsuarioEmpresa, ue.correo, eu.estadoUsuario,
+                               ue.fechaCreacion, e.nombre, e.nif, e.url, e.numeroContacto, e.sector, e.direccion,
+                               t.numeroTarjeta, t.nombreTitular, t.fechaExpiracion, t.codigoSeguridad 
                         FROM UsuarioEmpresa ue
                         JOIN EstadoUsuario eu ON ue.idEstadoUsuario = eu.idEstadoUsuario
                         JOIN Empresa e ON ue.idEmpresa = e.idEmpresa
+                        JOIN TarjetaPago t ON ue.idEmpresa = t.idEmpresa    
                         WHERE ue.idUsuarioEmpresa = @idUsuarioEmpresa;
                     ";
                 DetalleUsuarioEmpresaViewModel detalleUsuarioEmpresa =

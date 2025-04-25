@@ -1,5 +1,6 @@
 ﻿using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.Data.Interfaces;
+using ClubInfluApp.Helpers;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
 
@@ -27,6 +28,7 @@ namespace ClubInfluApp.BusinessLogic.Services
                 throw new Exception("Ya existe un usuario con ese correo registrado en el sistema");
             }
 
+            usuario.clave = HashHelper.GenerarHash(usuario.clave);
             return _usuarioInfluencerRepository.CrearUsuarioInfluencer(usuario, influencer, redesSociales);
         }
 
@@ -106,6 +108,26 @@ namespace ClubInfluApp.BusinessLogic.Services
         public void ActualizarEstadoUsuarioInfluencer(int idUsuarioInfluencer, int idEstadoUsuarioInfluencer)
         {
             _usuarioInfluencerRepository.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
+            EnviarCorreoActualizacionEstadoUsuarioInfluencer(idUsuarioInfluencer);
+        }
+
+        private void EnviarCorreoActualizacionEstadoUsuarioInfluencer(int idUsuarioInfluencer)
+        {
+            GestionarUsuarioInfluencerViewModel usuarioInfluencer = _usuarioInfluencerRepository.GestionarUsuarioInfluencer(idUsuarioInfluencer);
+            if (usuarioInfluencer == null)
+            {
+                throw new Exception("No se encontró el usuario influencer con ese id");
+            }
+
+            NotificacionesCorreoHelper.EnviarCorreo(
+                new List<string> { usuarioInfluencer.correo },
+                "Actualización Usuario - ClubInflu",
+                $@" Estimado/a <strong>{usuarioInfluencer.nombre}</strong>,<br /><br />
+                    Le informamos que, tras la correspondiente verificación, su cuenta en
+                    <strong>ClubInflu</strong> se encuentra actualmente en estado <strong>{usuarioInfluencer.estadoUsuario}</strong>.
+                    <br /><br /> 
+                    Para más información, por favor contáctese con nosotros al <strong>+1 (555) 123-4567</strong> o escriba a <strong>soporte@clubinflu.com</strong>."
+            );
         }
     }
 }

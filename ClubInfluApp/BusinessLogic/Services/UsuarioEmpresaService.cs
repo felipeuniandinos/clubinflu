@@ -1,5 +1,6 @@
 ﻿using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.Data.Interfaces;
+using ClubInfluApp.Helpers;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
 
@@ -18,10 +19,8 @@ namespace ClubInfluApp.BusinessLogic.Services
         public int CrearUsuarioEmpresa(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel)
         {
             Empresa empresa = ObtenerEmpresaParaNuevoUsuario(nuevoUsuarioEmpresaViewModel);
-            UsuarioEmpresa usuario = CrearNuevoUsuario(
-                nuevoUsuarioEmpresaViewModel,
-                empresa.idEmpresa
-            );
+            UsuarioEmpresa usuario = CrearNuevoUsuario(nuevoUsuarioEmpresaViewModel, empresa.idEmpresa);
+            TarjetaPago tarjetaPago = CrearNuevaTarjetaPago(nuevoUsuarioEmpresaViewModel, empresa.idEmpresa);
 
             if (ExisteUnUsuarioConEseCorreoYEmpresa(usuario.correo, empresa.idEmpresa))
             {
@@ -30,17 +29,14 @@ namespace ClubInfluApp.BusinessLogic.Services
                 );
             }
 
-            return _usuarioEmpresaRepository.CrearUsuarioEmpresa(usuario, empresa);
+            usuario.clave = HashHelper.GenerarHash(usuario.clave);
+            return _usuarioEmpresaRepository.CrearUsuarioEmpresa(usuario, empresa, tarjetaPago);
         }
 
-        private Empresa ObtenerEmpresaParaNuevoUsuario(
-            NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel
-        )
+        private Empresa ObtenerEmpresaParaNuevoUsuario(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel)
         {
             Empresa empresa = CrearNuevaEmpresa(nuevoUsuarioEmpresaViewModel);
-            Empresa empresaEnSistema = _usuarioEmpresaRepository.ObtenerEmpresaPorNif(
-                nuevoUsuarioEmpresaViewModel.nifEmpresa
-            );
+            Empresa empresaEnSistema = _usuarioEmpresaRepository.ObtenerEmpresaPorNif(nuevoUsuarioEmpresaViewModel.nif);
 
             if (empresaEnSistema != null)
             {
@@ -49,7 +45,21 @@ namespace ClubInfluApp.BusinessLogic.Services
 
             return empresa;
         }
-        
+
+        private TarjetaPago CrearNuevaTarjetaPago(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel, int idEmpresa)
+        {
+            return new TarjetaPago
+            {
+                idTarjetaPago = 0,
+                idEmpresa = idEmpresa,
+                nombreTitular = nuevoUsuarioEmpresaViewModel.nombreTitularTarjeta,
+                numeroTarjeta = nuevoUsuarioEmpresaViewModel.numeroTarjeta,
+                fechaExpiracion = nuevoUsuarioEmpresaViewModel.fechaExpiracionTarjeta,
+                codigoSeguridad = nuevoUsuarioEmpresaViewModel.codigoSeguridadTarjeta,
+                
+            };
+        }
+
 
         private UsuarioEmpresa CrearNuevoUsuario(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel, int idEmpresa)
         {
@@ -102,24 +112,37 @@ namespace ClubInfluApp.BusinessLogic.Services
             return _usuarioEmpresaRepository.ObtenerUsuariosEmpresa();
         }
 
-        public void ModificacionEstadoUsuarioEmpresa(
-            int idUsuarioEmpresa,
-            int idActualEstadoUsuario,
-            int idNuevoEstadoUsuario
-        )
+        public void ModificacionEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idActualEstadoUsuario, int idNuevoEstadoUsuario)
         {
             //TODO: Validar que el estado nuevo sea diferente al actual
             if (idActualEstadoUsuario != idNuevoEstadoUsuario)
             {
-                _usuarioEmpresaRepository.ModificarEstadoUsuarioEmpresa(
-                    idUsuarioEmpresa,
-                    idNuevoEstadoUsuario
-                );
+                _usuarioEmpresaRepository.ModificarEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
+                EnviarCorreoActualizacionEstadoUsuarioEmpresa(idUsuarioEmpresa);
             }
             else
             {
                 throw new Exception("El estado actual y el nuevo estado son iguales");
             }
+        }
+
+        private void EnviarCorreoActualizacionEstadoUsuarioEmpresa(int idUsuarioEmpresa)
+        {
+            DetalleUsuarioEmpresaViewModel usuarioEmpresa = _usuarioEmpresaRepository.ObtenerDetalleUsuarioEmpresa(idUsuarioEmpresa);
+            if (usuarioEmpresa == null)
+            {
+                throw new Exception("No se encontró el usuario empresa con ese id");
+            }
+
+            NotificacionesCorreoHelper.EnviarCorreo(
+                new List<string> { usuarioEmpresa.correo },
+                "Actualización Usuario - ClubInflu",
+                $@" Estimado/a <strong>{usuarioEmpresa.nombre}</strong>,<br /><br />
+                    Le informamos que, tras la correspondiente verificación, su cuenta en
+                    <strong>ClubInflu</strong> se encuentra actualmente en estado <strong>{usuarioEmpresa.estadoUsuario}</strong>.
+                    <br /><br /> 
+                    Para más información, por favor contáctese con nosotros al <strong>+1 (555) 123-4567</strong> o escriba a <strong>soporte@clubinflu.com</strong>."
+            );
         }
 
         public DetalleUsuarioEmpresaViewModel ObtenerDetalleUsuarioEmpresa(int idUsuarioEmpresa)

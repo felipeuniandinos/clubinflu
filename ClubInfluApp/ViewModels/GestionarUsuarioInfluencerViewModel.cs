@@ -8,7 +8,7 @@ namespace ClubInfluApp.ViewModels
         public string correo { get; set; }
         public DateTime usuariofechacreacion { get; set; }
         public DateTime usuariofechaactualizacion { get; set; }
-        public string estadousuario { get; set; }
+        public string estadoUsuario { get; set; }
         public string nombre { get; set; }
         public DateTime fechaNacimiento { get; set; }
         public string numerocontacto { get; set; }

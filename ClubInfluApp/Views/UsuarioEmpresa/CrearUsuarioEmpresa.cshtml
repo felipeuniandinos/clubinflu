@@ -154,6 +154,34 @@
                 </div>
             </fieldset>
 
+            <fieldset class="mt-4">
+                <legend class="fw-bold text-success">Información de pago</legend>
+
+                <div class="mb-3">
+                    <label asp-for="numeroTarjeta" class="form-label">Numero Tarjeta</label>
+                    <input asp-for="numeroTarjeta" class="form-control rounded-3" required />
+                    <span asp-validation-for="numeroTarjeta" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="nombreTitularTarjeta" class="form-label">Nombre Titual Tarjeta</label>
+                    <input asp-for="nombreTitularTarjeta" class="form-control" required />
+                    <span asp-validation-for="nombreTitularTarjeta" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="fechaExpiracionTarjeta" class="form-label">Fecha Expiracion Tarjeta</label>
+                    <input asp-for="fechaExpiracionTarjeta" type="month" class="form-control rounded-3" required />
+                    <span asp-validation-for="fechaExpiracionTarjeta" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="codigoSeguridadTarjeta" class="form-label">CVV Tarjeta</label>
+                    <input asp-for="codigoSeguridadTarjeta" class="form-control" />
+                    <span asp-validation-for="codigoSeguridadTarjeta" class="text-danger"></span>
+                </div>
+            </fieldset>
+
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="terminos" required>
                 <label class="form-check-label" for="terminos">

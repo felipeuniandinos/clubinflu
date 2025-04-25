@@ -1,6 +1,7 @@
 ﻿@model ClubInfluApp.ViewModels.GestionarUsuarioInfluencerViewModel
 
 @{
+	ViewData["BodyClass"] = "application-admin";
 	ViewData["Title"] = "Detalles del Influencer";
 }
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -26,7 +27,7 @@
 				<select class="form-control" name="estadoUsuario" id="estadoUsuario" onchange="this.form.submit()">
 					@foreach (var estado in Model.EstadoUsuarios)
 					{
-						<option value="@estado.IdEstadoUsuario" selected="@(estado.EstadoUsuario == Model.estadousuario ? "selected" : null)">
+						<option value="@estado.IdEstadoUsuario" selected="@(estado.EstadoUsuario == Model.estadoUsuario ? "selected" : null)">
 							@estado.EstadoUsuario
 						</option>
 					}

@@ -1,4 +1,6 @@
 ﻿using ClubInfluApp.Data.Interfaces;
+using ClubInfluApp.Helpers;
+using ClubInfluApp.Models;
 using Dapper;
 using Npgsql;
 
@@ -20,8 +22,17 @@ namespace ClubInfluApp.Data.Repositories
 
             try
             {
-                string query = "SELECT idUsuarioAdministrador FROM UsuarioAdministrador WHERE correo = @correo AND clave = @clave AND idEstadoUsuario = 2";
-                return connection.QueryFirstOrDefault<int>(query, new { correo, clave });
+                string query = "SELECT * FROM UsuarioAdministrador WHERE correo = @correo AND idEstadoUsuario = 2";
+                UsuarioAdministrador usuario = connection.QueryFirstOrDefault<UsuarioAdministrador>(query, new { correo });
+
+                if (usuario == default)
+                {
+                    return 0;
+                }
+
+
+                bool esClaveValida = HashHelper.VerificarHash(clave, usuario.clave);
+                return esClaveValida ? usuario.idUsuarioAdministrador : 0;
             }
             catch
             {
@@ -36,8 +47,17 @@ namespace ClubInfluApp.Data.Repositories
 
             try
             {
-                string query = "SELECT idUsuarioEmpresa FROM UsuarioEmpresa WHERE correo = @correo AND clave = @clave AND idEstadoUsuario = 2";
-                return connection.QueryFirstOrDefault<int>(query, new { correo, clave });
+                string query = "SELECT * FROM UsuarioEmpresa WHERE correo = @correo AND idEstadoUsuario = 2";
+                UsuarioEmpresa usuario = connection.QueryFirstOrDefault<UsuarioEmpresa>(query, new { correo });
+
+                if (usuario == default)
+                {
+                    return 0;
+                }
+
+
+                bool esClaveValida = HashHelper.VerificarHash(clave, usuario.clave);
+                return esClaveValida ? usuario.idUsuarioEmpresa : 0;
             }
             catch
             {
@@ -52,8 +72,17 @@ namespace ClubInfluApp.Data.Repositories
 
             try
             {
-                string query = "SELECT idUsuarioInfluencer FROM UsuarioInfluencer WHERE correo = @correo AND clave = @clave AND idEstadoUsuario = 2";
-                return connection.QueryFirstOrDefault<int>(query, new { correo, clave });
+                string query = "SELECT * FROM UsuarioInfluencer WHERE correo = @correo AND idEstadoUsuario = 2";
+                UsuarioInfluencer usuario = connection.QueryFirstOrDefault<UsuarioInfluencer>(query, new { correo });
+
+                if (usuario == default)
+                {
+                    return 0;
+                }
+
+
+                bool esClaveValida = HashHelper.VerificarHash(clave, usuario.clave);
+                return esClaveValida ? usuario.idUsuarioInfluencer : 0;
             }
             catch
             {

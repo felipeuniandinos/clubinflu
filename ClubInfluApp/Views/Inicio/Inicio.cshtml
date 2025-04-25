@@ -123,19 +123,43 @@
     <br>
     <div class="row justify-content-center align-items-center g-4">
         <div class="col-6 col-md-2">
-            <img src="~/imagenes/marca1.png" alt="Autocine" class="img-fluid">
+            <a href="https://www.universalmusic.com" target="_blank">
+                <img src="~/imagenes/marca1.png" alt="Universal" class="img-fluid">
+            </a>
         </div>
         <div class="col-6 col-md-2">
-            <img src="~/imagenes/marca2.png" alt="Qwah" class="img-fluid">
+            <a href="https://www.emimusic.es" target="_blank">
+                <img src="~/imagenes/marca7.png" alt="EMI Music" class="img-fluid">
+            </a>
         </div>
         <div class="col-6 col-md-2">
-            <img src="~/imagenes/marca3.png" alt="Manto" class="img-fluid">
+            <a href="https://www.telecinco.es" target="_blank">
+                <img src="~/imagenes/marca3.png" alt="Telecinco" class="img-fluid">
+            </a>
         </div>
         <div class="col-6 col-md-2">
-            <img src="~/imagenes/marca4.png" alt="Dalpiot" class="img-fluid">
+            <a href="https://www.cuatro.com" target="_blank">
+                <img src="~/imagenes/marca4.png" alt="Canal Cuatro" class="img-fluid">
+            </a>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row justify-content-center align-items-center g-4">
+        <div class="col-6 col-md-2">
+            <a href="https://www.mediaset.es" target="_blank">
+                <img src="~/imagenes/marca5.png" alt="Mediaset" class="img-fluid">
+            </a>
         </div>
         <div class="col-6 col-md-2">
-            <img src="~/imagenes/marca5.png" alt="Bareto" class="img-fluid">
+            <a href=" https://los40.com" target="_blank">
+                <img src="~/imagenes/marca6.png" alt="o	Los 40 Principales" class="img-fluid">
+            </a>
+        </div>
+        <div class="col-6 col-md-2">
+            <a href="https://www.antena3.com" target="_blank">
+                <img src="~/imagenes/marca2.png" alt="Antena 3" class="img-fluid">
+            </a>
         </div>
     </div>
 </div>
@@ -172,20 +196,20 @@
 <div class="container-fluid py-3 overflow-hidden bg-dark">
     <div class="marquee">
         <div class="marquee-content d-flex gap-5 fw-bold">
-            <span class="text-success">BRANDING</span>
+            <span class="text-success">Bienvenido a la aplicación de influencer número 1 en el mundo</span>
             <span class="text-light">*</span>
-            <span class="text-outline">CONEXIONES</span>
+            <span class="text-success">Welcome to the number 1 influencer app in the world</span>
             <span class="text-light">*</span>
-            <span class="text-success">EXPERIENCIAS</span>
+            <span class="text-success">Bienvenido a la aplicación de influencer número 1 en el mundo</span>
             <span class="text-light">*</span>
-            <span class="text-outline">COLABORACIONES</span>
-            <span class="text-success">BRANDING</span>
+            <span class="text-success">Welcome to the number 1 influencer app in the world</span>
+            <span class="text-success">Bienvenido a la aplicación de influencer número 1 en el mundo</span>
             <span class="text-light">*</span>
-            <span class="text-outline">CONEXIONES</span>
+            <span class="text-success">Welcome to the number 1 influencer app in the world</span>
             <span class="text-light">*</span>
-            <span class="text-success">EXPERIENCIAS</span>
+            <span class="text-success">Bienvenido a la aplicación de influencer número 1 en el mundo</span>
             <span class="text-light">*</span>
-            <span class="text-outline">COLABORACIONES</span>
+            <span class="text-success">Welcome to the number 1 influencer app in the world</span>
         </div>
     </div>
 </div>
@@ -211,16 +235,13 @@
     }
 
     @@keyframes marquee-scroll {
-        from
+        from {
+            transform: translateX(100%);
+        }
 
-    {
-        transform: translateX(100%);
-    }
-
-    to {
-        transform: translateX(-100%);
-    }
-
+        to {
+            transform: translateX(-100%);
+        }
     }
 
     /* Efecto de outline en texto */
@@ -257,16 +278,13 @@
 
     /* Ajuste responsive para móviles */
     @@media (max-width: 768px) {
-        .btn-whatsapp
-
-    {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-        bottom: 15px;
-        right: 15px;
-    }
-
+        .btn-whatsapp {
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            bottom: 15px;
+            right: 15px;
+        }
     }
 </style>
 

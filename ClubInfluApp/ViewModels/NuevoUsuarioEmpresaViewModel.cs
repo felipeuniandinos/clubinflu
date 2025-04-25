@@ -44,5 +44,17 @@ namespace ClubInfluApp.ViewModels
         [Required(ErrorMessage = "La dirección de la empresa es obligatoria.")]
         [StringLength(500, MinimumLength = 10, ErrorMessage = "La dirección debe tener entre 10 y 500 caracteres.")]
         public string direccion { get; set; }
+
+        [Required(ErrorMessage = "El numero de la tarjeta de pago asociada a la empresa es obligatoria.")]
+        public string numeroTarjeta { get; set; }
+
+        [Required(ErrorMessage = "El nombre del titular de la tarjeta de pago asociada a la empresa es obligatorio.")]
+        public string nombreTitularTarjeta { get; set; }
+
+        [Required(ErrorMessage = "La fecha de expiracion de la tarjeta de pago asociada a la empresa es obligatoria.")]
+        public DateTime fechaExpiracionTarjeta { get; set; }
+
+        [Required(ErrorMessage = "El CVV de la tarjeta de pago asociada a la empresa es obligatorio.")]
+        public string codigoSeguridadTarjeta { get; set; }
     }
 }

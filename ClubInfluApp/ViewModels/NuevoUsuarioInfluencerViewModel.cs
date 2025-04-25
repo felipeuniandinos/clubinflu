@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ClubInfluApp.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace ClubInfluApp.ViewModels
 {
@@ -35,6 +38,8 @@ namespace ClubInfluApp.ViewModels
         public string numeroContacto { get; set; }
 
         public List<NuevoInfluencerRedSocialViewModel> redesSociales { get; set; }
+
+        public List<Pais> paises { get; set; }
 
     }
 }

@@ -25,15 +25,12 @@ namespace ClubInfluApp.ViewModels
 
         public List<EstadoUsuario> estadosUsuarios { get; set; }
 
-        /*
-             public int idCiudadEmpresa { get; set; }
+        public string numeroTarjeta { get; set; }
 
-    public int? idCiudad2Empresa { get; set; }
+        public string nombreTitular { get; set; }
 
-    public int? idCiudad3Empresa { get; set; }
+        public DateTime fechaExpiracion { get; set; }
 
-    public int? idCiudad4Empresa { get; set; }
-         
-         */
+        public string codigoSeguridad { get; set; }
     }
 }

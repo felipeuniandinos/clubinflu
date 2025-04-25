@@ -1,4 +1,5 @@
 -- Eliminar tablas en orden inverso para evitar errores de referencia
+DROP TABLE IF EXISTS TarjetaPago;
 DROP TABLE IF EXISTS UsuarioEmpresa;
 DROP TABLE IF EXISTS InfluencerRedSocial;
 DROP TABLE IF EXISTS UsuarioInfluencer;
@@ -60,6 +61,17 @@ CREATE TABLE Empresa (
     FOREIGN KEY (idCiudad2) REFERENCES Ciudad(idCiudad),
     FOREIGN KEY (idCiudad3) REFERENCES Ciudad(idCiudad),
     FOREIGN KEY (idCiudad4) REFERENCES Ciudad(idCiudad)
+);
+
+CREATE TABLE TarjetaPago (
+    idTarjetaPago BIGSERIAL PRIMARY KEY,
+    idEmpresa BIGINT NOT NULL,
+    numeroTarjeta VARCHAR(40) NOT NULL,
+    nombreTitular VARCHAR(100) NOT NULL,
+    fechaExpiracion DATE NOT NULL,
+    codigoSeguridad VARCHAR(10) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (idEmpresa) REFERENCES Empresa(idEmpresa)
 );
 
 CREATE TABLE UsuarioEmpresa (
@@ -124,69 +136,3 @@ CREATE TABLE InfluencerRedSocial (
     FOREIGN KEY (idInfluencer) REFERENCES Influencer(idInfluencer),
     FOREIGN KEY (idRedSocial) REFERENCES RedSocial(idRedSocial)
 );
-
--- Inserts
-INSERT INTO Pais (pais) VALUES 
-('Colombia'),
-('México'),
-('Argentina'),
-('España'),
-('Estados Unidos');
-
-INSERT INTO Ciudad (idPais, ciudad) VALUES 
-(1, 'Bogotá'),
-(1, 'Medellín'),
-(2, 'Ciudad de México'),
-(2, 'Guadalajara'),
-(3, 'Buenos Aires'),
-(3, 'Córdoba'),
-(4, 'Madrid'),
-(4, 'Barcelona'),
-(5, 'Nueva York'),
-(5, 'Los Ángeles');
-
-INSERT INTO EstadoUsuario (estadoUsuario) VALUES 
-('Pendiente'),
-('Activo'),
-('Inactivo'),
-('Suspendido');
-
-INSERT INTO Genero (genero) VALUES 
-  ('Masculino'),
-  ('Femenino'),
-  ('No Binario');
-
-INSERT INTO RedSocial (redSocial) VALUES 
-  ('Facebook'),
-  ('Twitter'),
-  ('Instagram');
-
-INSERT INTO Empresa 
-(idCiudad, nombre, nif, url, numeroContacto, sector, direccion)
-VALUES 
-(1, 'TechCorp', '123456', 'https://techcorp.com', '1234567890', 'Tecnología', 'Calle 123, Ciudad Ejemplo');
-
-INSERT INTO UsuarioEmpresa 
-(idEmpresa, idEstadoUsuario, correo, clave, fechaCreacion, fechaActualizacion)
-VALUES 
-(1, 2, 'usuario@example.com', 'claveSegura123', CURRENT_DATE, CURRENT_DATE);
-
-INSERT INTO Influencer 
-(idCiudad, idCiudad2, idCiudad3, idCiudad4, idGenero, nombre, fechaNacimiento, numeroContacto)
-VALUES
-  (1, NULL, NULL, NULL, 1, 'Juan Pérez', '1990-05-20', '5551234567');
-
-INSERT INTO UsuarioInfluencer (idInfluencer, idEstadoUsuario, correo, clave, fechaCreacion, fechaActualizacion)
-VALUES
-  (1, 2, 'usuario1@ejemplo.com', 'clave_secreta1', '2023-02-01', '2023-02-01');
-
-INSERT INTO UsuarioAdministrador (idEstadoUsuario, correo, clave, fechaCreacion, fechaActualizacion)
-VALUES
-  (2, 'usuario1@ejemplo.com', 'clave_secreta1', '2023-02-01', '2023-02-01');
-
-INSERT INTO InfluencerRedSocial (idInfluencer, idRedSocial, numeroSeguidores, activo, fechaCreacion, fechaActualizacion)
-VALUES
-  (1, 1, 50000, true, '2023-01-01', '2023-01-01'),
-  (1, 2, 120000, true, '2023-02-15', '2023-02-15'),
-  (1, 3, 75000, false, '2023-03-10', '2023-03-10');
-

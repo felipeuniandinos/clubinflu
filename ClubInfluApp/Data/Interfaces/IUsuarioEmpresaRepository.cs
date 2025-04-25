@@ -5,7 +5,7 @@ namespace ClubInfluApp.Data.Interfaces
 {
     public interface IUsuarioEmpresaRepository
     {
-        public int CrearUsuarioEmpresa(UsuarioEmpresa usuarioEmpresa, Empresa empresa);
+        public int CrearUsuarioEmpresa(UsuarioEmpresa usuarioEmpresa, Empresa empresa, TarjetaPago tarjetaPago);
 
         public UsuarioEmpresa ObtenerUsuarioEmpresaValidoPorCorreoYEmpresa(string correo, int idEmpresa);
 

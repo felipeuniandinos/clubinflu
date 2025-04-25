@@ -60,13 +60,13 @@ namespace ClubInfluApp.Controllers
             switch (usuarioViewModel.tipo)
             {
                 case TipoUsuario.Empresa:
-                    return RedirectToAction("Inicio", "Inicio");
+                    return RedirectToAction("HistoricoCuponesDeServicio", "CuponServicio");
                 case TipoUsuario.Influencer:
-                    return RedirectToAction("Inicio", "Inicio");
+                    return RedirectToAction("ListarCuponesDeServicioOfertados", "CuponServicio");
                 case TipoUsuario.Administrador:
                     return RedirectToAction("ListarUsuariosInfluencer", "UsuarioInfluencer");
                 default:
-                    return RedirectToAction("InicioSesion", "Sesion");
+                    return RedirectToAction("Inicio", "Inicio");
             }
         }
 
