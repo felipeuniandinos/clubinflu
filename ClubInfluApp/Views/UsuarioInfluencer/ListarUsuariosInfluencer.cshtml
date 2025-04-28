@@ -1,0 +1,36 @@
+﻿@using ClubInfluApp.ViewModels
+@model List<UsuarioInfluencerViewModel>
+
+@{
+    ViewData["BodyClass"] = "application-admin";
+    ViewData["Title"] = "Usuarios Influencer";
+}
+
+<div class="container mt-5">
+    <table class="table table-bordered" style="background-color: white; color: black;">
+        <thead class="thead-light">
+            <tr>
+                <th>Id Usuario Influencer</th>
+                <th>Correo</th>
+                <th>Estado Usuario</th>
+                <th>Fecha Creación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuarioInfluencer in Model)
+            {
+                <tr>
+                    <td>@usuarioInfluencer.idUsuarioInfluencer</td>
+                    <td>@usuarioInfluencer.correo</td>
+                    <td>@usuarioInfluencer.estadoUsuario</td>
+                    <td>@usuarioInfluencer.fechaCreacion</td>
+                    <td>
+                        <a href="@Url.Action("GestionarSolicitudesUsuarioInfluencer", "UsuarioInfluencer", new { idUsuarioInfluencer  = usuarioInfluencer.idUsuarioInfluencer })" class="btn btn-primary">Gestionar Estado Usuario</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>

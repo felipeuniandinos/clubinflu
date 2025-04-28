@@ -1,0 +1,138 @@
+-- Eliminar tablas en orden inverso para evitar errores de referencia
+DROP TABLE IF EXISTS TarjetaPago;
+DROP TABLE IF EXISTS UsuarioEmpresa;
+DROP TABLE IF EXISTS InfluencerRedSocial;
+DROP TABLE IF EXISTS UsuarioInfluencer;
+DROP TABLE IF EXISTS UsuarioAdministrador;
+DROP TABLE IF EXISTS Influencer;
+DROP TABLE IF EXISTS RedSocial;
+DROP TABLE IF EXISTS Empresa;
+DROP TABLE IF EXISTS EstadoUsuario;
+DROP TABLE IF EXISTS Ciudad;
+DROP TABLE IF EXISTS Pais;
+DROP TABLE IF EXISTS Genero;
+
+-- Crear tablas
+CREATE TABLE EstadoUsuario (
+    idEstadoUsuario BIGSERIAL PRIMARY KEY,
+    estadoUsuario VARCHAR(100) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE Pais (
+    idPais BIGSERIAL PRIMARY KEY,
+    pais VARCHAR(100) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE Ciudad (
+    idCiudad BIGSERIAL PRIMARY KEY,
+    idPais BIGINT NOT NULL,
+    ciudad VARCHAR(100) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (idPais) REFERENCES Pais(idPais)
+);
+
+CREATE TABLE Genero (
+    idGenero BIGSERIAL PRIMARY KEY,
+    genero VARCHAR(100) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE RedSocial (
+    idRedSocial BIGSERIAL PRIMARY KEY,
+    redSocial VARCHAR(100) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE Empresa (
+    idEmpresa BIGSERIAL PRIMARY KEY,
+    idCiudad BIGINT NOT NULL,
+    idCiudad2 BIGINT NULL,
+    idCiudad3 BIGINT NULL,
+    idCiudad4 BIGINT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    nif VARCHAR(20) NOT NULL,
+    url VARCHAR(100),
+    numeroContacto VARCHAR(10),
+    sector TEXT NOT NULL,
+    direccion VARCHAR(500) NOT NULL,
+    FOREIGN KEY (idCiudad) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad2) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad3) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad4) REFERENCES Ciudad(idCiudad)
+);
+
+CREATE TABLE TarjetaPago (
+    idTarjetaPago BIGSERIAL PRIMARY KEY,
+    idEmpresa BIGINT NOT NULL,
+    numeroTarjeta VARCHAR(40) NOT NULL,
+    nombreTitular VARCHAR(100) NOT NULL,
+    fechaExpiracion DATE NOT NULL,
+    codigoSeguridad VARCHAR(10) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (idEmpresa) REFERENCES Empresa(idEmpresa)
+);
+
+CREATE TABLE UsuarioEmpresa (
+    idUsuarioEmpresa BIGSERIAL PRIMARY KEY,
+    idEmpresa BIGINT NOT NULL,
+    idEstadoUsuario BIGINT NOT NULL,
+    correo VARCHAR(500) NOT NULL,
+    clave VARCHAR(500) NOT NULL,
+    fechaCreacion DATE NOT NULL,
+    fechaActualizacion DATE NOT NULL,
+    FOREIGN KEY (idEmpresa) REFERENCES Empresa(idEmpresa),
+    FOREIGN KEY (idEstadoUsuario) REFERENCES EstadoUsuario(idEstadoUsuario)
+);
+
+CREATE TABLE Influencer (
+    idInfluencer BIGSERIAL PRIMARY KEY,
+    idCiudad BIGINT NOT NULL,
+    idCiudad2 BIGINT NULL,
+    idCiudad3 BIGINT NULL,
+    idCiudad4 BIGINT NULL,
+    idGenero BIGINT NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    fechaNacimiento DATE NOT NULL,
+    numeroContacto VARCHAR(10),
+    FOREIGN KEY (idCiudad) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad2) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad3) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idCiudad4) REFERENCES Ciudad(idCiudad),
+    FOREIGN KEY (idGenero) REFERENCES Genero(idGenero)
+);
+
+CREATE TABLE UsuarioInfluencer (
+    idUsuarioInfluencer BIGSERIAL PRIMARY KEY,
+    idInfluencer BIGINT NOT NULL,
+    idEstadoUsuario BIGINT NOT NULL,
+    correo VARCHAR(500) NOT NULL,
+    clave VARCHAR(500) NOT NULL,
+    fechaCreacion DATE NOT NULL,
+    fechaActualizacion DATE NOT NULL,
+    FOREIGN KEY (idInfluencer) REFERENCES Influencer(idInfluencer),
+    FOREIGN KEY (idEstadoUsuario) REFERENCES EstadoUsuario(idEstadoUsuario)
+);
+
+CREATE TABLE UsuarioAdministrador (
+    idUsuarioAdministrador BIGSERIAL PRIMARY KEY,
+    idEstadoUsuario BIGINT NOT NULL,
+    correo VARCHAR(500) NOT NULL,
+    clave VARCHAR(500) NOT NULL,
+    fechaCreacion DATE NOT NULL,
+    fechaActualizacion DATE NOT NULL,
+    FOREIGN KEY (idEstadoUsuario) REFERENCES EstadoUsuario(idEstadoUsuario)
+);
+
+CREATE TABLE InfluencerRedSocial (
+    idInfluencerRedSocial BIGSERIAL PRIMARY KEY,
+    idInfluencer BIGINT NOT NULL,
+    idRedSocial BIGINT NOT NULL,
+    numeroSeguidores INT NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    fechaCreacion DATE NOT NULL,
+    fechaActualizacion DATE NOT NULL,
+    FOREIGN KEY (idInfluencer) REFERENCES Influencer(idInfluencer),
+    FOREIGN KEY (idRedSocial) REFERENCES RedSocial(idRedSocial)
+);

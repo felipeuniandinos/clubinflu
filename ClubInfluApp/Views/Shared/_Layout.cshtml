@@ -1,56 +1,85 @@
 ﻿@{
     var viewName = ViewContext.RouteData.Values["Action"]?.ToString();
+    var bodyClass = ViewData["BodyClass"]?.ToString() ?? "";
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>@ViewData["Title"] - ClubInfluApp</title>
+
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ClubInfluApp.styles.css" asp-append-version="true" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+
+    @await RenderSectionAsync("Styles", required: false)
+
+    <style>
+        body {
+        background-color: #05091B;
+        }
+
+        .btn-success {
+        background-color: #4AF5A5 !important;
+        border-color: #4AF5A5 !important;
+        color: black !important; /* Para asegurar que el texto sea visible */
+        }
+
+        .btn-success:hover {
+        background-color: #3ACD88 !important; /* Un tono más oscuro para efecto hover */
+        border-color: #3ACD88 !important;
+        }
+    </style>
 </head>
-<body>
+<body class="@bodyClass d-flex flex-column min-vh-100">
 
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ClubInfluApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <!-- Navbar -->
+    @if (bodyClass == "application-admin")
+    {
+        @await Html.PartialAsync("_NavbarApplicationAdmin")
+    }
+    else if (bodyClass == "application-influencer")
+    {
+        @await Html.PartialAsync("_NavbarApplicationInfluencer")
+    }
+    else if (bodyClass == "application-empresa")
+    {
+        @await Html.PartialAsync("_NavbarApplicationEmpresa")
+    }
+    else
+    {
+        @await Html.PartialAsync("_NavbarDefault")
+    }
 
-
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <div class="container">
+    <!-- Contenido Principal -->
+    <div class="container-fluid flex-grow-1">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - ClubInfluApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    <!-- Footer -->
+    @if (bodyClass == "application-admin")
+    {
+        @await Html.PartialAsync("_FooterApplicationAdmin")
+    }
+    else
+    {
+        @await Html.PartialAsync("_FooterDefault")
+    }
+
+    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

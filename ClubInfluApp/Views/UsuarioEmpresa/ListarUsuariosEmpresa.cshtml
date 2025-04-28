@@ -1,0 +1,38 @@
+﻿@using ClubInfluApp.ViewModels
+@model List<UsuarioEmpresaViewModel>
+
+@{
+	ViewData["BodyClass"] = "application-admin";
+	ViewData["Title"] = "Usuarios Empresa";
+}
+
+<div class="container mt-5">
+	<table class="table table-bordered" style="background-color: white; color: black;">
+		<thead class="thead-light">
+			<tr>
+				<th>Id Usuario Empresa</th>
+				<th>Correo</th>
+				<th>Estado Usuario</th>
+				<th>Fecha Creación</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var usuarioEmpresa in Model)
+			{
+				<tr>
+					<td>@usuarioEmpresa.idUsuarioEmpresa</td>
+					<td>@usuarioEmpresa.correo</td>
+					<td>@usuarioEmpresa.estadoUsuario</td>
+					<td>@usuarioEmpresa.fechaCreacion</td>
+					<td>
+						<a href="@Url.Action("GestionarUsuarioEmpresa", "UsuarioEmpresa", new { idUsuarioEmpresa = @usuarioEmpresa.idUsuarioEmpresa })" class="btn btn-primary">
+							Gestionar Estado Usuario
+						</a>
+					</td>
+
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
