@@ -1,4 +1,3 @@
--- Eliminar tablas en orden inverso para evitar errores de referencia
 DROP TABLE IF EXISTS TarjetaPago;
 DROP TABLE IF EXISTS UsuarioEmpresa;
 DROP TABLE IF EXISTS InfluencerRedSocial;
@@ -9,6 +8,7 @@ DROP TABLE IF EXISTS RedSocial;
 DROP TABLE IF EXISTS Empresa;
 DROP TABLE IF EXISTS EstadoUsuario;
 DROP TABLE IF EXISTS Ciudad;
+DROP TABLE IF EXISTS Estado;
 DROP TABLE IF EXISTS Pais;
 DROP TABLE IF EXISTS Genero;
 

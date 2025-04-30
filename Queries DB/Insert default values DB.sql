@@ -19,6 +19,29 @@ INSERT INTO RedSocial (redSocial) VALUES
 ('Twitter'),
 ('Instagram');
 
+INSERT INTO Estado (idPais, estado) VALUES 
+(1, 'Andalucía'),
+(1, 'Cataluña'),
+(1, 'Comunidad Valenciana'),
+(1, 'Galicia'),
+(2, 'California'),
+(2, 'Florida'),
+(2, 'Nevada'),
+(2, 'Texas');
+
+INSERT INTO Ciudad (idEstado, ciudad) VALUES 
+(1, 'Sevilla'),
+(1, 'Málaga'),
+(2, 'Barcelona'),
+(2, 'Girona'),
+(3, 'Valencia'),
+(4, 'Pontevedra'),
+(5, 'Los Ángeles'),
+(5, 'San Francisco'),
+(6, 'Miami'),
+(7, 'Las Vegas'),
+(8, 'Dallas');
+
 INSERT INTO Empresa (
     idCiudad, nombre, nif, url, numeroContacto, sector, direccion
 ) VALUES (
