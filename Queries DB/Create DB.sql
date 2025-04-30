@@ -25,12 +25,20 @@ CREATE TABLE Pais (
     activo BOOLEAN DEFAULT TRUE
 );
 
+CREATE TABLE Estado (
+    idEstado BIGSERIAL PRIMARY KEY,
+    idPais BIGINT NOT NULL,
+     estado VARCHAR(100) NOT NULL,
+     activo BOOLEAN DEFAULT TRUE,
+     FOREIGN KEY (idPais) REFERENCES Pais(idPais)
+)
+
 CREATE TABLE Ciudad (
     idCiudad BIGSERIAL PRIMARY KEY,
-    idPais BIGINT NOT NULL,
+    idEstado BIGINT NOT NULL,
     ciudad VARCHAR(100) NOT NULL,
     activo BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (idPais) REFERENCES Pais(idPais)
+    FOREIGN KEY (idEstado) REFERENCES Estado(idEstado)
 );
 
 CREATE TABLE Genero (
