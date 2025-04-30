@@ -1,0 +1,173 @@
+﻿@using ClubInfluApp.ViewModels
+@model NuevoUsuarioInfluencerViewModel
+
+@{
+    ViewData["BodyClass"] = "publish";
+    ViewData["Title"] = "Usuario Influencer";
+}
+
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card p-4 shadow-lg rounded-4" style="max-width: 600px; width: 100%;">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="fw-bold">Crea tu cuenta de influencer</h3>
+            <button type="button" class="btn-close" onclick="window.location.href='@Url.Action("Inicio", "Inicio")'"></button>
+        </div>
+
+        <!-- Mensaje de éxito o error -->
+        @if (ViewBag.Mensaje != null)
+        {
+            <div class="alert alert-success text-center mt-3">
+                @ViewBag.Mensaje
+            </div>
+        }
+
+        <form asp-controller="UsuarioInfluencer" asp-action="CrearUsuarioInfluencer" method="post" class="mt-3">
+            <fieldset>
+                <legend class="fw-bold text-success">Información del Usuario</legend>
+
+                <div class="mb-3">
+                    <label asp-for="correo" class="form-label">Correo</label>
+                    <input asp-for="correo" class="form-control rounded-3" required />
+                    <span asp-validation-for="correo" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="clave" class="form-label">Clave</label>
+                    <input asp-for="clave" type="password" class="form-control rounded-3" required />
+                    <span asp-validation-for="clave" class="text-danger"></span>
+                </div>
+            </fieldset>
+
+            <fieldset class="mt-4">
+                <legend class="fw-bold text-success">Información del Influencer</legend>
+
+                <div class="mb-3">
+                    <label asp-for="nombre" class="form-label">Nombre</label>
+                    <input asp-for="nombre" class="form-control rounded-3" required />
+                    <span asp-validation-for="nombre" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input asp-for="fechaNacimiento" type="date" class="form-control rounded-3" required />
+                    <span asp-validation-for="fechaNacimiento" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="numeroContacto" class="form-label">Número de Contacto</label>
+                    <input asp-for="numeroContacto" class="form-control rounded-3" />
+                    <span asp-validation-for="numeroContacto" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="idGenero" class="form-label">Género</label>
+                    <select asp-for="idGenero" class="form-select rounded-3" required>
+                        <option value="">Seleccione un género</option>
+                        <option value="1">Masculino</option>
+                        <option value="2">Femenino</option>
+                        <option value="3">Otro</option>
+                    </select>
+                    <span asp-validation-for="idGenero" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">País 1</label>
+                    <select id="pais1" class="form-select rounded-3" required>
+                        <option value="">Selecciona un país</option>
+                        @foreach (Pais pais in Model.paises)
+                        {
+                            <option value="@pais.idPais">@pais.pais</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="idCiudad" class="form-label">Ciudad 1</label>
+                    <select asp-for="idCiudad" id="ciudad1" class="form-select rounded-3" required>
+                        <option value="">Selecciona un país primero</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">País 2</label>
+                    <select id="pais2" class="form-select rounded-3">
+                        <option value="">Selecciona un país</option>
+                        @foreach (Pais pais in Model.paises)
+                        {
+                            <option value="@pais.idPais">@pais.pais</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="idCiudad2" class="form-label">Ciudad 2</label>
+                    <select asp-for="idCiudad2" id="ciudad2" class="form-select rounded-3">
+                        <option value="">Selecciona un país primero</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">País 3</label>
+                    <select id="pais3" class="form-select rounded-3">
+                        <option value="">Selecciona un país</option>
+                        @foreach (Pais pais in Model.paises)
+                        {
+                            <option value="@pais.idPais">@pais.pais</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="idCiudad3" class="form-label">Ciudad 3</label>
+                    <select asp-for="idCiudad3" id="ciudad3" class="form-select rounded-3">
+                        <option value="">Selecciona un país primero</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">País 4</label>
+                    <select id="pais4" class="form-select rounded-3">
+                        <option value="">Selecciona un país</option>
+                        @foreach (Pais pais in Model.paises)
+                        {
+                            <option value="@pais.idPais">@pais.pais</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="idCiudad4" class="form-label">Ciudad 4</label>
+                    <select asp-for="idCiudad4" id="ciudad4" class="form-select rounded-3">
+                        <option value="">Selecciona un país primero</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset class="mt-4">
+                <legend class="fw-bold text-success">Redes Sociales</legend>
+
+                <div id="redesSocialesContainer"></div>
+                <button type="button" class="btn btn-secondary" id="addRedSocial">Agregar Red Social</button>
+            </fieldset>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="terminos" required>
+                <label class="form-check-label" for="terminos">
+                    <a href="/terminos-condiciones" target="_blank" class="text-decoration-none">
+                        Acepto las Condiciones Generales
+                    </a>
+                </label>
+            </div>
+
+            <button type="submit" id="btnCrearCuenta" class="btn btn-dark w-100 py-2 rounded-pill fw-bold" disabled>
+                Crear Cuenta
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Activa la validación en el cliente -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/usuarioinfluencer/crearusuarioinfluencer.js"></script>
+}

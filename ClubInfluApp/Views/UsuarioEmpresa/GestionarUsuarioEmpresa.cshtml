@@ -1,0 +1,134 @@
+﻿@model ClubInfluApp.ViewModels.DetalleUsuarioEmpresaViewModel
+
+@{
+    ViewData["BodyClass"] = "application-admin";
+    ViewData["Title"] = "Detalles del Usuario Empresa";
+}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="container mt-5">
+    <h2 style="color: white;">Detalles del Usuario Empresa</h2>
+
+    <table class="table table-bordered" style="background-color: white; color: black;">
+        <tr>
+            <th>Id Usuario Empresa</th>
+            <td>@Model.idUsuarioEmpresa</td>
+        </tr>
+        <tr>
+            <th>Correo</th>
+            <td>@Model.correo</td>
+        </tr>
+        <tr>
+            <th>Estado Usuario</th>
+            <td>
+                <input type="hidden" name="idUsuarioEmpresa" value="@Model.idUsuarioEmpresa" />
+                <input type="hidden" name="idActualEstadoUsuario" value="@Model.estadoUsuario" />
+                <select class="form-control" name="estadoUsuario" id="estadoUsuario">
+                    @foreach (var estado in Model.estadosUsuarios)
+                    {
+                        <option value="@estado.idEstadoUsuario" selected="@(estado.estadoUsuario == Model.estadoUsuario ? "selected" : null)">
+                            @estado.estadoUsuario
+                        </option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Fecha Creación</th>
+            <td>@Model.fechaCreacion</td>
+        </tr>
+        <tr>
+            <th>Nombre de Empresa</th>
+            <td>@Model.nombre</td>
+        </tr>
+        <tr>
+            <th>NIF de Empresa</th>
+            <td>@Model.nif</td>
+        </tr>
+        <tr>
+            <th>URL Empresa</th>
+            <td>@Model.url</td>
+        </tr>
+        <tr>
+            <th>Número de Contacto</th>
+            <td>@Model.numeroContacto</td>
+        </tr>
+        <tr>
+            <th>Sector</th>
+            <td>@Model.sector</td>
+        </tr>
+        <tr>
+            <th>Dirección Empresa</th>
+            <td>@Model.direccion</td>
+        </tr>
+        <tr>
+            <th colspan="2" class="table-primary text-center">Datos Facturación</th>
+        </tr>
+        <tr>
+            <th>Numero Tarjeta</th>
+            <td>@Model.numeroTarjeta</td>
+        </tr>
+        <tr>
+            <th>Nombre Titular Tarjeta</th>
+            <td>@Model.nombreTitular</td>
+        </tr>
+        <tr>
+            <th>Fecha Expiracion Tarjeta</th>
+            <td>@Model.fechaExpiracion.ToString("MM/yyyy")</td>
+        </tr>
+        <tr>
+            <th>CVV Tarjeta</th>
+            <td>@Model.codigoSeguridad</td>
+        </tr>
+    </table>
+
+    <div class="mt-4">
+        <a href="@Url.Action("ListarUsuariosEmpresa", "UsuarioEmpresa")" class="btn btn-secondary">Volver</a>
+        <button id="showAlert" class="btn btn-success">Actualizar Estado Empresa</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let estadoInicial = document.getElementById("estadoUsuario").value;
+
+        document.getElementById("showAlert").addEventListener("click", function () {
+            Swal.fire({
+                title: "¿Quieres guardar los cambios?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Guardar",
+                denyButtonText: "No guardar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let estadoSeleccionado = document.getElementById("estadoUsuario").value;
+                    let idUsuarioEmpresa = @Html.Raw(Json.Serialize(Model.idUsuarioEmpresa));
+                    let idActualEstadoUsuario = @Html.Raw(Json.Serialize(Model.estadoUsuario));
+
+                    if (estadoSeleccionado !== estadoInicial) {
+                        $.ajax({
+                            url: '@Url.Action("ModificarEstadoUsuarioEmpresa", "UsuarioEmpresa")',
+                            type: "PUT", // Usa POST en lugar de PUT
+                            data: {
+                                idUsuarioEmpresa: idUsuarioEmpresa,
+                                idActualEstadoUsuario: idActualEstadoUsuario,
+                                idNuevoEstadoUsuario: estadoSeleccionado
+                            },
+                            success: function (response) {
+                                Swal.fire(response.mensaje ?? "Estado actualizado correctamente", "", "success");
+                            },
+                            error: function (xhr, status, error) {
+                                console.error("Error al actualizar el estado:", xhr.responseText);
+                                Swal.fire("Hubo un error", "", "error");
+                            }
+                        });
+                    } else {
+                        Swal.fire("NO SE HA CAMBIADO EL ESTADO DE USUARIO", "", "info");
+                    }
+                } else if (result.isDenied) {
+                    Swal.fire("Los cambios no se guardaron", "", "info");
+                }
+            });
+        });
+    });
+</script>

@@ -1,13 +1,9 @@
-﻿@using ClubInfluApp.ViewModels 
+﻿@using ClubInfluApp.ViewModels
 @model List<UsuarioInfluencerViewModel>
 
 @{
-    ViewData["BodyClass"] = "ListaUsuarioInfluencer-page";
-}
-
-@if (ViewBag.Mensaje != null)
-{
-    <div class="alert alert-success">@ViewBag.Mensaje</div>
+    ViewData["BodyClass"] = "application-admin";
+    ViewData["Title"] = "Usuarios Influencer";
 }
 
 <div class="container mt-5">
@@ -18,6 +14,7 @@
                 <th>Correo</th>
                 <th>Estado Usuario</th>
                 <th>Fecha Creación</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +25,11 @@
                     <td>@usuarioInfluencer.correo</td>
                     <td>@usuarioInfluencer.estadoUsuario</td>
                     <td>@usuarioInfluencer.fechaCreacion</td>
+                    <td>
+                        <a href="@Url.Action("GestionarSolicitudesUsuarioInfluencer", "UsuarioInfluencer", new { idUsuarioInfluencer  = usuarioInfluencer.idUsuarioInfluencer })" class="btn btn-primary">Gestionar Estado Usuario</a>
+                    </td>
                 </tr>
+
             }
         </tbody>
     </table>
