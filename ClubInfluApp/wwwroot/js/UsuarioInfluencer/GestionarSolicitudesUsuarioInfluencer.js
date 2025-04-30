@@ -8,9 +8,9 @@
         denyButtonText: "No guardar"
     }).then((result) => {
         if (result.isConfirmed) {
-            var estadoSeleccionado = document.getElementById("estadoUsuario").value; 
+            var estadoSeleccionado = $('#estadoUsuario').val(); ; 
             var idUsuarioInfluencer = $("#idUsuarioInlfluencer").val();
-            if (estadoSeleccionado !== $("#estadoUsuarioInicial").val()) {
+            if ($('#estadoUsuario option:selected').text().trim() !== $("#estadoUsuarioInicial").val()) {
 
                 $.ajax({
                     url: url,

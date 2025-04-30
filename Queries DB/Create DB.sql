@@ -1,3 +1,4 @@
+-- DROP TABLES
 DROP TABLE IF EXISTS TarjetaPago;
 DROP TABLE IF EXISTS UsuarioEmpresa;
 DROP TABLE IF EXISTS InfluencerRedSocial;
@@ -12,7 +13,7 @@ DROP TABLE IF EXISTS Estado;
 DROP TABLE IF EXISTS Pais;
 DROP TABLE IF EXISTS Genero;
 
--- Crear tablas
+-- CREATE TABLES
 CREATE TABLE EstadoUsuario (
     idEstadoUsuario BIGSERIAL PRIMARY KEY,
     estadoUsuario VARCHAR(100) NOT NULL,
@@ -28,10 +29,10 @@ CREATE TABLE Pais (
 CREATE TABLE Estado (
     idEstado BIGSERIAL PRIMARY KEY,
     idPais BIGINT NOT NULL,
-     estado VARCHAR(100) NOT NULL,
-     activo BOOLEAN DEFAULT TRUE,
-     FOREIGN KEY (idPais) REFERENCES Pais(idPais)
-)
+    estado VARCHAR(100) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (idPais) REFERENCES Pais(idPais)
+);
 
 CREATE TABLE Ciudad (
     idCiudad BIGSERIAL PRIMARY KEY,
