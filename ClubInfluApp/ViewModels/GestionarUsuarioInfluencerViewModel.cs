@@ -13,13 +13,17 @@ namespace ClubInfluApp.ViewModels
         public DateTime fechaNacimiento { get; set; }
         public string numerocontacto { get; set; }
         public string ciudadprincipal { get; set; }
-        public string paisciudadprincipal { get; set; }
+        public string estadociudadprincipal { get; set; }
+        public string paisestadociudadprincipal { get; set; }
         public string ciudadsecundaria { get; set; }
-        public string paisciudadsecundaria { get; set; }
+        public string estadociudadsecundaria { get; set; }
+        public string paisestadociudadsecundaria { get; set; }
         public string ciudadterciaria { get; set; }
-        public string paisciudadterciaria { get; set; }
+        public string estadociudadterciaria { get; set; }
+        public string paisestadociudadterciaria { get; set; }
         public string ciudadcuaternaria { get; set; }
-        public string paisciudadcuaternaria { get; set; }
+        public string estadociudadcuaternaria { get; set; }
+        public string paisestadociudadcuaternaria { get; set; }
         public string genero { get; set; }
         
         public List<RedSocialViewModel> RedesSociales {  get; set; }

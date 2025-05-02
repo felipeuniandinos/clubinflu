@@ -1,4 +1,5 @@
 ﻿using ClubInfluApp.BusinessLogic.Interfaces;
+using ClubInfluApp.BusinessLogic.Services;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -12,13 +13,15 @@ namespace ClubInfluApp.Controllers
         private readonly IUsuarioInfluencerService _usuarioInfluencerService;
         private readonly IPaisService _paisService;
         private readonly ICiudadService _ciudadService;
+        private readonly IEstadoService _estadoService;
 
-        public UsuarioInfluencerController(ILogger<InicioController> logger, IUsuarioInfluencerService usuarioInfluencerService, IPaisService paisService, ICiudadService ciudadService)
+        public UsuarioInfluencerController(ILogger<InicioController> logger, IUsuarioInfluencerService usuarioInfluencerService, IPaisService paisService, ICiudadService ciudadService, IEstadoService estadoService)
         {
             _logger = logger;
             _usuarioInfluencerService = usuarioInfluencerService;
             _paisService = paisService;
             _ciudadService = ciudadService;
+            _estadoService = estadoService;
         }
 
         [Authorize(Roles = "Administrador")]
@@ -79,11 +82,19 @@ namespace ClubInfluApp.Controllers
         }
 
         [HttpGet]
-        public JsonResult ObtenerCiudadesPorPaisYTermino(int idPais, string termino)
+        public JsonResult ObtenerCiudadesPorEstadoYTermino(int idEstado, string termino)
         {
-            List<Ciudad> ciudades = _ciudadService.ObtenerCiudadesPorPaisYTermino(idPais, termino);
+            List<Ciudad> ciudades = _ciudadService.ObtenerCiudadesPorEstadoYTermino(idEstado, termino);
 
             return Json(ciudades);
+        }
+
+        [HttpGet]
+        public JsonResult ObtenerEstadosPorPaisYTermino(int idPais, string termino)
+        {
+            List<Estado> estados = _estadoService.ObtenerEstadosPorPaisYTermino(idPais, termino);
+
+            return Json(estados);
         }
     }
 }

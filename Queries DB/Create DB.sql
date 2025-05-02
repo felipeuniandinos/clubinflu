@@ -1,4 +1,4 @@
--- Eliminar tablas en orden inverso para evitar errores de referencia
+-- DROP TABLES
 DROP TABLE IF EXISTS TarjetaPago;
 DROP TABLE IF EXISTS UsuarioEmpresa;
 DROP TABLE IF EXISTS InfluencerRedSocial;
@@ -9,10 +9,11 @@ DROP TABLE IF EXISTS RedSocial;
 DROP TABLE IF EXISTS Empresa;
 DROP TABLE IF EXISTS EstadoUsuario;
 DROP TABLE IF EXISTS Ciudad;
+DROP TABLE IF EXISTS Estado;
 DROP TABLE IF EXISTS Pais;
 DROP TABLE IF EXISTS Genero;
 
--- Crear tablas
+-- CREATE TABLES
 CREATE TABLE EstadoUsuario (
     idEstadoUsuario BIGSERIAL PRIMARY KEY,
     estadoUsuario VARCHAR(100) NOT NULL,
@@ -25,12 +26,20 @@ CREATE TABLE Pais (
     activo BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE Ciudad (
-    idCiudad BIGSERIAL PRIMARY KEY,
+CREATE TABLE Estado (
+    idEstado BIGSERIAL PRIMARY KEY,
     idPais BIGINT NOT NULL,
-    ciudad VARCHAR(100) NOT NULL,
+    estado VARCHAR(100) NOT NULL,
     activo BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (idPais) REFERENCES Pais(idPais)
+);
+
+CREATE TABLE Ciudad (
+    idCiudad BIGSERIAL PRIMARY KEY,
+    idEstado BIGINT NOT NULL,
+    ciudad VARCHAR(100) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (idEstado) REFERENCES Estado(idEstado)
 );
 
 CREATE TABLE Genero (

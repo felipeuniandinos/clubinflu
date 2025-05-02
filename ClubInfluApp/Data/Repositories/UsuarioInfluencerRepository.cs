@@ -119,36 +119,44 @@ namespace ClubInfluApp.Data.Repositories
               
             string queryUsuarioInfluencer =
             @"
-                SELECT
-                    ui.idUsuarioInfluencer,
-                    ui.correo,
-                    ui.fechaCreacion AS usuarioFechaCreacion,
-                    ui.fechaActualizacion AS usuarioFechaActualizacion,
-                    eu.estadoUsuario,
-                    i.nombre,
-                    i.fechaNacimiento,
-                    i.numeroContacto,
-                    c1.ciudad AS ciudadPrincipal,
-                    p1.pais AS paisCiudadPrincipal,
-                    c2.ciudad AS ciudadSecundaria,
-                    p2.pais AS paisCiudadSecundaria,
-                    c3.ciudad AS ciudadTerciaria,
-                    p3.pais AS paisCiudadTerciaria,
-                    c4.ciudad AS ciudadCuaternaria,
-                    p4.pais AS paisCiudadCuaternaria,
-                    g.genero
-                FROM UsuarioInfluencer ui
-                JOIN Influencer i ON ui.idInfluencer = i.idInfluencer
-                JOIN EstadoUsuario eu ON ui.idEstadoUsuario = eu.idEstadoUsuario
-                JOIN Genero g ON i.idGenero = g.idGenero
-                LEFT JOIN Ciudad c1 ON i.idCiudad = c1.idCiudad
-                LEFT JOIN Pais p1 ON c1.idPais = p1.idPais
-                LEFT JOIN Ciudad c2 ON i.idCiudad2 = c2.idCiudad
-                LEFT JOIN Pais p2 ON c2.idPais = p2.idPais
-                LEFT JOIN Ciudad c3 ON i.idCiudad3 = c3.idCiudad
-                LEFT JOIN Pais p3 ON c3.idPais = p3.idPais
-                LEFT JOIN Ciudad c4 ON i.idCiudad4 = c4.idCiudad
-                LEFT JOIN Pais p4 ON c4.idPais = p4.idPais
+                 SELECT
+                     ui.idUsuarioInfluencer,
+                     ui.correo,
+                     ui.fechaCreacion AS usuarioFechaCreacion,
+                     ui.fechaActualizacion AS usuarioFechaActualizacion,
+                     eu.estadoUsuario,
+                     i.nombre,
+                     i.fechaNacimiento,
+                     i.numeroContacto,
+                     c1.ciudad AS ciudadPrincipal,
+                     e1.estado as estadoCiudadPrincipal,
+                     p1.pais AS paisEstadoCiudadPrincipal,
+                     c2.ciudad AS ciudadSecundaria,
+                     e2.estado as estadoCiudadSecundario,
+                     p2.pais AS paisEstadoCiudadSecundaria,
+                     c3.ciudad AS ciudadTerciaria,
+                     e3.estado as estadoCiudadTerciaria,
+                     p3.pais AS paisEstadoCiudadTerciaria,
+                     c4.ciudad AS ciudadCuaternaria,
+                     e3.estado as estadoCiudadCuaternaria,
+                     p4.pais AS paisEstadoCiudadCuaternaria,
+                     g.genero
+                 FROM UsuarioInfluencer ui
+                 JOIN Influencer i ON ui.idInfluencer = i.idInfluencer
+                 JOIN EstadoUsuario eu ON ui.idEstadoUsuario = eu.idEstadoUsuario
+                 JOIN Genero g ON i.idGenero = g.idGenero
+                 LEFT JOIN Ciudad c1 ON i.idCiudad = c1.idCiudad
+                 LEFT JOIN Estado e1 ON c1.idEstado = e1.idestado 
+                 LEFT JOIN Pais p1 ON e1.idPais = p1.idPais
+                 LEFT JOIN Ciudad c2 ON i.idCiudad2 = c2.idCiudad
+                 LEFT JOIN Estado e2 ON c2.idEstado = e2.idestado 
+                 LEFT JOIN Pais p2 ON e2.idPais = p2.idPais
+                 LEFT JOIN Ciudad c3 ON i.idCiudad3 = c3.idCiudad
+                 LEFT JOIN Estado e3 ON c3.idEstado = e3.idestado 
+                 LEFT JOIN Pais p3 ON e3.idPais = p3.idPais
+                 LEFT JOIN Ciudad c4 ON i.idCiudad4 = c4.idCiudad
+                 LEFT JOIN Estado e4 ON c4.idEstado = e4.idestado 
+                 LEFT JOIN Pais p4 ON e4.idPais = p4.idPais
                 WHERE ui.idUsuarioInfluencer = @idUsuarioInfluencer;";
 
                 var gestionarUsuarioInfluencer = connection.Query<GestionarUsuarioInfluencerViewModel>(queryUsuarioInfluencer, new { idUsuarioInfluencer }).FirstOrDefault();

@@ -5,23 +5,23 @@ using Npgsql;
 
 namespace ClubInfluApp.Data.Repositories
 {
-    public class CiudadRepository : ICiudadRepository
+    public class EstadoRepository : IEstadoRepository
     {
         private readonly string dbConnectionString;
 
-        public CiudadRepository(IConfiguration configuration)
+        public EstadoRepository(IConfiguration configuration)
         {
             dbConnectionString = configuration.GetConnectionString("PostgresConnection");
         }
 
-        public List<Ciudad> ObtenerCiudadesPorEstadoYTermino(int idEstado, string termino)
+        public List<Estado> ObtenerEstadosPorPaisYTermino(int idPais, string termino)
         {
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
             try
             {
-                string query = "SELECT * FROM Ciudad WHERE idEstado = @idEstado AND LOWER(ciudad) LIKE @termino ORDER BY ciudad LIMIT 20";
-                return connection.Query<Ciudad>(query, new { idEstado, termino = $"%{termino.ToLower()}%" }).ToList();
+                string query = "SELECT * FROM Estado WHERE idPais = @idPais AND LOWER(estado) LIKE @termino ORDER BY estado LIMIT 20";
+                return connection.Query<Estado>(query, new { idPais, termino = $"%{termino.ToLower()}%" }).ToList();
             }
             catch
             {

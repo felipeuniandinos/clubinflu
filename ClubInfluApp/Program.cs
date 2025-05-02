@@ -13,6 +13,7 @@ builder.Services.AddScoped<IUsuarioInfluencerService, UsuarioInfluencerService>(
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<ICiudadService, CiudadService>();
 builder.Services.AddScoped<IPaisService, PaisService>();
+builder.Services.AddScoped<IEstadoService, EstadoService>();
 
 
 //Add repositories to the container.
@@ -21,6 +22,7 @@ builder.Services.AddScoped<IUsuarioInfluencerRepository, UsuarioInfluencerReposi
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ICiudadRepository, CiudadRepository>();
 builder.Services.AddScoped<IPaisRepository, PaisRepository>();
+builder.Services.AddScoped<IEstadoRepository, EstadoRepository>();
 
 //Add Helpers to the container.
 NotificacionesCorreoHelper.Configurar(builder.Configuration);
