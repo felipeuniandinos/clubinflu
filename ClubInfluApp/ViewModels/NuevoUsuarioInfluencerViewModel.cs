@@ -47,5 +47,7 @@ namespace ClubInfluApp.ViewModels
 
         public List<Pais> paises { get; set; }
 
+        public List<Genero> generos { get; set; }
+
     }
 }

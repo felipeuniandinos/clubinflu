@@ -37,6 +37,8 @@ namespace ClubInfluApp.Controllers
         {
             NuevoUsuarioInfluencerViewModel nuevoUsuarioInfluencerViewModel = new NuevoUsuarioInfluencerViewModel();
             nuevoUsuarioInfluencerViewModel.paises = _paisService.ObtenerPaises();
+            //TODO: Obtener los generos (Recuerda creas el repositorio y el servicio -- No olvides la intefaces y ponerlas en el program)
+            // nuevoUsuarioInfluencerViewModel.generos = _generoService.ObtenerGeneros();
             return View(nuevoUsuarioInfluencerViewModel);
         }
 
@@ -52,7 +54,7 @@ namespace ClubInfluApp.Controllers
             }
 
             int idUsuarioEmpresa = _usuarioInfluencerService.CrearUsuarioEmpresa(nuevoUsuarioInfluencerViewModel);
-           
+
             ViewBag.Mensaje = "Registro completado. Revisaremos tu información y nos pondremos en contacto pronto. El equipo de Club influ.";
             return View(nuevoUsuarioInfluencerViewModel);
         }
@@ -60,8 +62,8 @@ namespace ClubInfluApp.Controllers
         [HttpGet]
         public IActionResult GestionarSolicitudesUsuarioInfluencer(int idUsuarioInfluencer)
         {
-            
-            
+
+
             GestionarUsuarioInfluencerViewModel detalleUsuarioInfluencer = _usuarioInfluencerService.GestionarUsuarioInfluencer(idUsuarioInfluencer);
 
             if (detalleUsuarioInfluencer == null)
@@ -74,11 +76,20 @@ namespace ClubInfluApp.Controllers
         }
 
         [HttpPut]
-        public IActionResult ActualizarEstadoUsuarioInfluencer (int idUsuarioInfluencer, int idEstadoUsuarioInfluencer)
+        public IActionResult ActualizarEstadoUsuarioInfluencer(int idUsuarioInfluencer, int idEstadoUsuarioInfluencer)
         {
-            _usuarioInfluencerService.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
+            try
+            {
+                _usuarioInfluencerService.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
 
-            return Json(new { mensaje = "El usuario influencer esta actualizado con exito" });
+                return Json(new { exito = true, mensaje = "El usuario influencer esta actualizado con exito" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { exito = false, error = ex.Message });
+            }
+
+
         }
 
         [HttpGet]
@@ -92,9 +103,31 @@ namespace ClubInfluApp.Controllers
         [HttpGet]
         public JsonResult ObtenerEstadosPorPaisYTermino(int idPais, string termino)
         {
-            List<Estado> estados = _estadoService.ObtenerEstadosPorPaisYTermino(idPais, termino);
+            try
+            {
+                List<Estado> estados = _estadoService.ObtenerEstadosPorPaisYTermino(idPais, termino);
+                return Json(new { exito = true, data = estados });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { exito = false, error = ex.Message });
+            }
+        }
 
-            return Json(estados);
+        //TODO: Crear el metodo para obtener las redes sociales
+        [HttpGet]
+        public JsonResult ObtenerRedesSociales()
+        {
+            //(Recuerda creas el repositorio y el servicio -- No olvides la intefaces y ponerlas en el program)
+            //List<RedSocial> redSociales = _redSocialService.ObtenerRedesSociales();
+            List<RedSocial> redSociales = new List<RedSocial>
+            {
+                new RedSocial { idRedSocial = 1, redSocial = "Instagram" },
+                new RedSocial { idRedSocial = 2, redSocial = "Facebook" },
+                new RedSocial {idRedSocial = 3, redSocial = "Twitter"},
+                new RedSocial {idRedSocial = 4, redSocial = "TikTok"}
+            };
+            return Json(redSociales);
         }
     }
 }

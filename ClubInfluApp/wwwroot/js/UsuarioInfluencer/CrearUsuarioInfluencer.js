@@ -6,31 +6,45 @@
 
         const div = document.createElement("div");
         div.classList.add("mb-3", "red-social-entry");
-        div.innerHTML = `
-                    <div class="mb-2">
-                        <label class="form-label">Red Social</label>
-                        <select name="redesSociales[${redSocialIndex}].idRedSocial" class="form-select" required>
-                            <option value="">Seleccione una red social</option>
-                            <option value="1">Instagram</option>
-                            <option value="2">TikTok</option>
-                            <option value="3">YouTube</option>
-                            <option value="4">Twitter</option>
-                        </select>
-                    </div>
+        //Ejemplo de cargar las redes sociales desde el controlador
+        
+        $.ajax({
+            type: 'GET',
+            url: '/UsuarioInfluencer/ObtenerRedesSociales',
+            data: {},
+            dataType: 'json',
+            success: function (data) {
+                console.log("Redes sociales cargadas:", data);
 
-                    <div class="mb-2">
-                        <label class="form-label">Número de Seguidores</label>
-                        <input type="number" name="redesSociales[${redSocialIndex}].numeroSeguidores" class="form-control" required />
-                    </div>
+                let selectHTML = `<div class="mb-2">
+                                    <label class="form-label">Red Social</label>
+                                    <select name="redesSociales[${redSocialIndex}].idRedSocial" class="form-select" required>
+                                        <option value="">Seleccione una red social</option>`;
 
-                    <button type="button" class="btn btn-danger btn-sm removeRedSocial">Eliminar</button>
-                    <hr/>
-                `;
+                for (let i = 0; i < data.length; i++) {
+                    selectHTML += `<option value="${data[i].idRedSocial}">${data[i].redSocial}</option>`;
+                }
 
-        container.appendChild(div);
+                selectHTML += `      </select>
+                                  </div>
 
-        // Incrementa el índice para que los nombres sean únicos
-        redSocialIndex++;
+                                 <div class="mb-2">
+                                     <label class="form-label">Número de Seguidores</label>
+                                     <input type="number" name="redesSociales[${redSocialIndex}].numeroSeguidores" class="form-control" required />
+                                 </div>
+
+                                 <button type="button" class="btn btn-danger btn-sm removeRedSocial">Eliminar</button>
+                                 <hr/>`;
+
+                div.innerHTML = selectHTML;
+                container.appendChild(div);
+                redSocialIndex++;
+            },
+            error: function (xhr, status, error) {
+                console.error("Error en la carga de estados:", error);
+                failure();
+            }
+        });    
     });
 
     document.getElementById("redesSocialesContainer").addEventListener("click", function (e) {
@@ -53,13 +67,18 @@
                             idPais: $(paisSelector).val()
                         },
                         dataType: 'json',
-                        success: function (data) {
-                            success({
-                                results: data.map(estado => ({
-                                    id: estado.idEstado,
-                                    text: estado.estado
-                                }))
-                            });
+                        success: function (response) {
+                            if (response.exito) {
+                                success({
+                                    results: response.data.map(estado => ({
+                                        id: estado.idEstado,
+                                        text: estado.estado
+                                    }))
+                                });
+                            } else {
+                                Swal.fire(response.error, "", "error");
+                            }
+                            
                         },
                         error: function (xhr, status, error) {
                             console.error("Error en la carga de estados:", error);
