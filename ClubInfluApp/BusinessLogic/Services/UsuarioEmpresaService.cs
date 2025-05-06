@@ -81,9 +81,6 @@ namespace ClubInfluApp.BusinessLogic.Services
             {
                 idEmpresa = 0,
                 idCiudad = nuevoUsuarioEmpresaViewModel.idCiudad,
-                idCiudad2 = nuevoUsuarioEmpresaViewModel.idCiudad2,
-                idCiudad3 = nuevoUsuarioEmpresaViewModel.idCiudad3,
-                idCiudad4 = nuevoUsuarioEmpresaViewModel.idCiudad4,
                 nif = nuevoUsuarioEmpresaViewModel.nif,
                 nombre = nuevoUsuarioEmpresaViewModel.nombre,
                 url = nuevoUsuarioEmpresaViewModel.url,
@@ -112,18 +109,22 @@ namespace ClubInfluApp.BusinessLogic.Services
             return _usuarioEmpresaRepository.ObtenerUsuariosEmpresa();
         }
 
-        public void ModificacionEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idActualEstadoUsuario, int idNuevoEstadoUsuario)
+        public void ModificacionEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
         {
             //TODO: Validar que el estado nuevo sea diferente al actual
-            if (idActualEstadoUsuario != idNuevoEstadoUsuario)
+            int estadoActualUsuarioEmpresa = _usuarioEmpresaRepository.ObtenerEstadoUsuarioEmpresa(idUsuarioEmpresa);
+
+            if (estadoActualUsuarioEmpresa != idNuevoEstadoUsuario)
             {
                 _usuarioEmpresaRepository.ModificarEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
                 EnviarCorreoActualizacionEstadoUsuarioEmpresa(idUsuarioEmpresa);
             }
             else
             {
-                throw new Exception("El estado actual y el nuevo estado son iguales");
+                throw new Exception("No se ha cambiado el estado de usuario empresa");
             }
+           
+           
         }
 
         private void EnviarCorreoActualizacionEstadoUsuarioEmpresa(int idUsuarioEmpresa)

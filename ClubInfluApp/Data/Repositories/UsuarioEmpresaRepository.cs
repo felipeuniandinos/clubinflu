@@ -29,9 +29,9 @@ namespace ClubInfluApp.Data.Repositories
                     string insertarEmpresa =
                         @"
                         INSERT INTO Empresa 
-                        (idCiudad, idCiudad2, idCiudad3, idCiudad4, nombre, nif, url, numeroContacto, sector, direccion) 
+                        (idCiudad, nombre, nif, url, numeroContacto, sector, direccion) 
                         VALUES 
-                        (@idCiudad, @idCiudad2, @idCiudad3, @idCiudad4, @nombre, @nif, @url, @numeroContacto, @sector, @direccion) 
+                        (@idCiudad, @nombre, @nif, @url, @numeroContacto, @sector, @direccion) 
                         RETURNING idEmpresa;
                     ";
 
@@ -50,9 +50,6 @@ namespace ClubInfluApp.Data.Repositories
                         UPDATE Empresa
                         SET 
                             idCiudad = COALESCE(@idCiudad, idCiudad),
-                            idCiudad2 = COALESCE(@idCiudad2, idCiudad2),
-                            idCiudad3 = COALESCE(@idCiudad3, idCiudad3),
-                            idCiudad4 = COALESCE(@idCiudad4, idCiudad4),
                             nombre = COALESCE(@nombre, nombre),
                             nif = COALESCE(@nif, nif),
                             url = COALESCE(@url, url),
@@ -163,11 +160,16 @@ namespace ClubInfluApp.Data.Repositories
                 string queryDetalleUsuarioEmpresa =
                     @"  SELECT ue.idUsuarioEmpresa, ue.correo, eu.estadoUsuario,
                                ue.fechaCreacion, e.nombre, e.nif, e.url, e.numeroContacto, e.sector, e.direccion,
-                               t.numeroTarjeta, t.nombreTitular, t.fechaExpiracion, t.codigoSeguridad 
+                               t.numeroTarjeta, t.nombreTitular, t.fechaExpiracion, t.codigoSeguridad, c1.ciudad AS ciudad,
+                             e1.estado as estado,
+                             p1.pais AS pais
                         FROM UsuarioEmpresa ue
                         JOIN EstadoUsuario eu ON ue.idEstadoUsuario = eu.idEstadoUsuario
                         JOIN Empresa e ON ue.idEmpresa = e.idEmpresa
                         JOIN TarjetaPago t ON ue.idEmpresa = t.idEmpresa    
+                        LEFT JOIN Ciudad c1 ON e.idCiudad = c1.idCiudad
+                         LEFT JOIN Estado e1 ON c1.idEstado = e1.idestado 
+                         LEFT JOIN Pais p1 ON e1.idPais = p1.idPais
                         WHERE ue.idUsuarioEmpresa = @idUsuarioEmpresa;
                     ";
                 DetalleUsuarioEmpresaViewModel detalleUsuarioEmpresa =
@@ -221,6 +223,27 @@ namespace ClubInfluApp.Data.Repositories
                 transaction.Rollback();
                 throw new Exception("Error al modificar el estado del usuario empresa.", ex);
                 ;
+            }
+        }
+
+        public int ObtenerEstadoUsuarioEmpresa(int idUsuarioEmpresa)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+
+            try
+            {
+                string queryObtenerEstadoUsuarioEmpresa =
+                  @"
+                    SELECT idEstadoUsuario 
+                    FROM usuarioempresa   
+                    WHERE idusuarioempresa  = @idUsuarioEmpresa; 
+                  ";
+                return connection.QueryFirstOrDefault<int>(queryObtenerEstadoUsuarioEmpresa, new { idUsuarioEmpresa });
+            }
+            catch
+            {
+                throw;
             }
         }
     }

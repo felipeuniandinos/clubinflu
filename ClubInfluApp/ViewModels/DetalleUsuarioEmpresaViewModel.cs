@@ -32,5 +32,8 @@ namespace ClubInfluApp.ViewModels
         public DateTime fechaExpiracion { get; set; }
 
         public string codigoSeguridad { get; set; }
+        public string pais {  get; set; }
+        public string estado {  get; set; }
+        public string ciudad {  get; set; }
     }
 }

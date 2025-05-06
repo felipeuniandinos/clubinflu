@@ -24,6 +24,7 @@ namespace ClubInfluApp.ViewModels
 
         public int? idCiudad4 { get; set; }
 
+        [Required(ErrorMessage = "El estado de la empresa es obligatoria.")]
         public int idEstado { get; set; }
         public int? idEstado2 { get; set; }
         public int? idEstado3 { get; set; }

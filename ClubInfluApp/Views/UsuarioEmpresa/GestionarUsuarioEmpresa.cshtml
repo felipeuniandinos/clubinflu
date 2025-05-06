@@ -6,6 +6,12 @@
 }
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+<input type="hidden" id="idUsuarioEmpresa" value="@Model.idUsuarioEmpresa" />
+<input type="hidden" id="estadoUsuarioInicial" value="@Model.estadoUsuario" />
+<input type="hidden" id="urlActualizarEstadoEmpresa" value="@Url.Action("ModificarEstadoUsuarioEmpresa", "UsuarioEmpresa")" />
+
+
 <div class="container mt-5">
     <h2 style="color: white;">Detalles del Usuario Empresa</h2>
 
@@ -50,6 +56,10 @@
             <td>@Model.url</td>
         </tr>
         <tr>
+            <th>Ubicacion</th>
+            <td>@("Pais: " + Model.pais + " - Estado: " + Model.estado + " - Ciudad: " + Model.ciudad)</td>
+        </tr>
+        <tr>
             <th>Número de Contacto</th>
             <td>@Model.numeroContacto</td>
         </tr>
@@ -84,51 +94,11 @@
 
     <div class="mt-4">
         <a href="@Url.Action("ListarUsuariosEmpresa", "UsuarioEmpresa")" class="btn btn-secondary">Volver</a>
-        <button id="showAlert" class="btn btn-success">Actualizar Estado Empresa</button>
+        <button id="showAlert" class="btn btn-success" onclick="aprobarSolicitud()">Actualizar Estado Empresa</button>
     </div>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let estadoInicial = document.getElementById("estadoUsuario").value;
-
-        document.getElementById("showAlert").addEventListener("click", function () {
-            Swal.fire({
-                title: "¿Quieres guardar los cambios?",
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: "Guardar",
-                denyButtonText: "No guardar"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    let estadoSeleccionado = document.getElementById("estadoUsuario").value;
-                    let idUsuarioEmpresa = @Html.Raw(Json.Serialize(Model.idUsuarioEmpresa));
-                    let idActualEstadoUsuario = @Html.Raw(Json.Serialize(Model.estadoUsuario));
-
-                    if (estadoSeleccionado !== estadoInicial) {
-                        $.ajax({
-                            url: '@Url.Action("ModificarEstadoUsuarioEmpresa", "UsuarioEmpresa")',
-                            type: "PUT", // Usa POST en lugar de PUT
-                            data: {
-                                idUsuarioEmpresa: idUsuarioEmpresa,
-                                idActualEstadoUsuario: idActualEstadoUsuario,
-                                idNuevoEstadoUsuario: estadoSeleccionado
-                            },
-                            success: function (response) {
-                                Swal.fire(response.mensaje ?? "Estado actualizado correctamente", "", "success");
-                            },
-                            error: function (xhr, status, error) {
-                                console.error("Error al actualizar el estado:", xhr.responseText);
-                                Swal.fire("Hubo un error", "", "error");
-                            }
-                        });
-                    } else {
-                        Swal.fire("NO SE HA CAMBIADO EL ESTADO DE USUARIO", "", "info");
-                    }
-                } else if (result.isDenied) {
-                    Swal.fire("Los cambios no se guardaron", "", "info");
-                }
-            });
-        });
-    });
-</script>
+<<!-- Activa la validación en el cliente -->
+@section Scripts {
+    <script src="~/js/UsuarioEmpresa/GestionarUsuarioEmpresa.js"></script>
+}

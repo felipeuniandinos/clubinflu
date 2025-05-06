@@ -43,20 +43,24 @@
 			<td>@Model.genero</td>
 		</tr>
 		<tr>
-			<th>Ubicacion Principal</th>
-			<td> Pais: @Model.paisestadociudadprincipal, Estado: @Model.estadociudadprincipal, Ciudad: @Model.ciudadprincipal </td>
-		</tr>
-		<tr>
-			<th>Ciudad Secundaria</th>
-			<td>@Model.ciudadsecundaria</td>
-		</tr>
-		<tr>
-			<th>Estado Principal</th>
-			<td>@Model.estadociudadsecundaria</td>
-		</tr>
-		<tr>
-			<th>Pais Ciudad Secundaria</th>
-			<td>@Model.paisestadociudadsecundaria</td>
+			<th>Ubicacion</th>
+			<td>
+				<ul>
+				<li>@("Pais: " + Model.paisestadociudadprincipal + " - Estado: " + Model.estadociudadprincipal + " - Ciudad: " + Model.ciudadprincipal)</li>
+				@if(!string.IsNullOrEmpty(Model.paisestadociudadsecundaria))
+				{	
+					<li>@("Pais: " + Model.paisestadociudadsecundaria + " - Estado: " + Model.estadociudadsecundaria + " - Ciudad: " + Model.ciudadsecundaria)</li>
+				}
+				@if (!string.IsNullOrEmpty(Model.paisestadociudadterciaria))
+				{
+					<li>@("Pais: " + Model.paisestadociudadterciaria + " - Estado: " + Model.estadociudadterciaria + " - Ciudad: " + Model.ciudadterciaria)</li>
+				}
+				@if (!string.IsNullOrEmpty(Model.paisestadociudadcuaternaria))
+				{
+					<li>@("Pais: " + Model.paisestadociudadcuaternaria + " - Estado: " + Model.estadociudadcuaternaria + " - Ciudad: " + Model.ciudadcuaternaria)</li>
+				}			
+				</ul>
+			</td>
 		</tr>
 		<tr>
 			<th>Fecha Nacimiento</th>

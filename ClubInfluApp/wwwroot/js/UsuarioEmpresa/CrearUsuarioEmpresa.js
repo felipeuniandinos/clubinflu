@@ -1,53 +1,81 @@
-﻿const ciudadesPorPais = {
-    "1": [
-        { id: 1, nombre: "Bogotá" },
-        { id: 2, nombre: "Medellín" }
-    ],
-    "2": [
-        { id: 3, nombre: "Ciudad de México" },
-        { id: 4, nombre: "Guadalajara" }
-    ],
-    "3": [
-        { id: 5, nombre: "Buenos Aires" },
-        { id: 6, nombre: "Córdoba" }
-    ],
-    "4": [
-        { id: 7, nombre: "Madrid" },
-        { id: 8, nombre: "Barcelona" }
-    ],
-    "5": [
-        { id: 9, nombre: "Nueva York" },
-        { id: 10, nombre: "Los Ángeles" }
-    ]
-};
+﻿document.addEventListener("DOMContentLoaded", function () {
 
-function actualizarCiudades(paisId, ciudadId) {
-    let paisSeleccionado = document.getElementById(paisId).value;
-    let ciudadSelect = document.getElementById(ciudadId);
-    ciudadSelect.innerHTML = "";
-
-    if (ciudadesPorPais[paisSeleccionado]) {
-        ciudadesPorPais[paisSeleccionado].forEach(ciudad => {
-            let option = document.createElement("option");
-            option.value = ciudad.id; // Ahora el value es el ID de la ciudad
-            option.textContent = ciudad.nombre; // Se muestra el nombre de la ciudad
-            ciudadSelect.appendChild(option);
+    function inicializarSelectEstado(paisSelector, estadoSelector) {
+        $(estadoSelector).select2({
+            placeholder: "Escribe para buscar",
+            minimumInputLength: 2,
+            ajax: {
+                transport: function (params, success, failure) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/UsuarioInfluencer/ObtenerEstadosPorPaisYTermino',
+                        data: {
+                            termino: params.data.term,
+                            idPais: $(paisSelector).val()
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            success({
+                                results: data.map(estado => ({
+                                    id: estado.idEstado,
+                                    text: estado.estado
+                                }))
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error en la carga de estados:", error);
+                            failure();
+                        }
+                    });
+                }
+            }
         });
-    } else {
-        let option = document.createElement("option");
-        option.textContent = "Selecciona un país primero";
-        option.value = "";
-        ciudadSelect.appendChild(option);
+
+        $(paisSelector).on('change', function () {
+            $(estadoSelector).val(null).trigger('change');
+        });
     }
-}
 
-// Asignamos los eventos de cambio para actualizar cada ciudad
-document.getElementById("pais1").addEventListener("change", () => actualizarCiudades("pais1", "ciudad1"));
-document.getElementById("pais2").addEventListener("change", () => actualizarCiudades("pais2", "ciudad2"));
-document.getElementById("pais3").addEventListener("change", () => actualizarCiudades("pais3", "ciudad3"));
-document.getElementById("pais4").addEventListener("change", () => actualizarCiudades("pais4", "ciudad4"));
+    function inicializarSelectCiudad(estadoSelector, ciudadSelector) {
+        $(ciudadSelector).select2({
+            placeholder: "Escribe para buscar",
+            minimumInputLength: 2,
+            ajax: {
+                transport: function (params, success, failure) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/UsuarioInfluencer/ObtenerCiudadesPorEstadoYTermino',
+                        data: {
+                            termino: params.data.term,
+                            idEstado: $(estadoSelector).val()
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            success({
+                                results: data.map(ciudad => ({
+                                    id: ciudad.idCiudad,
+                                    text: ciudad.ciudad
+                                }))
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error en la carga de ciudades:", error);
+                            failure();
+                        }
+                    });
+                }
+            }
+        });
 
-document.addEventListener("DOMContentLoaded", function () {
+        $(estadoSelector).on('change', function () {
+            $(ciudadSelector).val(null).trigger('change');
+        });
+    }
+
+    inicializarSelectEstado("#pais1", "#estado1");
+ 
+    inicializarSelectCiudad("#estado1", "#ciudad1");
+   
     const checkboxTerminos = document.getElementById("terminos");
     const btnCrearCuenta = document.getElementById("btnCrearCuenta");
 

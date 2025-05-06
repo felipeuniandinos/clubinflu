@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using ClubInfluApp.BusinessLogic.Interfaces;
+using ClubInfluApp.BusinessLogic.Services;
 using ClubInfluApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,13 @@ namespace ClubInfluApp.Controllers
     {
         private readonly ILogger<InicioController> _logger;
         private readonly IUsuarioEmpresaService _usuarioEmpresaService;
+        private readonly IPaisService _paisService;
 
-        public UsuarioEmpresaController(ILogger<InicioController> logger, IUsuarioEmpresaService usuarioEmpresaService)
+        public UsuarioEmpresaController(ILogger<InicioController> logger, IUsuarioEmpresaService usuarioEmpresaService, IPaisService paisService)
         {
             _logger = logger;
             _usuarioEmpresaService = usuarioEmpresaService;
+            _paisService = paisService;
         }
 
         [Authorize(Roles = "Administrador")]
@@ -28,7 +31,9 @@ namespace ClubInfluApp.Controllers
         [HttpGet]
         public IActionResult CrearUsuarioEmpresa()
         {
-            return View();
+            NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel = new NuevoUsuarioEmpresaViewModel();
+            nuevoUsuarioEmpresaViewModel.paises = _paisService.ObtenerPaises();
+            return View(nuevoUsuarioEmpresaViewModel);
         }
 
         [HttpPost]
@@ -53,9 +58,9 @@ namespace ClubInfluApp.Controllers
         }
 
         [HttpPut]
-        public IActionResult ModificarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idActualEstadoUsuario, int idNuevoEstadoUsuario)
+        public IActionResult ModificarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
         {
-            _usuarioEmpresaService.ModificacionEstadoUsuarioEmpresa(idUsuarioEmpresa, idActualEstadoUsuario, idNuevoEstadoUsuario);
+            _usuarioEmpresaService.ModificacionEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
             return Json(new { mensaje = "El usuario empresa esta actualizado con exito" });
         }
     }

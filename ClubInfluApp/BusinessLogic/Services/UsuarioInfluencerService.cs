@@ -107,8 +107,17 @@ namespace ClubInfluApp.BusinessLogic.Services
 
         public void ActualizarEstadoUsuarioInfluencer(int idUsuarioInfluencer, int idEstadoUsuarioInfluencer)
         {
-            _usuarioInfluencerRepository.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
-            EnviarCorreoActualizacionEstadoUsuarioInfluencer(idUsuarioInfluencer);
+            // colocar el if, ir a la base de datos, obtener el id del estado usuario inlfuencer asociado al idUsuarioInfluencer
+            int estadoActualUsuarioInfluencer = _usuarioInfluencerRepository.ObtenerEstadoUsuarioInfluencer(idUsuarioInfluencer);
+
+            if (estadoActualUsuarioInfluencer != idEstadoUsuarioInfluencer)
+            {
+                _usuarioInfluencerRepository.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
+                EnviarCorreoActualizacionEstadoUsuarioInfluencer(idUsuarioInfluencer);
+            } else {
+                throw new Exception("No se ha cambiado el estado de usuario influencer");
+            }
+            
         }
 
         private void EnviarCorreoActualizacionEstadoUsuarioInfluencer(int idUsuarioInfluencer)

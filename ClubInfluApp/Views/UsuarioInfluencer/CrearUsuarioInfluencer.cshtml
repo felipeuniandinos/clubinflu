@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">País 1</label>
+                    <label class="form-label">País Principal</label>
                     <select id="pais1" class="form-select rounded-3" required>
                         <option value="">Selecciona un país</option>
                         @foreach (Pais pais in Model.paises)
@@ -82,14 +82,14 @@
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="idEstado" class="form-label">Estado 1</label>
+                    <label asp-for="idEstado" class="form-label">Estado Principal</label>
                     <select asp-for="idEstado" id="estado1" class="form-select rounded-3" required>
                         <option value="">Selecciona un país primero</option>
                     </select>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="idCiudad" class="form-label">Ciudad 1</label>
+                    <label asp-for="idCiudad" class="form-label">Ciudad Principal</label>
                     <select asp-for="idCiudad" id="ciudad1" class="form-select rounded-3" required>
                         <option value="">Selecciona un Estado primero</option>
                     </select>

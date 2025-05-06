@@ -218,6 +218,28 @@ namespace ClubInfluApp.Data.Repositories
                 throw;
             }
         }
+        
+        public int ObtenerEstadoUsuarioInfluencer(int idUsuarioInfluencer)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
 
+            try
+            {
+                string queryObtenerEstadoUsuarioInfluencer =
+                  @"
+                    SELECT idEstadoUsuario 
+                    FROM usuarioinfluencer  
+                    WHERE idusuarioinfluencer = @idUsuarioInfluencer; 
+                
+                ";
+                return connection.QueryFirstOrDefault<int>(queryObtenerEstadoUsuarioInfluencer, new { idUsuarioInfluencer });
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
     }
 }

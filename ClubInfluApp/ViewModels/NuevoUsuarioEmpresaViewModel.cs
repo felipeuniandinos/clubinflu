@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ClubInfluApp.Models;
 
 namespace ClubInfluApp.ViewModels
 {
@@ -16,11 +17,8 @@ namespace ClubInfluApp.ViewModels
         [Required(ErrorMessage = "La ciudad de la empresa es obligatoria.")]
         public int idCiudad { get; set; }
 
-        public int? idCiudad2 { get; set; }
-
-        public int? idCiudad3 { get; set; }
-
-        public int? idCiudad4 { get; set; }
+        [Required(ErrorMessage = "El estado de la empresa es obligatoria.")]
+        public int idEstado { get; set; }
 
         [Required(ErrorMessage = "El nombre de la empresa es obligatorio.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "El nombre de la empresa debe tener entre 3 y 100 caracteres.")]
@@ -56,5 +54,6 @@ namespace ClubInfluApp.ViewModels
 
         [Required(ErrorMessage = "El CVV de la tarjeta de pago asociada a la empresa es obligatorio.")]
         public string codigoSeguridadTarjeta { get; set; }
+        public List<Pais> paises { get; set; }
     }
 }
