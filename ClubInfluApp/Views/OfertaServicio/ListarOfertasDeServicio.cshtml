@@ -2,12 +2,12 @@
 @model ClubInfluApp.ViewModels.OfertasServiciosViewModel
 
 @{
-	ViewData["BodyClass"] = "application-influencer";
-	ViewData["Title"] = "Ofertas De Servicio";
+    ViewData["BodyClass"] = "application-influencer";
+    ViewData["Title"] = "Ofertas De Servicio";
 }
 
 <style>
-    h1 {
+    h1, label {
         color: white;
     }
 
@@ -19,36 +19,48 @@
 
 <h1 class="text-center mb-5">Ofertas Exclusivas Para Influencers Como Tu</h1>
 
-@* <form asp-controller="OfertaServicio" asp-action="ListarOfertasServicios" method="post" class="mt-3"> 
-    <fieldset>
-        <legend class="fw-bold text-success">Seleccione datos de filtrado</legend>
-
-
-        <div class="mb-3">
-            <label asp-for="tipo" class="form-label">Categoria</label>
-            <select asp-for="tipo" asp-items="Html.GetEnumSelectList<TipoUsuario>()" class="form-select rounded-3" required>
-                <option value="">Seleccione el tipo de usuario</option>
+<form method="get" asp-action="ListarOfertasDeServicio" class="mb-4 row g-3">
+    <div class="row">
+        <div class="col-md-3">
+            <label class="form-label">Categoría</label>
+            <select id="idCategoriaOferta" name="idCategoriaOferta" class="form-select">
+                <option value="">Selecciona un categoría</option>
+                @foreach (CategoriaOferta categoria in Model.categorias)
+                {
+                    <option value="@categoria.idCategoriaOferta">@categoria.nombre</option>
+                }
             </select>
-            <span asp-validation-for="tipo" class="text-danger"></span>
         </div>
-        <div class="mb-3">
-            <label asp-for="tipo" class="form-label">Estado</label>
-            <select asp-for="tipo" asp-items="Html.GetEnumSelectList<TipoUsuario>()" class="form-select rounded-3" required>
-                <option value="">Seleccione el tipo de usuario</option>
-            </select>
-            <span asp-validation-for="tipo" class="text-danger"></span>
-        </div>
-    </fieldset>
 
-    <button type="submit" id="btnIniciarSesion" class="btn btn-dark w-100 py-2 rounded-pill fw-bold">
-        Iniciar Sesión
-    </button>
+        <div class="col-md-3">
+            <label class="form-label">País</label>
+            <select id="pais1" class="form-select rounded-3" required>
+                <option value="">Selecciona un país</option>
+                @foreach (Pais pais in Model.paises)
+                {
+                    <option value="@pais.idPais">@pais.pais</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Estado 1</label>
+            <select id="idEstado" name="idEstado" class="form-select rounded-3" required>
+                <option value="">Selecciona un país primero</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label"></label>
+            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+        </div>
+    </div>
+    
 </form>
 
- *@
 <div class="row row-cols-1 row-cols-md-3 g-4">
 
-    @foreach(OfertaServicioViewModel ofertaServicio in Model.ofertasServicios)
+    @foreach (OfertaServicioViewModel ofertaServicio in Model.ofertasServicios)
     {
         <div class="col">
             <div class="card h-100">
@@ -64,6 +76,11 @@
             </div>
         </div>
     }
-      
 
 </div>
+
+<!-- Activa la validación en el cliente -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/ofertaservicio/listarofertasdeservicio.js"></script>
+}

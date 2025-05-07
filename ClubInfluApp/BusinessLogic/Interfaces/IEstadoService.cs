@@ -6,5 +6,6 @@ namespace ClubInfluApp.BusinessLogic.Interfaces
     {
         public List<Estado> ObtenerEstadosPorPaisYTermino(int idPais, string termino);
       
+        public Estado ObtenerEstadoPrinciaplPorIdUsuarioInfluencer(int idUsuarioInfluencer);
     }
 }
