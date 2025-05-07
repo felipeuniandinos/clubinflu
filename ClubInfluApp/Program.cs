@@ -14,6 +14,8 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<ICiudadService, CiudadService>();
 builder.Services.AddScoped<IPaisService, PaisService>();
 builder.Services.AddScoped<IEstadoService, EstadoService>();
+builder.Services.AddScoped<IOfertaServicioService, OfertaServicioService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 
 
 //Add repositories to the container.
@@ -23,6 +25,8 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ICiudadRepository, CiudadRepository>();
 builder.Services.AddScoped<IPaisRepository, PaisRepository>();
 builder.Services.AddScoped<IEstadoRepository, EstadoRepository>();
+builder.Services.AddScoped<IOfertaServicioRepository, OfertaServicioRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 
 //Add Helpers to the container.
 NotificacionesCorreoHelper.Configurar(builder.Configuration);

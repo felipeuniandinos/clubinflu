@@ -3,6 +3,6 @@
     public class EstadoCupon
     {
         public int idEstadoCupon { get; set; }
-        public string nombreEstadoCupon { get; set; }
+        public string estadoCupon { get; set; }
     }
 }

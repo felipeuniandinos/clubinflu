@@ -3,18 +3,18 @@
     public class OfertaServicio
     {
         public int idOfertaServicio { get; set; }
-        public string nombreOfertaServicio { get; set; }
-        public string direccionOfertaServicio { get; set; }
-        public string imagenOfertaServicio { get; set; }
-        public string descripcionOfertaServicio { get; set; }
-        public DateTime fechaInicioOfertaServicio { get; set; }
-        public DateTime fechaFinOfertaServicio { get; set; }
-        public DateTime horaInicioOfertaServicio { get; set; }
-        public DateTime horaFinOfertaServicio { get; set; }
-        public int cuposDisponiblesOfertaServicio { get; set; }
-        public DateTime fechaCreacionOfertaServicio { get; set; }
-        public bool activoOfertaServicio { get; set; }
+        public string nombre { get; set; }
+        public string direccion { get; set; }
+        public string imagen { get; set; }
+        public string descripcion { get; set; }
+        public DateTime fechaInicio { get; set; }
+        public DateTime fechaFin { get; set; }
+        public TimeSpan horaInicio { get; set; }
+        public TimeSpan horaFin { get; set; }
+        public int cuposDisponibles { get; set; }
+        public DateTime fechaCreacion { get; set; }
+        public bool activo { get; set; }
         public int idCategoriaOferta { get; set; }
-        public int idCiudad { get; set; }
+        public int idEmpresa { get; set; }
     }
 }

@@ -84,3 +84,47 @@ INSERT INTO InfluencerRedSocial (
     (1, 1, 50000, true, '2023-01-01', '2023-01-01'),
     (1, 2, 120000, true, '2023-02-15', '2023-02-15'),
     (1, 3, 75000, false, '2023-03-10', '2023-03-10');
+
+INSERT INTO EstadoCupon (estadoCupon) VALUES
+('No redimido'),
+('Redimido'),
+('Expirado');
+
+INSERT INTO CategoriaOferta (nombre) VALUES
+('Gastronomía'),
+('Tecnología'),
+('Bienestar');
+
+INSERT INTO OfertaServicio (
+    nombre, direccion, imagen, descripcion, fechaInicio, fechaFin,
+    horaInicio, horaFin, cuposDisponibles, fechaCreacion, activo,
+    idCategoriaOferta, idEmpresa
+) VALUES 
+('Cena para dos', 'Calle Luna 123', 'img1.jpg', 'Cena romántica en restaurante exclusivo.',
+ '2025-06-01', '2025-06-30', '19:00', '22:00', 20, CURRENT_DATE, true, 1, 1),
+ 
+('Taller de Arduino', 'Calle Sol 456', 'img2.jpg', 'Curso práctico de electrónica y Arduino.',
+ '2025-06-10', '2025-06-20', '10:00', '14:00', 15, CURRENT_DATE, true, 2, 1),
+ 
+('Spa Relax', 'Calle Agua 789', 'img3.jpg', 'Circuito de spa completo con masaje.',
+ '2025-05-15', '2025-06-15', '09:00', '18:00', 10, CURRENT_DATE, true, 3, 1),
+ 
+('Cena Sushi', 'Calle Mar 321', 'img4.jpg', 'Buffet libre de sushi para dos personas.',
+ '2025-06-01', '2025-06-30', '18:00', '22:00', 25, CURRENT_DATE, true, 1, 1),
+
+('Curso de Python', 'Calle Código 654', 'img5.jpg', 'Aprende Python desde cero.',
+ '2025-07-01', '2025-07-15', '16:00', '20:00', 30, CURRENT_DATE, true, 2, 1),
+
+('Yoga al aire libre', 'Parque Central', 'img6.jpg', 'Sesión matutina de yoga al aire libre.',
+ '2025-06-05', '2025-06-25', '07:00', '08:30', 50, CURRENT_DATE, true, 3, 1);
+
+INSERT INTO CuponServico (
+    codigo, fechaRedencion, idOfertaServicio, idEstadoCupon, idInfluencer
+) VALUES
+('CUPON1001', NULL, 1, 1, null),
+('CUPON1002', '2025-06-12', 2, 2, 1),
+('CUPON1003', NULL, 3, 1, 1),
+('CUPON1004', '2025-06-08', 4, 2, 1),
+('CUPON1005', NULL, 5, 1, 1),
+('CUPON1006', '2025-07-01', 6, 3, 1);
+
