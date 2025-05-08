@@ -6,8 +6,6 @@
 
         const div = document.createElement("div");
         div.classList.add("mb-3", "red-social-entry");
-        //Ejemplo de cargar las redes sociales desde el controlador
-        
         $.ajax({
             type: 'GET',
             url: '/UsuarioInfluencer/ObtenerRedesSociales',

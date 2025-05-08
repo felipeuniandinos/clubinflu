@@ -7,7 +7,9 @@ namespace ClubInfluApp.BusinessLogic.Interfaces
         public int CrearUsuarioEmpresa(NuevoUsuarioInfluencerViewModel nuevoUsuarioInfluencerViewModel);
 
         public List<UsuarioInfluencerViewModel> ObtenerUsuariosInfluencer();
+        
         public GestionarUsuarioInfluencerViewModel GestionarUsuarioInfluencer(int idUsuarioInfluencer);
+        
         public void ActualizarEstadoUsuarioInfluencer(int idUsuarioInfluencer, int idEstadoUsuarioInfluencer);
     }
 }

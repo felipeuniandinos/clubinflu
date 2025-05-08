@@ -27,7 +27,7 @@ namespace ClubInfluApp.Data.Repositories
                 if (empresa.idEmpresa == 0)
                 {
                     string insertarEmpresa =
-                        @"
+                    @"
                         INSERT INTO Empresa 
                         (idCiudad, nombre, nif, url, numeroContacto, sector, direccion) 
                         VALUES 
@@ -46,7 +46,7 @@ namespace ClubInfluApp.Data.Repositories
                 else
                 {
                     string actualizarEmpresa =
-                        @"
+                    @"
                         UPDATE Empresa
                         SET 
                             idCiudad = COALESCE(@idCiudad, idCiudad),
@@ -142,7 +142,6 @@ namespace ClubInfluApp.Data.Repositories
                 List<UsuarioEmpresaViewModel> listaListaUsuarioEmpresa = connection
                     .Query<UsuarioEmpresaViewModel>(informacionListaUsuarioEmpresa)
                     .ToList();
-
                 return listaListaUsuarioEmpresa;
             }
             catch
@@ -158,24 +157,37 @@ namespace ClubInfluApp.Data.Repositories
             try
             {
                 string queryDetalleUsuarioEmpresa =
-                    @"  SELECT ue.idUsuarioEmpresa, ue.correo, eu.estadoUsuario,
-                               ue.fechaCreacion, e.nombre, e.nif, e.url, e.numeroContacto, e.sector, e.direccion,
-                               t.numeroTarjeta, t.nombreTitular, t.fechaExpiracion, t.codigoSeguridad, c1.ciudad AS ciudad,
-                             e1.estado as estado,
-                             p1.pais AS pais
-                        FROM UsuarioEmpresa ue
-                        JOIN EstadoUsuario eu ON ue.idEstadoUsuario = eu.idEstadoUsuario
-                        JOIN Empresa e ON ue.idEmpresa = e.idEmpresa
-                        JOIN TarjetaPago t ON ue.idEmpresa = t.idEmpresa    
-                        LEFT JOIN Ciudad c1 ON e.idCiudad = c1.idCiudad
-                         LEFT JOIN Estado e1 ON c1.idEstado = e1.idestado 
-                         LEFT JOIN Pais p1 ON e1.idPais = p1.idPais
-                        WHERE ue.idUsuarioEmpresa = @idUsuarioEmpresa;
-                    ";
+                @"  SELECT 
+                        ue.idUsuarioEmpresa, 
+                        ue.correo, eu.estadoUsuario,
+                        ue.fechaCreacion,
+                        e.nombre,
+                        e.nif,
+                        e.url,
+                        e.numeroContacto,
+                        e.sector,
+                        e.direccion,
+                        t.numeroTarjeta,
+                        t.nombreTitular,
+                        t.fechaExpiracion,
+                        t.codigoSeguridad,
+                        c1.ciudad AS ciudad,
+                        e1.estado as estado,
+                        p1.pais AS pais
+                    FROM UsuarioEmpresa ue
+                    JOIN EstadoUsuario eu ON ue.idEstadoUsuario = eu.idEstadoUsuario
+                    JOIN Empresa e ON ue.idEmpresa = e.idEmpresa
+                    JOIN TarjetaPago t ON ue.idEmpresa = t.idEmpresa    
+                    LEFT JOIN Ciudad c1 ON e.idCiudad = c1.idCiudad
+                    LEFT JOIN Estado e1 ON c1.idEstado = e1.idestado 
+                    LEFT JOIN Pais p1 ON e1.idPais = p1.idPais
+                    WHERE ue.idUsuarioEmpresa = @idUsuarioEmpresa;
+                ";
+
                 DetalleUsuarioEmpresaViewModel detalleUsuarioEmpresa =
                     connection.QueryFirstOrDefault<DetalleUsuarioEmpresaViewModel>(
-                        queryDetalleUsuarioEmpresa,
-                        new { idUsuarioEmpresa }
+                    queryDetalleUsuarioEmpresa,
+                     new { idUsuarioEmpresa }
                     );
                 string queryEstadosUsuario =
                     @"  SELECT ue.idEstadoUsuario, ue.estadousuario FROM EstadoUsuario ue;";

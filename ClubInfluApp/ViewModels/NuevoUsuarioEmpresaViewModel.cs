@@ -50,7 +50,7 @@ namespace ClubInfluApp.ViewModels
         public string nombreTitularTarjeta { get; set; }
 
         [Required(ErrorMessage = "La fecha de expiracion de la tarjeta de pago asociada a la empresa es obligatoria.")]
-        public DateTime fechaExpiracionTarjeta { get; set; }
+        public DateTime? fechaExpiracionTarjeta { get; set; }
 
         [Required(ErrorMessage = "El CVV de la tarjeta de pago asociada a la empresa es obligatorio.")]
         public string codigoSeguridadTarjeta { get; set; }

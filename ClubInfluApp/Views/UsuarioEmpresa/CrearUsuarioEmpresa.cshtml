@@ -14,7 +14,6 @@
             <button type="button" class="btn-close" onclick="window.location.href='@Url.Action("Inicio", "Inicio")'"></button>
         </div>
 
-        <!-- Mensaje de éxito o error -->
         @if (ViewBag.Mensaje != null)
         {
             <div class="alert alert-success text-center mt-3">
@@ -114,7 +113,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="nombreTitularTarjeta" class="form-label">Nombre Titulal Tarjeta</label>
+                    <label asp-for="nombreTitularTarjeta" class="form-label">Nombre Titular Tarjeta</label>
                     <input asp-for="nombreTitularTarjeta" class="form-control" required />
                     <span asp-validation-for="nombreTitularTarjeta" class="text-danger"></span>
                 </div>
@@ -148,7 +147,6 @@
     </div>
 </div>
 
-<!-- Activa la validación en el cliente -->
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/usuarioempresa/crearusuarioempresa.js"></script>

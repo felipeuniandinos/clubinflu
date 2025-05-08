@@ -6,14 +6,16 @@ namespace ClubInfluApp.BusinessLogic.Services
 {
     public class GeneroService : IGeneroService
     {
-        private readonly IGeneroRepository generoRepository;
+        private readonly IGeneroRepository _generoRepository;
+
         public GeneroService(IGeneroRepository generoRepository)
         {
-            this.generoRepository = generoRepository;
+            _generoRepository = generoRepository;
         }
+
         public List<Genero> ObtenerGeneros()
         {
-            return generoRepository.ObtenerGeneros();
+            return _generoRepository.ObtenerGeneros();
         }
     }
 }

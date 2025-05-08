@@ -6,14 +6,16 @@ namespace ClubInfluApp.BusinessLogic.Services
 {
     public class RedSocialService : IRedSocialService
     {
-        private readonly IRedSocialRepository redSocialRepository;
+        private readonly IRedSocialRepository _redSocialRepository;
+
         public RedSocialService(IRedSocialRepository redSocialRepository)
         {
-            this.redSocialRepository = redSocialRepository;
+            _redSocialRepository = redSocialRepository;
         }
+        
         public List<RedSocial> ObtenerRedesSociales()
         {
-            return redSocialRepository.ObtenerRedesSociales();
+            return _redSocialRepository.ObtenerRedesSociales();
         }
     }
 }

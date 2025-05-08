@@ -26,8 +26,11 @@ namespace ClubInfluApp.ViewModels
 
         [Required(ErrorMessage = "El estado de la empresa es obligatoria.")]
         public int idEstado { get; set; }
+        
         public int? idEstado2 { get; set; }
+        
         public int? idEstado3 { get; set; }
+        
         public int? idEstado4 { get;set; }
 
         [Required(ErrorMessage = "El genero es obligatorio.")]
@@ -38,7 +41,7 @@ namespace ClubInfluApp.ViewModels
         public string nombre { get; set; }
 
         [Required(ErrorMessage = "La fecha de nacimiento es obligatoria.")]
-        public DateTime fechaNacimiento { get; set; }
+        public DateTime? fechaNacimiento { get; set; }
 
         [RegularExpression(@"^\d{10}$", ErrorMessage = "El número de contacto debe tener exactamente 10 dígitos.")]
         public string numeroContacto { get; set; }

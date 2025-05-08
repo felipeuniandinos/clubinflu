@@ -26,6 +26,7 @@ namespace ClubInfluApp.Controllers
         }
 
         [Authorize(Roles = "Administrador")]
+
         [HttpGet]
         public IActionResult ListarUsuariosEmpresa()
         {
@@ -38,6 +39,9 @@ namespace ClubInfluApp.Controllers
         {
             NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel = new NuevoUsuarioEmpresaViewModel();
             nuevoUsuarioEmpresaViewModel.paises = _paisService.ObtenerPaises();
+            nuevoUsuarioEmpresaViewModel.fechaExpiracionTarjeta = null;
+
+
             return View(nuevoUsuarioEmpresaViewModel);
         }
 
@@ -46,13 +50,13 @@ namespace ClubInfluApp.Controllers
         {
             nuevoUsuarioEmpresaViewModel.paises = _paisService.ObtenerPaises();
             ModelState.Remove("paises");
+           
             if (!ModelState.IsValid)
             {
                 return View(nuevoUsuarioEmpresaViewModel);
             }
 
             int idUsuarioEmpresa = _usuarioEmpresaService.CrearUsuarioEmpresa(nuevoUsuarioEmpresaViewModel);
-
             ViewBag.Mensaje = "Registro completado. Revisaremos tu información y nos pondremos en contacto pronto.El equipo de Club Influ";
             return View(nuevoUsuarioEmpresaViewModel);
         }
@@ -67,11 +71,9 @@ namespace ClubInfluApp.Controllers
         [HttpPut]
         public IActionResult ModificarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
         {
-
             try
             {
                 _usuarioEmpresaService.ModificacionEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
-
                 return Json(new { exito = true, mensaje = "El usuario empresa esta actualizado con exito" });
             }
             catch (Exception ex)
@@ -86,7 +88,6 @@ namespace ClubInfluApp.Controllers
             try
             {
                 List<Ciudad> ciudades = _ciudadService.ObtenerCiudadesPorEstadoYTermino(idEstado, termino);
-                //throw new Exception("Error Particular Ciudad Empresa");
                 return Json(new { exito = true, data = ciudades });
             }
             catch (Exception ex)
