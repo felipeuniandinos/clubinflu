@@ -50,8 +50,9 @@ namespace ClubInfluApp.Controllers
         public IActionResult CrearUsuarioInfluencer(NuevoUsuarioInfluencerViewModel nuevoUsuarioInfluencerViewModel)
         {
             nuevoUsuarioInfluencerViewModel.paises = _paisService.ObtenerPaises();
+            nuevoUsuarioInfluencerViewModel.generos = _generoService.ObtenerGeneros();
             ModelState.Remove("paises");
-
+            ModelState.Remove("generos");
             if (!ModelState.IsValid)
             {
                 return View(nuevoUsuarioInfluencerViewModel);
@@ -130,11 +131,9 @@ namespace ClubInfluApp.Controllers
         [HttpGet]
         public JsonResult ObtenerRedesSociales()
         {
-            //(Recuerda creas el repositorio y el servicio -- No olvides la intefaces y ponerlas en el program)
             try
             {
                 List<RedSocial> redSociales = _redSocialService.ObtenerRedesSociales();
-
                 return Json(new { exito = true, data = redSociales });
             }
             catch (Exception ex)

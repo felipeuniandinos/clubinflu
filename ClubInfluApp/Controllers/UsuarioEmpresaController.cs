@@ -44,6 +44,8 @@ namespace ClubInfluApp.Controllers
         [HttpPost]
         public IActionResult CrearUsuarioEmpresa(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel)
         {
+            nuevoUsuarioEmpresaViewModel.paises = _paisService.ObtenerPaises();
+            ModelState.Remove("paises");
             if (!ModelState.IsValid)
             {
                 return View(nuevoUsuarioEmpresaViewModel);
@@ -52,7 +54,7 @@ namespace ClubInfluApp.Controllers
             int idUsuarioEmpresa = _usuarioEmpresaService.CrearUsuarioEmpresa(nuevoUsuarioEmpresaViewModel);
 
             ViewBag.Mensaje = "Registro completado. Revisaremos tu información y nos pondremos en contacto pronto.El equipo de Club Influ";
-            return View();
+            return View(nuevoUsuarioEmpresaViewModel);
         }
 
         [HttpGet]
@@ -95,12 +97,10 @@ namespace ClubInfluApp.Controllers
 
         [HttpGet]
         public JsonResult ObtenerEstadosPorPaisYTermino(int idPais, string termino)
-        {
-            
+        {  
             try
             {
                 List<Estado> estados = _estadoService.ObtenerEstadosPorPaisYTermino(idPais, termino);
-                //throw new Exception("Error Particular Estado Empresa");
                 return Json(new { exito = true, data = estados });
             }
             catch (Exception ex)

@@ -13,19 +13,18 @@
             url: '/UsuarioInfluencer/ObtenerRedesSociales',
             data: {},
             dataType: 'json',
-            success: function (data) {
-                console.log("Redes sociales cargadas:", data);
-
-                let selectHTML = `<div class="mb-2">
+            success: function (response) {
+                if (response.exito) {
+                    let selectHTML = `<div class="mb-2">
                                     <label class="form-label">Red Social</label>
                                     <select name="redesSociales[${redSocialIndex}].idRedSocial" class="form-select" required>
                                         <option value="">Seleccione una red social</option>`;
 
-                for (let i = 0; i < data.length; i++) {
-                    selectHTML += `<option value="${data[i].idRedSocial}">${data[i].redSocial}</option>`;
-                }
+                    for (let i = 0; i < response.data.length; i++) {
+                        selectHTML += `<option value="${response.data[i].idRedSocial}">${response.data[i].redSocial}</option>`;
+                    }
 
-                selectHTML += `      </select>
+                    selectHTML += `      </select>
                                   </div>
 
                                  <div class="mb-2">
@@ -36,9 +35,12 @@
                                  <button type="button" class="btn btn-danger btn-sm removeRedSocial">Eliminar</button>
                                  <hr/>`;
 
-                div.innerHTML = selectHTML;
-                container.appendChild(div);
-                redSocialIndex++;
+                    div.innerHTML = selectHTML;
+                    container.appendChild(div);
+                    redSocialIndex++;
+                } else {
+                    Swal.fire(response.error, "", "error");
+                }
             },
             error: function (xhr, status, error) {
                 console.error("Error en la carga de estados:", error);

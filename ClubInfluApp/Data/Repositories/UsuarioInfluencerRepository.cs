@@ -32,7 +32,7 @@ namespace ClubInfluApp.Data.Repositories
                         VALUES 
                         (@idCiudad, @idCiudad2, @idCiudad3, @idCiudad4, @idGenero, @nombre, @fechaNacimiento, @numeroContacto) 
                         RETURNING idInfluencer;
-                    ";
+                ";
 
                 int idInfluencerCreado = connection.QuerySingle<int>(insertarInfluencer, influencer, transaction);
                 usuarioInfluencer.idInfluencer = idInfluencerCreado;
@@ -46,7 +46,7 @@ namespace ClubInfluApp.Data.Repositories
                             (idInfluencer, idRedSocial, numeroSeguidores, fechaCreacion, fechaActualizacion)
                             VALUES 
                             (@idInfluencer, @idRedSocial, @numeroSeguidores, @fechaCreacion, @fechaActualizacion);
-                        ";
+                    ";
                     connection.Execute(insertarInfluencerRedSocial, redSocial, transaction);
                 }
 
