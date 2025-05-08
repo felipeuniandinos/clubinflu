@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.BusinessLogic.Services;
+using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +13,16 @@ namespace ClubInfluApp.Controllers
         private readonly ILogger<InicioController> _logger;
         private readonly IUsuarioEmpresaService _usuarioEmpresaService;
         private readonly IPaisService _paisService;
+        private readonly IEstadoService _estadoService;
+        private readonly ICiudadService _ciudadService;
 
-        public UsuarioEmpresaController(ILogger<InicioController> logger, IUsuarioEmpresaService usuarioEmpresaService, IPaisService paisService)
+        public UsuarioEmpresaController(ILogger<InicioController> logger, IUsuarioEmpresaService usuarioEmpresaService, IPaisService paisService, IEstadoService estadoService, ICiudadService ciudadService)
         {
             _logger = logger;
             _usuarioEmpresaService = usuarioEmpresaService;
             _paisService = paisService;
+            _estadoService = estadoService;
+            _ciudadService = ciudadService;
         }
 
         [Authorize(Roles = "Administrador")]
@@ -60,8 +65,48 @@ namespace ClubInfluApp.Controllers
         [HttpPut]
         public IActionResult ModificarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
         {
-            _usuarioEmpresaService.ModificacionEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
-            return Json(new { mensaje = "El usuario empresa esta actualizado con exito" });
+
+            try
+            {
+                _usuarioEmpresaService.ModificacionEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
+
+                return Json(new { exito = true, mensaje = "El usuario empresa esta actualizado con exito" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { exito = false, error = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public JsonResult ObtenerCiudadesPorEstadoYTermino(int idEstado, string termino)
+        {
+            try
+            {
+                List<Ciudad> ciudades = _ciudadService.ObtenerCiudadesPorEstadoYTermino(idEstado, termino);
+                //throw new Exception("Error Particular Ciudad Empresa");
+                return Json(new { exito = true, data = ciudades });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { exito = false, error = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public JsonResult ObtenerEstadosPorPaisYTermino(int idPais, string termino)
+        {
+            
+            try
+            {
+                List<Estado> estados = _estadoService.ObtenerEstadosPorPaisYTermino(idPais, termino);
+                //throw new Exception("Error Particular Estado Empresa");
+                return Json(new { exito = true, data = estados });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { exito = false, error = ex.Message });
+            }
         }
     }
 }

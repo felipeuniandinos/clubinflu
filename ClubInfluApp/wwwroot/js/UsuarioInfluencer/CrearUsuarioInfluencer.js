@@ -108,13 +108,17 @@
                             idEstado: $(estadoSelector).val()
                         },
                         dataType: 'json',
-                        success: function (data) {
-                            success({
-                                results: data.map(ciudad => ({
-                                    id: ciudad.idCiudad,
-                                    text: ciudad.ciudad
-                                }))
-                            });
+                        success: function (response) {
+                            if (response.exito) {
+                                success({
+                                    results: response.data.map(ciudad => ({
+                                        id: ciudad.idCiudad,
+                                        text: ciudad.ciudad
+                                    }))
+                                });
+                            } else {
+                                Swal.fire(response.error, "", "error");
+                            }
                         },
                         error: function (xhr, status, error) {
                             console.error("Error en la carga de ciudades:", error);

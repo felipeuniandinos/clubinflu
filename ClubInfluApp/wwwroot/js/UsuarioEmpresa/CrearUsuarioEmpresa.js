@@ -8,19 +8,23 @@
                 transport: function (params, success, failure) {
                     $.ajax({
                         type: 'GET',
-                        url: '/UsuarioInfluencer/ObtenerEstadosPorPaisYTermino',
+                        url: '/UsuarioEmpresa/ObtenerEstadosPorPaisYTermino',
                         data: {
                             termino: params.data.term,
                             idPais: $(paisSelector).val()
                         },
                         dataType: 'json',
-                        success: function (data) {
-                            success({
-                                results: data.map(estado => ({
-                                    id: estado.idEstado,
-                                    text: estado.estado
-                                }))
-                            });
+                        success: function (response) {
+                            if (response.exito) {
+                                success({
+                                    results: response.data.map(estado => ({
+                                        id: estado.idEstado,
+                                        text: estado.estado
+                                    }))
+                                });
+                            } else {
+                                Swal.fire(response.error, "", "error");
+                            }
                         },
                         error: function (xhr, status, error) {
                             console.error("Error en la carga de estados:", error);
@@ -44,19 +48,23 @@
                 transport: function (params, success, failure) {
                     $.ajax({
                         type: 'GET',
-                        url: '/UsuarioInfluencer/ObtenerCiudadesPorEstadoYTermino',
+                        url: '/UsuarioEmpresa/ObtenerCiudadesPorEstadoYTermino',
                         data: {
                             termino: params.data.term,
                             idEstado: $(estadoSelector).val()
                         },
                         dataType: 'json',
-                        success: function (data) {
-                            success({
-                                results: data.map(ciudad => ({
-                                    id: ciudad.idCiudad,
-                                    text: ciudad.ciudad
-                                }))
-                            });
+                        success: function (response) {
+                            if (response.exito) {
+                                success({
+                                    results: response.data.map(ciudad => ({
+                                        id: ciudad.idCiudad,
+                                        text: ciudad.ciudad
+                                    }))
+                                });
+                            } else {
+                                Swal.fire(response.error, "", "error");
+                            }
                         },
                         error: function (xhr, status, error) {
                             console.error("Error en la carga de ciudades:", error);

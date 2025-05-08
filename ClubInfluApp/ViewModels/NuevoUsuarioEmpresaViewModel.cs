@@ -54,6 +54,6 @@ namespace ClubInfluApp.ViewModels
 
         [Required(ErrorMessage = "El CVV de la tarjeta de pago asociada a la empresa es obligatorio.")]
         public string codigoSeguridadTarjeta { get; set; }
-        public List<Pais> paises { get; set; }
+        public List<Pais> paises { get; set; } 
     }
 }

@@ -14,14 +14,18 @@ namespace ClubInfluApp.Controllers
         private readonly IPaisService _paisService;
         private readonly ICiudadService _ciudadService;
         private readonly IEstadoService _estadoService;
+        private readonly IGeneroService _generoService;
+        private readonly IRedSocialService _redSocialService;
 
-        public UsuarioInfluencerController(ILogger<InicioController> logger, IUsuarioInfluencerService usuarioInfluencerService, IPaisService paisService, ICiudadService ciudadService, IEstadoService estadoService)
+        public UsuarioInfluencerController(ILogger<InicioController> logger, IUsuarioInfluencerService usuarioInfluencerService, IPaisService paisService, ICiudadService ciudadService, IEstadoService estadoService, IGeneroService generoService, IRedSocialService redSocialService)
         {
             _logger = logger;
             _usuarioInfluencerService = usuarioInfluencerService;
             _paisService = paisService;
             _ciudadService = ciudadService;
             _estadoService = estadoService;
+            _generoService = generoService;
+            _redSocialService = redSocialService;
         }
 
         [Authorize(Roles = "Administrador")]
@@ -38,7 +42,7 @@ namespace ClubInfluApp.Controllers
             NuevoUsuarioInfluencerViewModel nuevoUsuarioInfluencerViewModel = new NuevoUsuarioInfluencerViewModel();
             nuevoUsuarioInfluencerViewModel.paises = _paisService.ObtenerPaises();
             //TODO: Obtener los generos (Recuerda creas el repositorio y el servicio -- No olvides la intefaces y ponerlas en el program)
-            // nuevoUsuarioInfluencerViewModel.generos = _generoService.ObtenerGeneros();
+            nuevoUsuarioInfluencerViewModel.generos = _generoService.ObtenerGeneros();
             return View(nuevoUsuarioInfluencerViewModel);
         }
 
@@ -62,7 +66,6 @@ namespace ClubInfluApp.Controllers
         [HttpGet]
         public IActionResult GestionarSolicitudesUsuarioInfluencer(int idUsuarioInfluencer)
         {
-
 
             GestionarUsuarioInfluencerViewModel detalleUsuarioInfluencer = _usuarioInfluencerService.GestionarUsuarioInfluencer(idUsuarioInfluencer);
 
@@ -95,9 +98,17 @@ namespace ClubInfluApp.Controllers
         [HttpGet]
         public JsonResult ObtenerCiudadesPorEstadoYTermino(int idEstado, string termino)
         {
-            List<Ciudad> ciudades = _ciudadService.ObtenerCiudadesPorEstadoYTermino(idEstado, termino);
 
-            return Json(ciudades);
+            try
+            {
+                List<Ciudad> ciudades = _ciudadService.ObtenerCiudadesPorEstadoYTermino(idEstado, termino);
+                //throw new Exception("Error Particular Ciudad");
+                return Json(new { exito = true, data = ciudades });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { exito = false, error = ex.Message });
+            }
         }
 
         [HttpGet]
@@ -106,6 +117,7 @@ namespace ClubInfluApp.Controllers
             try
             {
                 List<Estado> estados = _estadoService.ObtenerEstadosPorPaisYTermino(idPais, termino);
+                //throw new Exception("Error Particular Estado");
                 return Json(new { exito = true, data = estados });
             }
             catch (Exception ex)
@@ -119,15 +131,16 @@ namespace ClubInfluApp.Controllers
         public JsonResult ObtenerRedesSociales()
         {
             //(Recuerda creas el repositorio y el servicio -- No olvides la intefaces y ponerlas en el program)
-            //List<RedSocial> redSociales = _redSocialService.ObtenerRedesSociales();
-            List<RedSocial> redSociales = new List<RedSocial>
+            try
             {
-                new RedSocial { idRedSocial = 1, redSocial = "Instagram" },
-                new RedSocial { idRedSocial = 2, redSocial = "Facebook" },
-                new RedSocial {idRedSocial = 3, redSocial = "Twitter"},
-                new RedSocial {idRedSocial = 4, redSocial = "TikTok"}
-            };
-            return Json(redSociales);
+                List<RedSocial> redSociales = _redSocialService.ObtenerRedesSociales();
+
+                return Json(new { exito = true, data = redSociales });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { exito = false, error = ex.Message });
+            }
         }
     }
 }

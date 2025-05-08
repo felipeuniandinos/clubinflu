@@ -61,16 +61,16 @@
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="idGenero" class="form-label">Género</label>
-                    <select asp-for="idGenero" class="form-select rounded-3" required>
-                        <option value="">Seleccione un género</option>
-                        <option value="1">Masculino</option>
-                        <option value="2">Femenino</option>
-                        <option value="3">Otro</option>
+                    <label class="form-label">Género</label>
+                    <select id="genero1" class="form-select rounded-3" required>
+                        <option value="">Selecciona un género</option>
+                        @foreach (Genero genero in Model.generos)
+                        {
+                            <option value="@genero.idGenero">@genero.genero</option>
+                        }
                     </select>
-                    <span asp-validation-for="idGenero" class="text-danger"></span>
                 </div>
-
+               
                 <div class="mb-3">
                     <label class="form-label">País Principal</label>
                     <select id="pais1" class="form-select rounded-3" required>

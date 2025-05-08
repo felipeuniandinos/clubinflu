@@ -19,7 +19,11 @@
                     idNuevoEstadoUsuario: estadoSeleccionado
                 },
                 success: function (response) {
-                    Swal.fire(response.mensaje, "", "info");
+                    if (response.exito) {
+                        Swal.fire(response.mensaje, "", "info");
+                    } else {
+                        Swal.fire(response.error, "", "error");
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error("Error al actualizar el estado:", xhr.responseText);
