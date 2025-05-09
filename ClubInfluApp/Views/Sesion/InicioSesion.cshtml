@@ -13,7 +13,6 @@
             <button type="button" class="btn-close" onclick="window.location.href='@Url.Action("Inicio", "Inicio")'"></button>
         </div>
 
-        <!-- Mensaje de error si la autenticación falla -->
         @if (ViewBag.Mensaje != null)
         {
             <div class="alert alert-danger text-center mt-3">
@@ -53,7 +52,6 @@
     </div>
 </div>
 
-<!-- Activa la validación en el cliente -->
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

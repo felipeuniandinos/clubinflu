@@ -66,7 +66,6 @@ namespace ClubInfluApp.BusinessLogic.Services
                     fechaActualizacion = fechaActual
                 });
             }
-
             return redesSociales;
         }
 
@@ -107,8 +106,16 @@ namespace ClubInfluApp.BusinessLogic.Services
 
         public void ActualizarEstadoUsuarioInfluencer(int idUsuarioInfluencer, int idEstadoUsuarioInfluencer)
         {
-            _usuarioInfluencerRepository.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
-            EnviarCorreoActualizacionEstadoUsuarioInfluencer(idUsuarioInfluencer);
+            int estadoActualUsuarioInfluencer = _usuarioInfluencerRepository.ObtenerEstadoUsuarioInfluencer(idUsuarioInfluencer);
+
+            if (estadoActualUsuarioInfluencer != idEstadoUsuarioInfluencer)
+            {
+                _usuarioInfluencerRepository.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
+                EnviarCorreoActualizacionEstadoUsuarioInfluencer(idUsuarioInfluencer);
+            } else {
+                throw new Exception("No se ha cambiado el estado de usuario influencer");
+            }
+            
         }
 
         private void EnviarCorreoActualizacionEstadoUsuarioInfluencer(int idUsuarioInfluencer)
@@ -126,7 +133,8 @@ namespace ClubInfluApp.BusinessLogic.Services
                     Le informamos que, tras la correspondiente verificación, su cuenta en
                     <strong>ClubInflu</strong> se encuentra actualmente en estado <strong>{usuarioInfluencer.estadoUsuario}</strong>.
                     <br /><br /> 
-                    Para más información, por favor contáctese con nosotros al <strong>+1 (555) 123-4567</strong> o escriba a <strong>soporte@clubinflu.com</strong>."
+                    Para más información, por favor contáctese con nosotros al <strong>+1 (555) 123-4567</strong> o escriba a <strong>soporte@clubinflu.com</strong>.
+                "
             );
         }
     }

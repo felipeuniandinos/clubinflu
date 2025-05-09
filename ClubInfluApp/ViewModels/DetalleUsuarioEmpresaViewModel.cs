@@ -13,6 +13,7 @@ namespace ClubInfluApp.ViewModels
         public DateTime fechaCreacion { get; set; }
 
         public string nombre { get; set; }
+        
         public string nif { get; set; }
 
         public string url { get; set; }
@@ -32,5 +33,11 @@ namespace ClubInfluApp.ViewModels
         public DateTime fechaExpiracion { get; set; }
 
         public string codigoSeguridad { get; set; }
+        
+        public string pais {  get; set; }
+        
+        public string estado {  get; set; }
+        
+        public string ciudad {  get; set; }
     }
 }
