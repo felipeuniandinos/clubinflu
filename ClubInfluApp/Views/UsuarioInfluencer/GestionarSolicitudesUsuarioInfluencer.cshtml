@@ -1,8 +1,8 @@
 ﻿@model ClubInfluApp.ViewModels.GestionarUsuarioInfluencerViewModel
 
 @{
-	ViewData["BodyClass"] = "application-admin";
-	ViewData["Title"] = "Detalles del Influencer";
+    ViewData["BodyClass"] = "application-admin";
+    ViewData["Title"] = "Detalles del Influencer";
 }
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -11,106 +11,110 @@
 <input type="hidden" id="urlActualizarEstadoInfluencer" value="@Url.Action("ActualizarEstadoUsuarioInfluencer", "UsuarioInfluencer")" />
 
 <div class="container mt-5">
-	<h2 style="color: white;">Detalles del Influencer</h2>
-	<table class="table table-bordered" style="background-color: white; color: black;">
-		<tr>
-			<th>Correo</th>
-			<td>@Model.correo</td>
-		</tr>
-		<tr>
-			<th>Nombre</th>
-			<td>@Model.nombre</td>
-		</tr>
-		<tr>
-			<th>Numero de Contacto</th>
-			<td>@Model.numerocontacto</td>
-		</tr>
-		<tr>
-			<th>Estado Usuario</th>
-			<td>
-				<select class="form-control" name="estadoUsuario" id="estadoUsuario" onchange="this.form.submit()">
-					@foreach (var estado in Model.EstadoUsuarios)
-					{
-						<option value="@estado.IdEstadoUsuario" selected="@(estado.EstadoUsuario == Model.estadoUsuario ? "selected" : null)">
-							@estado.EstadoUsuario
-						</option>
-					}
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<th>Genero</th>
-			<td>@Model.genero</td>
-		</tr>
-		<tr>
-			<th>Ubicacion</th>
-			<td>
-				<ul>
-				<li>@("Pais: " + Model.paisestadociudadprincipal + " - Estado: " + Model.estadociudadprincipal + " - Ciudad: " + Model.ciudadprincipal)</li>
-				@if(!string.IsNullOrEmpty(Model.paisestadociudadsecundaria))
-				{	
-					<li>@("Pais: " + Model.paisestadociudadsecundaria + " - Estado: " + Model.estadociudadsecundaria + " - Ciudad: " + Model.ciudadsecundaria)</li>
-				}
-				@if (!string.IsNullOrEmpty(Model.paisestadociudadterciaria))
-				{
-					<li>@("Pais: " + Model.paisestadociudadterciaria + " - Estado: " + Model.estadociudadterciaria + " - Ciudad: " + Model.ciudadterciaria)</li>
-				}
-				@if (!string.IsNullOrEmpty(Model.paisestadociudadcuaternaria))
-				{
-					<li>@("Pais: " + Model.paisestadociudadcuaternaria + " - Estado: " + Model.estadociudadcuaternaria + " - Ciudad: " + Model.ciudadcuaternaria)</li>
-				}			
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<th>Fecha Nacimiento</th>
-			<td>@Model.fechaNacimiento</td>
-		</tr>
-		<tr>
-			<th>Fecha Creacion</th>
-			<td>@Model.usuariofechacreacion</td>
-		</tr>
-		<tr>
-			<th>Fecha Actualizacion</th>
-			<td>@Model.usuariofechaactualizacion</td>
-		</tr>
-	</table>
+    <h2 style="color: white;">Detalles del Influencer</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered" style="background-color: white; color: black;">
+            <tr>
+                <th>Correo</th>
+                <td>@Model.correo</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>@Model.nombre</td>
+            </tr>
+            <tr>
+                <th>Numero de Contacto</th>
+                <td>@Model.numerocontacto</td>
+            </tr>
+            <tr>
+                <th>Estado Usuario</th>
+                <td>
+                    <select class="form-control" name="estadoUsuario" id="estadoUsuario">
+                        @foreach (var estado in Model.EstadoUsuarios)
+                        {
+                            <option value="@estado.IdEstadoUsuario" selected="@(estado.EstadoUsuario == Model.estadoUsuario ? "selected" : null)">
+                                @estado.EstadoUsuario
+                            </option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Genero</th>
+                <td>@Model.genero</td>
+            </tr>
+            <tr>
+                <th>Ubicacion</th>
+                <td>
+                    <ul>
+                        <li>@("Pais: " + Model.paisestadociudadprincipal + " - Estado: " + Model.estadociudadprincipal + " - Ciudad: " + Model.ciudadprincipal)</li>
+                        @if (!string.IsNullOrEmpty(Model.paisestadociudadsecundaria))
+                        {
+                            <li>@("Pais: " + Model.paisestadociudadsecundaria + " - Estado: " + Model.estadociudadsecundaria + " - Ciudad: " + Model.ciudadsecundaria)</li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.paisestadociudadterciaria))
+                        {
+                            <li>@("Pais: " + Model.paisestadociudadterciaria + " - Estado: " + Model.estadociudadterciaria + " - Ciudad: " + Model.ciudadterciaria)</li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.paisestadociudadcuaternaria))
+                        {
+                            <li>@("Pais: " + Model.paisestadociudadcuaternaria + " - Estado: " + Model.estadociudadcuaternaria + " - Ciudad: " + Model.ciudadcuaternaria)</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Fecha Nacimiento</th>
+                <td>@Model.fechaNacimiento</td>
+            </tr>
+            <tr>
+                <th>Fecha Creacion</th>
+                <td>@Model.usuariofechacreacion</td>
+            </tr>
+            <tr>
+                <th>Fecha Actualizacion</th>
+                <td>@Model.usuariofechaactualizacion</td>
+            </tr>
+        </table>
+    </div>
 
 
-	<h3 class="mt-4" style="color: white;">Redes Sociales</h3>
-	@if (Model.RedesSociales.Any())
-	{
-		<table class="table table-bordered" style="background-color: white; color: black;">
-			<thead class="thead-dark">
-				<tr>
-					<th>Red Social</th>
-					<th>Número de Seguidores</th>
-					<th>Fecha de Creación</th>
-					<th>Última Actualización</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var red in Model.RedesSociales)
-				{
-					<tr>
-						<td>@red.redsocial</td>
-						<td>@red.numeroseguidores</td>
-						<td>@red.redfechacreacion.ToString("dd/MM/yyyy HH:mm")</td>
-						<td>@red.redfechaactualizacion.ToString("dd/MM/yyyy HH:mm")</td>
-					</tr>
-				}
-			</tbody>
-		</table>
-	}
-	else
-	{
-		<p>No hay redes sociales registradas.</p>
-	}
+    <h3 class="mt-4" style="color: white;">Redes Sociales</h3>
+    @if (Model.RedesSociales.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered" style="background-color: white; color: black;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Red Social</th>
+                        <th>Número de Seguidores</th>
+                        <th>Fecha de Creación</th>
+                        <th>Última Actualización</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var red in Model.RedesSociales)
+                    {
+                        <tr>
+                            <td>@red.redsocial</td>
+                            <td>@red.numeroseguidores</td>
+                            <td>@red.redfechacreacion.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@red.redfechaactualizacion.ToString("dd/MM/yyyy HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>No hay redes sociales registradas.</p>
+    }
 
-	<div class="mt-4">
-		<a href="@Url.Action("ListarUsuariosInfluencer", "UsuarioInfluencer")" class="btn btn-secondary">Volver</a>
-		<button id="showAlert" class="btn btn-success" onclick="aprobarSolicitud()">Actualizar Estado Influencer</button>
-	</div>
+    <div class="mt-4">
+        <a href="@Url.Action("ListarUsuariosInfluencer", "UsuarioInfluencer")" class="btn btn-secondary">Volver</a>
+        <button id="showAlert" class="btn btn-success" onclick="aprobarSolicitud()">Actualizar Estado Influencer</button>
+    </div>
 </div>
 
 
