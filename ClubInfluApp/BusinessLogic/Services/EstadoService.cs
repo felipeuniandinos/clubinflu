@@ -12,6 +12,11 @@ namespace ClubInfluApp.BusinessLogic.Services
         {
             _estadoRepository = estadoRepository;
         }
+  
+        public Estado ObtenerEstadoPrincipalPorIdUsuarioInfluencer(int idUsuarioInfluencer)
+        {
+            return _estadoRepository.ObtenerEstadoPrincipalPorIdUsuarioInfluencer(idUsuarioInfluencer);
+        }
 
         public List<Estado> ObtenerEstadosPorPaisYTermino(int idPais, string termino)
         {

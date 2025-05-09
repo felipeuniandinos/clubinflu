@@ -1,0 +1,89 @@
+﻿@using ClubInfluApp.ViewModels
+@model ClubInfluApp.ViewModels.OfertasServiciosViewModel
+
+@{
+    ViewData["BodyClass"] = "application-influencer";
+    ViewData["Title"] = "Ofertas De Servicio";
+}
+
+<style>
+    h1, label {
+        color: white;
+    }
+
+    .card-img-top {
+        max-height: 220px;
+        object-fit: cover;
+    }
+</style>
+
+<h1 class="text-center mb-5">Ofertas Exclusivas Para Influencers Como Tu</h1>
+
+<form method="get" asp-action="ListarOfertasDeServicio" class="mb-4 row g-3">
+    <div class="row">
+        <div class="col-md-3">
+            <label class="form-label">Categoría</label>
+            <select id="idCategoriaOferta" name="idCategoriaOferta" class="form-select">
+                <option value="">Selecciona un categoría</option>
+                @foreach (CategoriaOferta categoria in Model.categorias)
+                {
+                    <option value="@categoria.idCategoriaOferta">@categoria.nombre</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">País</label>
+            <select id="pais1" class="form-select rounded-3">
+                <option value="">Selecciona un país</option>
+                @foreach (Pais pais in Model.paises)
+                {
+                    <option value="@pais.idPais">@pais.pais</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Estado 1</label>
+            <select id="idEstado" name="idEstado" class="form-select rounded-3">
+                <option value="">Selecciona un país primero</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label"></label>
+            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+        </div>
+    </div>
+    
+</form>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+    @foreach (OfertaServicioViewModel ofertaServicio in Model.ofertasServicios)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <img src="~/@ofertaServicio.imagen" class="card-img-top" alt="@ofertaServicio.nombre">
+                <div class="card-body">
+                    <h5 class="card-title">@ofertaServicio.nombre</h5>
+                    <p class="card-text">@ofertaServicio.descripcion</p>
+                    <p class="mb-1"><strong>Empresa:</strong> @ofertaServicio.nombreEmpresa</p>
+                    <p class="mb-1"><strong>Categoría:</strong> @ofertaServicio.nombreCategoriaOferta</p>
+                    <p class="mb-1"><strong>Ubicación:</strong> @ofertaServicio.pais - @ofertaServicio.estado - @ofertaServicio.ciudad</p>
+                    <p class="mb-1"><strong>Dirección:</strong> @ofertaServicio.direccion</p>
+                    <p class="mb-1"><strong>Válido:</strong> @ofertaServicio.fechaInicio - @ofertaServicio.fechaFin</p>
+                    <p><strong>Horario:</strong> @ofertaServicio.horaInicio - @ofertaServicio.horaFin</p>
+                    <a href="#" class="btn btn-success w-100">Reservar Cupón</a>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<!-- Activa la validación en el cliente -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/ofertaservicio/listarofertasdeservicio.js"></script>
+}

@@ -1,10 +1,12 @@
-﻿$("#play-button").on("click", function () {
-    var $videoPlayer = $("#video-player");
-    var $videoThumbnail = $("#video-thumbnail");
-    var $playButton = $("#play-button");
+﻿$(document).ready(function () {
+    $("#play-button").on("click", function () {
+        var $videoPlayer = $("#video-player");
+        var $videoThumbnail = $("#video-thumbnail");
+        var $playButton = $("#play-button");
 
-    $videoThumbnail.addClass("d-none");
-    $playButton.addClass("d-none");
+        $videoThumbnail.addClass("d-none");
+        $playButton.addClass("d-none");
 
-    $videoPlayer.removeClass("d-none")[0].play();
+        $videoPlayer.removeClass("d-none")[0].play();
+    });
 });

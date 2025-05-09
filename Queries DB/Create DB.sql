@@ -1,10 +1,14 @@
--- DROP TABLES
-DROP TABLE IF EXISTS TarjetaPago;
-DROP TABLE IF EXISTS UsuarioEmpresa;
+-- DROP TABLES (ordenado para evitar conflictos por claves foráneas)
+DROP TABLE IF EXISTS CuponServico;
+DROP TABLE IF EXISTS OfertaServicio;
+DROP TABLE IF EXISTS CategoriaOferta;
+DROP TABLE IF EXISTS EstadoCupon;
 DROP TABLE IF EXISTS InfluencerRedSocial;
 DROP TABLE IF EXISTS UsuarioInfluencer;
 DROP TABLE IF EXISTS UsuarioAdministrador;
 DROP TABLE IF EXISTS Influencer;
+DROP TABLE IF EXISTS TarjetaPago;
+DROP TABLE IF EXISTS UsuarioEmpresa;
 DROP TABLE IF EXISTS RedSocial;
 DROP TABLE IF EXISTS Empresa;
 DROP TABLE IF EXISTS EstadoUsuario;
@@ -14,6 +18,7 @@ DROP TABLE IF EXISTS Pais;
 DROP TABLE IF EXISTS Genero;
 
 -- CREATE TABLES
+
 CREATE TABLE EstadoUsuario (
     idEstadoUsuario BIGSERIAL PRIMARY KEY,
     estadoUsuario VARCHAR(100) NOT NULL,
@@ -145,3 +150,46 @@ CREATE TABLE InfluencerRedSocial (
     FOREIGN KEY (idInfluencer) REFERENCES Influencer(idInfluencer),
     FOREIGN KEY (idRedSocial) REFERENCES RedSocial(idRedSocial)
 );
+
+CREATE TABLE CategoriaOferta (
+    idCategoriaOferta BIGSERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE OfertaServicio (
+    idOfertaServicio BIGSERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    direccion TEXT NOT NULL,
+    imagen VARCHAR(500) NOT NULL,
+    descripcion TEXT NOT NULL,
+    fechaInicio DATE NOT NULL,
+    fechaFin DATE NOT NULL,
+    horaInicio TIME NOT NULL,
+    horaFin TIME NOT NULL,
+    cuposDisponibles INT NOT NULL,
+    fechaCreacion DATE NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    idCategoriaOferta BIGINT NOT NULL,
+    idEmpresa BIGINT NOT NULL,
+    FOREIGN KEY (idCategoriaOferta) REFERENCES CategoriaOferta(idCategoriaOferta),
+    FOREIGN KEY (idEmpresa) REFERENCES Empresa(idEmpresa)
+);
+
+CREATE TABLE EstadoCupon (
+    idEstadoCupon BIGSERIAL PRIMARY KEY,
+    estadoCupon VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE CuponServico (
+    idCuponServicio BIGSERIAL PRIMARY KEY,
+    codigo VARCHAR(200) NOT NULL,
+    fechaRedencion DATE,
+    idOfertaServicio BIGINT NOT NULL,
+    idEstadoCupon BIGINT NOT NULL,
+    idInfluencer BIGINT,
+    FOREIGN KEY (idOfertaServicio) REFERENCES OfertaServicio(idOfertaServicio),
+    FOREIGN KEY (idEstadoCupon) REFERENCES EstadoCupon(idEstadoCupon),
+    FOREIGN KEY (idInfluencer) REFERENCES Influencer(idInfluencer)
+);
+
+
