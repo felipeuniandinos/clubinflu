@@ -13,9 +13,9 @@ namespace ClubInfluApp.BusinessLogic.Services
             this.ciudadRepository = ciudadRepository;
         }
 
-        public List<Ciudad> ObtenerCiudadesPorPaisYTermino(int idPais, string termino)
+        public List<Ciudad> ObtenerCiudadesPorEstadoYTermino(int idEstado, string termino)
         {
-            return ciudadRepository.ObtenerCiudadesPorPaisYTermino(idPais, termino);
+            return ciudadRepository.ObtenerCiudadesPorEstadoYTermino(idEstado, termino);
         }
     }
 }

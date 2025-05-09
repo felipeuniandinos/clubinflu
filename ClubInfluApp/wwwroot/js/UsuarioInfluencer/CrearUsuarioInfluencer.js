@@ -39,7 +39,43 @@
         }
     });
 
-    function inicializarSelectCiudad(paisSelector, ciudadSelector) {
+    function inicializarSelectEstado(paisSelector, estadoSelector) {
+        $(estadoSelector).select2({
+            placeholder: "Escribe para buscar",
+            minimumInputLength: 2,
+            ajax: {
+                transport: function (params, success, failure) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/UsuarioInfluencer/ObtenerEstadosPorPaisYTermino',
+                        data: {
+                            termino: params.data.term,
+                            idPais: $(paisSelector).val()
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            success({
+                                results: data.map(estado => ({
+                                    id: estado.idEstado,
+                                    text: estado.estado
+                                }))
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error en la carga de estados:", error);
+                            failure();
+                        }
+                    });
+                }
+            }
+        });
+
+        $(paisSelector).on('change', function () {
+            $(estadoSelector).val(null).trigger('change');
+        });
+    }
+
+    function inicializarSelectCiudad(estadoSelector, ciudadSelector) {
         $(ciudadSelector).select2({
             placeholder: "Escribe para buscar",
             minimumInputLength: 2,
@@ -47,10 +83,10 @@
                 transport: function (params, success, failure) {
                     $.ajax({
                         type: 'GET',
-                        url: '/UsuarioInfluencer/ObtenerCiudadesPorPaisYTermino',
+                        url: '/UsuarioInfluencer/ObtenerCiudadesPorEstadoYTermino',
                         data: {
                             termino: params.data.term,
-                            idPais: $(paisSelector).val()
+                            idEstado: $(estadoSelector).val()
                         },
                         dataType: 'json',
                         success: function (data) {
@@ -70,18 +106,21 @@
             }
         });
 
-        $(paisSelector).on('change', function () {
+        $(estadoSelector).on('change', function () {
             $(ciudadSelector).val(null).trigger('change');
         });
     }
 
+    inicializarSelectEstado("#pais1", "#estado1");
+    inicializarSelectEstado("#pais2", "#estado2");
+    inicializarSelectEstado("#pais3", "#estado3");
+    inicializarSelectEstado("#pais4", "#estado4");
 
-    inicializarSelectCiudad("#pais1", "#ciudad1");
-    inicializarSelectCiudad("#pais2", "#ciudad2");
-    inicializarSelectCiudad("#pais3", "#ciudad3");
-    inicializarSelectCiudad("#pais4", "#ciudad4");
-
-
+    inicializarSelectCiudad("#estado1", "#ciudad1");
+    inicializarSelectCiudad("#estado2", "#ciudad2");
+    inicializarSelectCiudad("#estado3", "#ciudad3");
+    inicializarSelectCiudad("#estado4", "#ciudad4");
+   
     const checkboxTerminos = document.getElementById("terminos");
     const btnCrearCuenta = document.getElementById("btnCrearCuenta");
 

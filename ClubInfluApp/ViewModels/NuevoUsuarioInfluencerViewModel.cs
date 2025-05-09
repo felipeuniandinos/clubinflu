@@ -24,6 +24,11 @@ namespace ClubInfluApp.ViewModels
 
         public int? idCiudad4 { get; set; }
 
+        public int idEstado { get; set; }
+        public int? idEstado2 { get; set; }
+        public int? idEstado3 { get; set; }
+        public int? idEstado4 { get;set; }
+
         [Required(ErrorMessage = "El genero es obligatorio.")]
         public int idGenero { get; set; }
 

@@ -6,6 +6,10 @@
 }
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<input type="hidden" id="idUsuarioInlfluencer" value="@Model.idUsuarioInfluencer" />
+<input type="hidden" id="estadoUsuarioInicial" value="@Model.estadoUsuario" />
+<input type="hidden" id="urlActualizarEstadoInfluencer" value="@Url.Action("ActualizarEstadoUsuarioInfluencer", "UsuarioInfluencer")" />
+
 <div class="container mt-5">
 	<h2 style="color: white;">Detalles del Influencer</h2>
 	<table class="table table-bordered" style="background-color: white; color: black;">
@@ -39,20 +43,20 @@
 			<td>@Model.genero</td>
 		</tr>
 		<tr>
-			<th>Ciudad Principal</th>
-			<td>@Model.ciudadprincipal</td>
-		</tr>
-		<tr>
-			<th>Pais Ciudad Principal</th>
-			<td>@Model.paisciudadprincipal</td>
+			<th>Ubicacion Principal</th>
+			<td> Pais: @Model.paisestadociudadprincipal, Estado: @Model.estadociudadprincipal, Ciudad: @Model.ciudadprincipal </td>
 		</tr>
 		<tr>
 			<th>Ciudad Secundaria</th>
 			<td>@Model.ciudadsecundaria</td>
 		</tr>
 		<tr>
+			<th>Estado Principal</th>
+			<td>@Model.estadociudadsecundaria</td>
+		</tr>
+		<tr>
 			<th>Pais Ciudad Secundaria</th>
-			<td>@Model.paisciudadsecundaria</td>
+			<td>@Model.paisestadociudadsecundaria</td>
 		</tr>
 		<tr>
 			<th>Fecha Nacimiento</th>
@@ -105,44 +109,8 @@
 	</div>
 </div>
 
-<script>
-	let estadoInicial = document.getElementById("estadoUsuario").value;
-	document.getElementById("showAlert").addEventListener("click", function () {
-		Swal.fire({
-			title: "¿Quieres guardar los cambios?",
-			showDenyButton: true,
-			showCancelButton: true,
-			confirmButtonText: "Guardar",
-			denyButtonText: "No guardar"
-		}).then((result) => {
-			if (result.isConfirmed) {
-				let estadoSeleccionado = document.getElementById("estadoUsuario").value;
-				let idUsuarioInfluencer = @Html.Raw(Json.Serialize(Model.idUsuarioInfluencer));
-				  if (estadoSeleccionado !== estadoInicial) {
-
-			$.ajax({
-				url: '@Url.Action("ActualizarEstadoUsuarioInfluencer", "UsuarioInfluencer")',
-				type: "PUT",
-				data: {
-					idUsuarioInfluencer: idUsuarioInfluencer,
-					idEstadoUsuarioInfluencer: estadoSeleccionado
-				},
-				success: function (response) {
-					Swal.fire(response.mensaje, "", "info");
-				},
-				error: function (xhr, status, error) {
-					console.error("Error al actualizar el estado:", xhr.responseText);
-					Swal.fire("Hubo un error", "", "info");
-				}
-			});
-
-				 } else {
-					Swal.fire("NO SE HA CAMBIADO EL ESTADO DE USUARIO", "", "info");
-				 }
-			} else if (result.isDenied) {
-				Swal.fire("Los cambios no se guardaron", "", "info");
-			}
-		});
-	});
-</script>
+<<!-- Activa la validación en el cliente -->
+@section Scripts {
+	<script src="~/js/usuarioinfluencer/gestionarsolicitudesusuarioinfluencer.js"></script>
+}
 
