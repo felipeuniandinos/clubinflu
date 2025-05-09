@@ -12,11 +12,10 @@ namespace ClubInfluApp.BusinessLogic.Services
         {
             this.estadoRepository = estadoRepository;
         }
-        
-        //TODO: Obtener el id estado principal asociado al usuario influencer desde la base de datos
-        public Estado ObtenerEstadoPrinciaplPorIdUsuarioInfluencer(int idUsuarioInfluencer)
+  
+        public Estado ObtenerEstadoPrincipalPorIdUsuarioInfluencer(int idUsuarioInfluencer)
         {
-            throw new NotImplementedException();
+            return estadoRepository.ObtenerEstadoPrincipalPorIdUsuarioInfluencer(idUsuarioInfluencer);
         }
 
         public List<Estado> ObtenerEstadosPorPaisYTermino(int idPais, string termino)

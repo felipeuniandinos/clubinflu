@@ -14,6 +14,22 @@ namespace ClubInfluApp.Data.Repositories
             dbConnectionString = configuration.GetConnectionString("PostgresConnection");
         }
 
+        public Estado ObtenerEstadoPrincipalPorIdUsuarioInfluencer(int idUsuarioInfluencer)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+            try
+            {
+                string query = "SELECT * FROM Estado WHERE idEstado = \r\n(SELECT c.idestado FROM Influencer i JOIN ciudad c ON i.idciudad = c.idciudad WHERE i.idinfluencer  = @idUsuarioInfluencer)";
+                return connection.QueryFirstOrDefault<Estado>(query, new {idUsuarioInfluencer});
+            }
+            catch
+            {
+                throw;
+            }
+            
+        }
+
         public List<Estado> ObtenerEstadosPorPaisYTermino(int idPais, string termino)
         {
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);

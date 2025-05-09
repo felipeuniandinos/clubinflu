@@ -64,12 +64,12 @@ namespace ClubInfluApp.Controllers
                 case TipoUsuario.Empresa:
                     return RedirectToAction("HistoricoCuponesDeServicio", "OfertaServicio");
                 case TipoUsuario.Influencer:
-                    //Estado estadoPrincipalInfluencer = _estadoService.ObtenerEstadoPrinciaplPorIdUsuarioInfluencer(idUsuarioAutenticado);
-                    //FiltroOfertasDeServicio filtroOfertasDeServicio = new FiltroOfertasDeServicio
-                    //{
-                    //    idEstado = estadoPrincipalInfluencer.idEstado
-                    //};
-                    FiltroOfertasDeServicio filtroOfertasDeServicio = new FiltroOfertasDeServicio(); //Eliminar esta linea
+                    Estado estadoPrincipalInfluencer = _estadoService.ObtenerEstadoPrincipalPorIdUsuarioInfluencer(idUsuarioAutenticado);
+                    FiltroOfertasDeServicio filtroOfertasDeServicio = new FiltroOfertasDeServicio
+                    {
+                        idEstado = estadoPrincipalInfluencer.idEstado
+                    };
+                 
                     return RedirectToAction("ListarOfertasDeServicio", "OfertaServicio", filtroOfertasDeServicio);
                 case TipoUsuario.Administrador:
                     return RedirectToAction("ListarUsuariosInfluencer", "UsuarioInfluencer");

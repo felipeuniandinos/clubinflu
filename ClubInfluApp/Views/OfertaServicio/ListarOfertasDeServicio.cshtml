@@ -34,7 +34,7 @@
 
         <div class="col-md-3">
             <label class="form-label">País</label>
-            <select id="pais1" class="form-select rounded-3" required>
+            <select id="pais1" class="form-select rounded-3">
                 <option value="">Selecciona un país</option>
                 @foreach (Pais pais in Model.paises)
                 {
@@ -45,7 +45,7 @@
 
         <div class="col-md-3">
             <label class="form-label">Estado 1</label>
-            <select id="idEstado" name="idEstado" class="form-select rounded-3" required>
+            <select id="idEstado" name="idEstado" class="form-select rounded-3">
                 <option value="">Selecciona un país primero</option>
             </select>
         </div>
@@ -64,11 +64,15 @@
     {
         <div class="col">
             <div class="card h-100">
-                <img src="@ofertaServicio.imagen" class="card-img-top" alt="Spa Premium">
+                <img src="~/@ofertaServicio.imagen" class="card-img-top" alt="@ofertaServicio.nombre">
                 <div class="card-body">
                     <h5 class="card-title">@ofertaServicio.nombre</h5>
                     <p class="card-text">@ofertaServicio.descripcion</p>
-                    <p class="mb-1"><strong>Categoría:</strong> @ofertaServicio.nombreCategoria</p>
+                    <p class="mb-1"><strong>Categoría:</strong> @ofertaServicio.nombreCategoriaOferta</p>
+                    <p class="mb-1"><strong>Dirección:</strong> @ofertaServicio.direccion -  @ofertaServicio.pais - @ofertaServicio.estado - @ofertaServicio.ciudad</p>
+                    <p class="mb-1"><strong>Pais:</strong> @ofertaServicio.pais</p>
+                    <p class="mb-1"><strong>Estado:</strong> @ofertaServicio.estado</p>
+                    <p class="mb-1"><strong>Ciudad:</strong> @ofertaServicio.ciudad</p>
                     <p class="mb-1"><strong>Válido:</strong> @ofertaServicio.fechaInicio - @ofertaServicio.fechaFin</p>
                     <p><strong>Horario:</strong> @ofertaServicio.horaInicio - @ofertaServicio.horaFin</p>
                     <a href="#" class="btn btn-success w-100">Reservar Cupón</a>

@@ -29,14 +29,14 @@ namespace ClubInfluApp.Data.Repositories
 
                 var sql = "SELECT * FROM obtener_ofertas_por_filtro(@p_id_categoria_oferta, @p_id_estado);";
 
-                var resultado = connection
+                var listaDeOfertasYServicios = connection
                     .Query<OfertaServicioViewModel>(sql, new
                     {
                         p_id_categoria_oferta = idCategoria,
                         p_id_estado = idEstado
                     }).ToList();
 
-                return resultado;
+                return listaDeOfertasYServicios;
             }
             catch
             {
