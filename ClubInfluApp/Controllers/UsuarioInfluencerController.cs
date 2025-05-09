@@ -43,7 +43,6 @@ namespace ClubInfluApp.Controllers
             NuevoUsuarioInfluencerViewModel nuevoUsuarioInfluencerViewModel = new NuevoUsuarioInfluencerViewModel();
             nuevoUsuarioInfluencerViewModel.paises = _paisService.ObtenerPaises();
             nuevoUsuarioInfluencerViewModel.generos = _generoService.ObtenerGeneros();
-            nuevoUsuarioInfluencerViewModel.fechaNacimiento = null;
             return View(nuevoUsuarioInfluencerViewModel);
         }
 

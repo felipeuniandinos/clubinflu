@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+﻿$(document).ready(function () {
 
     function inicializarSelectEstado(paisSelector, estadoSelector) {
         $(estadoSelector).select2({
@@ -81,13 +81,9 @@
     }
 
     inicializarSelectEstado("#pais1", "#estado1");
- 
     inicializarSelectCiudad("#estado1", "#ciudad1");
-   
-    const checkboxTerminos = document.getElementById("terminos");
-    const btnCrearCuenta = document.getElementById("btnCrearCuenta");
 
-    checkboxTerminos.addEventListener("change", function () {
-        btnCrearCuenta.disabled = !this.checked;
+    $("#terminos").on("change", function () {
+        $("#btnCrearCuenta").prop("disabled", !$(this).is(":checked"));
     });
 });

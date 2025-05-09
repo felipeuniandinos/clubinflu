@@ -1,11 +1,10 @@
-﻿document.getElementById("play-button").addEventListener("click", function () {
-    var videoPlayer = document.getElementById("video-player");
-    var videoThumbnail = document.getElementById("video-thumbnail");
-    var playButton = document.getElementById("play-button");
+﻿$("#play-button").on("click", function () {
+    var $videoPlayer = $("#video-player");
+    var $videoThumbnail = $("#video-thumbnail");
+    var $playButton = $("#play-button");
 
-    videoThumbnail.classList.add("d-none");
-    playButton.classList.add("d-none");
+    $videoThumbnail.addClass("d-none");
+    $playButton.addClass("d-none");
 
-    videoPlayer.classList.remove("d-none");
-    videoPlayer.play();
+    $videoPlayer.removeClass("d-none")[0].play();
 });

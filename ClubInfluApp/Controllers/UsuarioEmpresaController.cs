@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using ClubInfluApp.BusinessLogic.Interfaces;
-using ClubInfluApp.BusinessLogic.Services;
+﻿using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -39,9 +37,6 @@ namespace ClubInfluApp.Controllers
         {
             NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel = new NuevoUsuarioEmpresaViewModel();
             nuevoUsuarioEmpresaViewModel.paises = _paisService.ObtenerPaises();
-            nuevoUsuarioEmpresaViewModel.fechaExpiracionTarjeta = null;
-
-
             return View(nuevoUsuarioEmpresaViewModel);
         }
 

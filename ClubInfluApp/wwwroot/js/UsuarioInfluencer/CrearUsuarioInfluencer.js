@@ -1,56 +1,51 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+﻿$(document).ready(function () {
     let redSocialIndex = 0;
 
-    document.getElementById("addRedSocial").addEventListener("click", function () {
-        const container = document.getElementById("redesSocialesContainer");
+    $("#addRedSocial").on("click", function () {
+        const $container = $("#redesSocialesContainer");
+        const $div = $("<div>").addClass("mb-3 red-social-entry");
 
-        const div = document.createElement("div");
-        div.classList.add("mb-3", "red-social-entry");
         $.ajax({
             type: 'GET',
             url: '/UsuarioInfluencer/ObtenerRedesSociales',
-            data: {},
             dataType: 'json',
             success: function (response) {
                 if (response.exito) {
                     let selectHTML = `<div class="mb-2">
-                                    <label class="form-label">Red Social</label>
-                                    <select name="redesSociales[${redSocialIndex}].idRedSocial" class="form-select" required>
-                                        <option value="">Seleccione una red social</option>`;
+                                        <label class="form-label">Red Social</label>
+                                        <select name="redesSociales[${redSocialIndex}].idRedSocial" class="form-select" required>
+                                            <option value="">Seleccione una red social</option>`;
 
-                    for (let i = 0; i < response.data.length; i++) {
-                        selectHTML += `<option value="${response.data[i].idRedSocial}">${response.data[i].redSocial}</option>`;
-                    }
+                    $.each(response.data, function (i, redSocial) {
+                        selectHTML += `<option value="${redSocial.idRedSocial}">${redSocial.redSocial}</option>`;
+                    });
 
-                    selectHTML += `      </select>
-                                  </div>
+                    selectHTML += `   </select>
+                                    </div>
 
-                                 <div class="mb-2">
-                                     <label class="form-label">Número de Seguidores</label>
-                                     <input type="number" name="redesSociales[${redSocialIndex}].numeroSeguidores" class="form-control" required />
-                                 </div>
+                                    <div class="mb-2">
+                                        <label class="form-label">Número de Seguidores</label>
+                                        <input type="number" name="redesSociales[${redSocialIndex}].numeroSeguidores" class="form-control" required />
+                                    </div>
 
-                                 <button type="button" class="btn btn-danger btn-sm removeRedSocial">Eliminar</button>
-                                 <hr/>`;
+                                    <button type="button" class="btn btn-danger btn-sm removeRedSocial">Eliminar</button>
+                                    <hr/>`;
 
-                    div.innerHTML = selectHTML;
-                    container.appendChild(div);
+                    $div.html(selectHTML);
+                    $container.append($div);
                     redSocialIndex++;
                 } else {
                     Swal.fire(response.error, "", "error");
                 }
             },
             error: function (xhr, status, error) {
-                console.error("Error en la carga de estados:", error);
-                failure();
+                console.error("Error en la carga de redes sociales:", error);
             }
-        });    
+        });
     });
 
-    document.getElementById("redesSocialesContainer").addEventListener("click", function (e) {
-        if (e.target.classList.contains("removeRedSocial")) {
-            e.target.parentElement.remove();
-        }
+    $("#redesSocialesContainer").on("click", ".removeRedSocial", function () {
+        $(this).closest(".red-social-entry").remove();
     });
 
     function inicializarSelectEstado(paisSelector, estadoSelector) {
@@ -70,15 +65,16 @@
                         success: function (response) {
                             if (response.exito) {
                                 success({
-                                    results: response.data.map(estado => ({
-                                        id: estado.idEstado,
-                                        text: estado.estado
-                                    }))
+                                    results: $.map(response.data, function (estado) {
+                                        return {
+                                            id: estado.idEstado,
+                                            text: estado.estado
+                                        };
+                                    })
                                 });
                             } else {
                                 Swal.fire(response.error, "", "error");
                             }
-                            
                         },
                         error: function (xhr, status, error) {
                             console.error("Error en la carga de estados:", error);
@@ -89,8 +85,8 @@
             }
         });
 
-        $(paisSelector).on('change', function () {
-            $(estadoSelector).val(null).trigger('change');
+        $(paisSelector).on("change", function () {
+            $(estadoSelector).val(null).trigger("change");
         });
     }
 
@@ -111,10 +107,12 @@
                         success: function (response) {
                             if (response.exito) {
                                 success({
-                                    results: response.data.map(ciudad => ({
-                                        id: ciudad.idCiudad,
-                                        text: ciudad.ciudad
-                                    }))
+                                    results: $.map(response.data, function (ciudad) {
+                                        return {
+                                            id: ciudad.idCiudad,
+                                            text: ciudad.ciudad
+                                        };
+                                    })
                                 });
                             } else {
                                 Swal.fire(response.error, "", "error");
@@ -129,8 +127,8 @@
             }
         });
 
-        $(estadoSelector).on('change', function () {
-            $(ciudadSelector).val(null).trigger('change');
+        $(estadoSelector).on("change", function () {
+            $(ciudadSelector).val(null).trigger("change");
         });
     }
 
@@ -143,11 +141,8 @@
     inicializarSelectCiudad("#estado2", "#ciudad2");
     inicializarSelectCiudad("#estado3", "#ciudad3");
     inicializarSelectCiudad("#estado4", "#ciudad4");
-   
-    const checkboxTerminos = document.getElementById("terminos");
-    const btnCrearCuenta = document.getElementById("btnCrearCuenta");
 
-    checkboxTerminos.addEventListener("change", function () {
-        btnCrearCuenta.disabled = !this.checked;
+    $("#terminos").on("change", function () {
+        $("#btnCrearCuenta").prop("disabled", !this.checked);
     });
 });

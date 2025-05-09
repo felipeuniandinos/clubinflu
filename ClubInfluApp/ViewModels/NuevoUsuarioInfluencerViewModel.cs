@@ -41,7 +41,7 @@ namespace ClubInfluApp.ViewModels
         public string nombre { get; set; }
 
         [Required(ErrorMessage = "La fecha de nacimiento es obligatoria.")]
-        public DateTime? fechaNacimiento { get; set; }
+        public DateTime fechaNacimiento { get; set; }
 
         [RegularExpression(@"^\d{10}$", ErrorMessage = "El número de contacto debe tener exactamente 10 dígitos.")]
         public string numeroContacto { get; set; }
