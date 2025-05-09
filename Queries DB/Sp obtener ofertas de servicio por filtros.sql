@@ -19,6 +19,7 @@ RETURNS TABLE (
     idCategoriaOferta BIGINT,
     nombreCategoriaOferta varchar,
     idEmpresa BIGINT,
+    nombreEmpresa VARCHAR,
     ciudad VARCHAR,
     estado VARCHAR,
     pais VARCHAR
@@ -41,6 +42,7 @@ BEGIN
         os.idCategoriaOferta,
 		cat.nombre,
         os.idEmpresa,
+		e.nombre,
         c.ciudad,
         est.estado,
         p.pais

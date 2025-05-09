@@ -12,6 +12,7 @@ namespace ClubInfluApp.ViewModels
         public string estado { get; set; }
         public string ciudad { get; set; }
         public string nombreCategoriaOferta { get; set; }
+        public string nombreEmpresa { get; set; }
         public DateTime fechaInicio { get; set; }
         public DateTime fechaFin { get; set; }
         public TimeSpan horaInicio { get; set; }
