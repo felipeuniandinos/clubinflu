@@ -6,15 +6,16 @@ namespace ClubInfluApp.BusinessLogic.Services
 {
     public class CategoriaService : ICategoriaService
     {
-        private readonly ICategoriaRepository categoriaRepository;
+        private readonly ICategoriaRepository _categoriaRepository;
+
         public CategoriaService(ICategoriaRepository categoriaRepository)
         {
-            this.categoriaRepository = categoriaRepository;
+            _categoriaRepository = categoriaRepository;
         }
 
         public List<CategoriaOferta> ObtenerCategorias()
         {
-            return categoriaRepository.ObtenerCategorias();
+            return _categoriaRepository.ObtenerCategorias();
         }
     }
    

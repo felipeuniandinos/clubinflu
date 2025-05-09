@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+﻿$(document).ready(function () {
     function inicializarSelectEstado(paisSelector, estadoSelector) {
         $(estadoSelector).select2({
             placeholder: "Escribe para buscar",
@@ -15,10 +15,12 @@
                         dataType: 'json',
                         success: function (data) {
                             success({
-                                results: data.map(estado => ({
-                                    id: estado.idEstado,
-                                    text: estado.estado
-                                }))
+                                results: $.map(data, function (estado) {
+                                    return {
+                                        id: estado.idEstado,
+                                        text: estado.estado
+                                    };
+                                })
                             });
                         },
                         error: function (xhr, status, error) {

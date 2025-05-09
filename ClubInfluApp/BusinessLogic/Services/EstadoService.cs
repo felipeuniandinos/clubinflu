@@ -6,21 +6,21 @@ namespace ClubInfluApp.BusinessLogic.Services
 {
     public class EstadoService : IEstadoService
     {
-        private readonly IEstadoRepository estadoRepository;
+        private readonly IEstadoRepository _estadoRepository;
 
         public EstadoService(IEstadoRepository estadoRepository)
         {
-            this.estadoRepository = estadoRepository;
+            _estadoRepository = estadoRepository;
         }
   
         public Estado ObtenerEstadoPrincipalPorIdUsuarioInfluencer(int idUsuarioInfluencer)
         {
-            return estadoRepository.ObtenerEstadoPrincipalPorIdUsuarioInfluencer(idUsuarioInfluencer);
+            return _estadoRepository.ObtenerEstadoPrincipalPorIdUsuarioInfluencer(idUsuarioInfluencer);
         }
 
         public List<Estado> ObtenerEstadosPorPaisYTermino(int idPais, string termino)
         {
-            return estadoRepository.ObtenerEstadosPorPaisYTermino(idPais, termino);
+            return _estadoRepository.ObtenerEstadosPorPaisYTermino(idPais, termino);
         }
     }
 }
