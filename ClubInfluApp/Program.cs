@@ -35,6 +35,8 @@ builder.Services.AddScoped<IRedSocialRepository, RedSocialRepository>();
 //Add Helpers to the container.
 NotificacionesCorreoHelper.Configurar(builder.Configuration);
 
+// Add HttpContextAccessor
+builder.Services.AddHttpContextAccessor();
 
 // Add authentication
 builder.Services.AddAuthentication("CookieAuth")

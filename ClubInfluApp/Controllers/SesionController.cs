@@ -62,7 +62,7 @@ namespace ClubInfluApp.Controllers
             switch (usuarioViewModel.tipo)
             {
                 case TipoUsuario.Empresa:
-                    return RedirectToAction("HistoricoCuponesDeServicio", "OfertaServicio");
+                    return RedirectToAction("HistoricoOfertasDeServicioEmpresa", "OfertaServicio");
                 case TipoUsuario.Influencer:
                     Estado estadoPrincipalInfluencer = _estadoService.ObtenerEstadoPrincipalPorIdUsuarioInfluencer(idUsuarioAutenticado);
                     FiltroOfertasDeServicio filtroOfertasDeServicio = new FiltroOfertasDeServicio

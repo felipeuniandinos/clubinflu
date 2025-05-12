@@ -146,5 +146,10 @@ namespace ClubInfluApp.BusinessLogic.Services
         {
             return _usuarioEmpresaRepository.ObtenerDetalleUsuarioEmpresa(idUsuarioEmpresa);
         }
+
+        public Empresa ObtenerEmpresaPorIdUsuarioEmpresa(int idUsuarioEmpresa)
+        {
+            return _usuarioEmpresaRepository.ObtenerEmpresaPorIdUsuarioEmpresa(idUsuarioEmpresa);
+        }
     }
 }

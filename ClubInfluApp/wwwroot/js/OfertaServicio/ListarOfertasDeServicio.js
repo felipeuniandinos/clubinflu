@@ -13,15 +13,19 @@
                             idPais: $(paisSelector).val()
                         },
                         dataType: 'json',
-                        success: function (data) {
-                            success({
-                                results: $.map(data, function (estado) {
-                                    return {
-                                        id: estado.idEstado,
-                                        text: estado.estado
-                                    };
-                                })
-                            });
+                        success: function (response) {
+                            if (response.exito) {
+                                success({
+                                    results: $.map(response.data, function (estado) {
+                                        return {
+                                            id: estado.idEstado,
+                                            text: estado.estado
+                                        };
+                                    })
+                                });
+                            } else {
+                                Swal.fire(response.error, "", "error");
+                            }
                         },
                         error: function (xhr, status, error) {
                             console.error("Error en la carga de estados:", error);

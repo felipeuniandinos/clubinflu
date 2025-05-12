@@ -1,0 +1,119 @@
+﻿@* Vista Razor *@
+<div id="content"></div>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #121212;
+        color: white;
+        font-family: 'Segoe UI', sans-serif;
+        text-align: center;
+    }
+
+    .robot-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 73vh;
+        animation: bounce 2s infinite;
+    }
+
+    .robot svg {
+        width: 200px;
+        height: auto;
+    }
+
+    .eye-ball {
+        animation: lookAround 3s infinite alternate;
+    }
+
+    .eyelid {
+        animation: blink 4s infinite;
+        transform-origin: top;
+    }
+
+    .message {
+        font-size: 2rem;
+        background: #ff4444;
+        padding: 15px 25px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(255, 68, 68, 0.7);
+        margin-top: 10px; 
+    }
+
+    @@keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    @@keyframes lookAround {
+        0% {
+            transform: translateX(0);
+        }
+
+        50% {
+            transform: translateX(4px);
+        }
+
+        100% {
+            transform: translateX(-4px);
+        }
+    }
+
+    @@keyframes blink {
+        0%, 90%, 100% {
+            transform: scaleY(0);
+        }
+
+        92%, 96% {
+            transform: scaleY(1);
+        }
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const permisoConcedido = false;
+
+    $(document).ready(function () {
+        if (!permisoConcedido) {
+            $('#content').html(`
+                <div class="robot-container">
+                  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Cabeza -->
+                    <rect x="40" y="40" width="120" height="100" rx="15" fill="#4e4e4e" />
+
+                    <!-- Antena -->
+                    <line x1="100" y1="30" x2="100" y2="10" stroke="#ccc" stroke-width="4"/>
+                    <circle cx="100" cy="10" r="5" fill="red"/>
+
+                    <!-- Ojos (blancos) -->
+                    <circle cx="70" cy="80" r="12" fill="#fff"/>
+                    <circle cx="130" cy="80" r="12" fill="#fff"/>
+
+                    <!-- Pupilas -->
+                    <circle class="eye-ball" cx="70" cy="80" r="5" fill="black"/>
+                    <circle class="eye-ball" cx="130" cy="80" r="5" fill="black"/>
+
+                    <!-- Párpados (simulan parpadeo) -->
+                    <rect class="eyelid" x="58" y="70" width="24" height="12" fill="#4e4e4e"/>
+                    <rect class="eyelid" x="118" y="70" width="24" height="12" fill="#4e4e4e"/>
+
+                    <!-- Boca -->
+                    <rect x="70" y="115" width="60" height="10" rx="5" fill="#ff9999"/>
+                  </svg>
+                  <div class="message">¡Te pillé! Permiso denegado</div>
+                </div>
+            `);
+        } else {
+            $('#content').html(`<h1>Bienvenido</h1>`);
+        }
+    });
+</script>

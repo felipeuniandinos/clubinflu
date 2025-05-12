@@ -64,7 +64,7 @@
     {
         <div class="col">
             <div class="card h-100">
-                <img src="~/@ofertaServicio.imagen" class="card-img-top" alt="@ofertaServicio.nombre">
+                <img src="@Url.Content($"~/imagenes/ofertas_servicios/{ofertaServicio.imagen}")" class="card-img-top" alt="@ofertaServicio.nombre">
                 <div class="card-body">
                     <h5 class="card-title">@ofertaServicio.nombre</h5>
                     <p class="card-text">@ofertaServicio.descripcion</p>

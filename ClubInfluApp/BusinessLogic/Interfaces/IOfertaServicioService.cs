@@ -6,5 +6,7 @@ namespace ClubInfluApp.BusinessLogic.Interfaces
     public interface IOfertaServicioService
     {
         public OfertasServiciosViewModel ObtenerOfertasDeServicioFiltradas(FiltroOfertasDeServicio filtroOfertasDeServicio);
+
+        public int CrearOfertaServicio(NuevaOfertaServicioViewModel nuevaOfertaServicioViewModel);
     }
 }

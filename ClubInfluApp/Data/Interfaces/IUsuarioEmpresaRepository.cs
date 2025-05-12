@@ -18,5 +18,7 @@ namespace ClubInfluApp.Data.Interfaces
         public DetalleUsuarioEmpresaViewModel ObtenerDetalleUsuarioEmpresa(int idUsuarioEmpresa);
 
         public int ObtenerEstadoUsuarioEmpresa(int idUsuarioEmpresa);
+
+        public Empresa ObtenerEmpresaPorIdUsuarioEmpresa(int idUsuarioEmpresa);
     }
 }
