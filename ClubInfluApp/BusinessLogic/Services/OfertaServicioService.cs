@@ -43,7 +43,7 @@ namespace ClubInfluApp.BusinessLogic.Services
 
             if(nuevaOferta.cuposDisponibles <= 0)
             {
-                throw new Exception("El número de cupos disponibles debe ser mayor a cero.");
+                throw new Exception("|BL|:El número de cupos disponibles debe ser mayor a cero.");
             }
 
             return _ofertaServicioRepository.CrearOfertaDeServicio(nuevaOferta);
