@@ -35,6 +35,8 @@ builder.Services.AddScoped<IRedSocialRepository, RedSocialRepository>();
 //Add Helpers to the container.
 NotificacionesCorreoHelper.Configurar(builder.Configuration);
 
+// Add HttpContextAccessor
+builder.Services.AddHttpContextAccessor();
 
 // Add authentication
 builder.Services.AddAuthentication("CookieAuth")
@@ -55,13 +57,8 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+app.UseExceptionHandler("/Inicio/Error");
+app.UseHsts();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

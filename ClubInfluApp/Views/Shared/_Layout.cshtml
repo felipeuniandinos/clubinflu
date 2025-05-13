@@ -61,6 +61,12 @@
     <!-- Contenido Principal -->
     <div class="container-fluid flex-grow-1">
         <main role="main" class="pb-3">
+            @if (TempData["ExceptionBL"] != null)
+            {
+                <div class="alert alert-danger text-center mt-3">
+                    @TempData["ExceptionBL"]
+                </div>
+            }
             @RenderBody()
         </main>
     </div>

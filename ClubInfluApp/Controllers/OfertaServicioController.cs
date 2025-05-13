@@ -9,12 +9,15 @@ namespace ClubInfluApp.Controllers
     public class OfertaServicioController : Controller
     {
         private readonly IOfertaServicioService _ofertaServicioService;
+        private readonly ICategoriaService _categoriaService;
 
-        public OfertaServicioController(IOfertaServicioService ofertaServicioService)
+        public OfertaServicioController(IOfertaServicioService ofertaServicioService, ICategoriaService categoriaService)
         {
             _ofertaServicioService = ofertaServicioService;
+            _categoriaService = categoriaService;
         }
 
+        [HttpGet]
         [Authorize(Roles = "Influencer")]
         public IActionResult ListarOfertasDeServicio(FiltroOfertasDeServicio filtroOfertasDeServicio)
         {
@@ -22,10 +25,38 @@ namespace ClubInfluApp.Controllers
             return View(ofertasServicios);
         }
 
+        [HttpGet]
         [Authorize(Roles = "Empresa")]
-        public IActionResult HistoricoCuponesDeServicio()
+        public IActionResult HistoricoOfertasDeServicioEmpresa()
         {
             return View();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Empresa")]
+        public IActionResult CrearOfertaDeServicio()
+        {
+            NuevaOfertaServicioViewModel nuevaOfertaServicioViewModel = new NuevaOfertaServicioViewModel();
+            nuevaOfertaServicioViewModel.categorias = _categoriaService.ObtenerCategorias();
+            return View(nuevaOfertaServicioViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Empresa")]
+        [ValidateAntiForgeryToken]
+        public IActionResult CrearOfertaDeServicio(NuevaOfertaServicioViewModel nuevaOfertaServicioViewModel)
+        {
+            nuevaOfertaServicioViewModel.categorias = _categoriaService.ObtenerCategorias();
+            ModelState.Remove("categorias");
+
+            if (!ModelState.IsValid)
+            {
+                return View(nuevaOfertaServicioViewModel);
+            }
+
+            int idOfertaServico = _ofertaServicioService.CrearOfertaServicio(nuevaOfertaServicioViewModel);
+            ViewBag.Mensaje = "La oferta fue creada correctamente.";
+            return View(nuevaOfertaServicioViewModel);
         }
     }
 }

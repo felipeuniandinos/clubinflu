@@ -24,9 +24,7 @@ namespace ClubInfluApp.BusinessLogic.Services
 
             if (ExisteUnUsuarioConEseCorreoYEmpresa(usuario.correo, empresa.idEmpresa))
             {
-                throw new Exception(
-                    "Ya existe un usuario asociado a la empresa con ese correo registrado en el sistema"
-                );
+                throw new Exception("|BL|:Ya existe un usuario asociado a la empresa con ese correo registrado en el sistema");
             }
 
             usuario.clave = HashHelper.GenerarHash(usuario.clave);
@@ -145,6 +143,11 @@ namespace ClubInfluApp.BusinessLogic.Services
         public DetalleUsuarioEmpresaViewModel ObtenerDetalleUsuarioEmpresa(int idUsuarioEmpresa)
         {
             return _usuarioEmpresaRepository.ObtenerDetalleUsuarioEmpresa(idUsuarioEmpresa);
+        }
+
+        public Empresa ObtenerEmpresaPorIdUsuarioEmpresa(int idUsuarioEmpresa)
+        {
+            return _usuarioEmpresaRepository.ObtenerEmpresaPorIdUsuarioEmpresa(idUsuarioEmpresa);
         }
     }
 }

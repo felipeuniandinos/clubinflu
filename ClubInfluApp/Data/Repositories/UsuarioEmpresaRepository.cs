@@ -258,5 +258,28 @@ namespace ClubInfluApp.Data.Repositories
                 throw;
             }
         }
+
+        public Empresa ObtenerEmpresaPorIdUsuarioEmpresa(int idUsuarioEmpresa)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+
+            try
+            {
+                string queryObtenerEmpresaPorIdUsuarioEmpresa =
+                  @"
+                    SELECT e.* 
+                    FROM UsuarioEmpresa ue
+                    JOIN Empresa e ON ue.idEmpresa = e.idEmpresa
+                    WHERE ue.idUsuarioEmpresa = @idUsuarioEmpresa;
+                  ";
+
+                return connection.QuerySingle<Empresa>(queryObtenerEmpresaPorIdUsuarioEmpresa, new { idUsuarioEmpresa });
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
