@@ -33,6 +33,13 @@ namespace ClubInfluApp.BusinessLogic.Services
 
             return ofertaServicioViewModel;
         }
+        public List<OfertaServicioViewModel> ObtenerOfertasDeServicioPorEmpresa()
+        {
+            int idEmpresaActual = ObtenerIdEmpresaActual();
+            List<OfertaServicioViewModel> ofertasDeServicioFiltradasPorEmpresa = _ofertaServicioRepository.ObtenerOfertasDeServicioPorEmpresa(idEmpresaActual);
+     
+            return ofertasDeServicioFiltradasPorEmpresa;
+        }
 
         public int CrearOfertaServicio(NuevaOfertaServicioViewModel nuevaOfertaServicioViewModel)
         {
