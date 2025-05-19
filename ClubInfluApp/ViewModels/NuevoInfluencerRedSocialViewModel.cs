@@ -10,5 +10,8 @@ namespace ClubInfluApp.ViewModels
         [Required(ErrorMessage = "El numero de segudires es obligatorio.")]
         public int numeroSeguidores { get; set; }
 
+        [Required(ErrorMessage = "El video es obligatorio.")]
+        public IFormFile videoEstadisticas { get; set; }
+
     }
 }

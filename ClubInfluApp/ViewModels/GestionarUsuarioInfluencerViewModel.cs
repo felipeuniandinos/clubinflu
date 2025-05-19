@@ -28,7 +28,7 @@ namespace ClubInfluApp.ViewModels
         
         public string ciudadsecundaria { get; set; }
         
-        public string estadociudadsecundaria { get; set; }
+        public string estadociudadsecundario { get; set; }
         
         public string paisestadociudadsecundaria { get; set; }
         

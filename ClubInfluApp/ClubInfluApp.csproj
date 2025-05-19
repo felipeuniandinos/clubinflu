@@ -18,10 +18,15 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\videos\estadisticas\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\js\UsuarioInfluencer\GestionarSolicitudesUsuarioInfluencer.js">
+    <Content Update="Views\Shared\_NavbarAccesoDenegado.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\UsuarioInfluencer\GestionarUsuarioInfluencer.js">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

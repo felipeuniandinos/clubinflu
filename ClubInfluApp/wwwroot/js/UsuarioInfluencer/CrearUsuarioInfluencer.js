@@ -28,6 +28,11 @@
                                         <input type="number" name="redesSociales[${redSocialIndex}].numeroSeguidores" class="form-control" required />
                                     </div>
 
+                                    <div class="mb-2">
+                                        <label asp-for="videoEstadisticas" class="form-label">Video</label>
+                                        <input type="file" accept=".mp3,.mp4,.mp5" name="redesSociales[${redSocialIndex}].videoEstadisticas" class="form-control rounded-3" />
+                                    </div>
+
                                     <button type="button" class="btn btn-danger btn-sm removeRedSocial">Eliminar</button>
                                     <hr/>`;
 

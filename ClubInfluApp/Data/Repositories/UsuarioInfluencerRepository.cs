@@ -20,7 +20,6 @@ namespace ClubInfluApp.Data.Repositories
         {
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
-
             using NpgsqlTransaction transaction = connection.BeginTransaction();
 
             try
@@ -43,9 +42,9 @@ namespace ClubInfluApp.Data.Repositories
                     string insertarInfluencerRedSocial =
                     @"
                         INSERT INTO InfluencerRedSocial 
-                        (idInfluencer, idRedSocial, numeroSeguidores, fechaCreacion, fechaActualizacion)
+                        (idInfluencer, idRedSocial, numeroSeguidores, fechaCreacion, fechaActualizacion, videoEstadisticas)
                         VALUES 
-                        (@idInfluencer, @idRedSocial, @numeroSeguidores, @fechaCreacion, @fechaActualizacion);
+                        (@idInfluencer, @idRedSocial, @numeroSeguidores, @fechaCreacion, @fechaActualizacion, @videoEstadisticas);
                     ";
                     connection.Execute(insertarInfluencerRedSocial, redSocial, transaction);
                 }
@@ -164,13 +163,14 @@ namespace ClubInfluApp.Data.Repositories
                     throw new Exception("No se encontró detalles de usuario influencer.");
                 }
 
-                string queryRedesSociales = 
+                string queryRedesSociales =
                 @"
                     SELECT
                         rs.redSocial,
                         irs.numeroSeguidores,
                         irs.fechaCreacion AS redFechaCreacion,
-                        irs.fechaActualizacion AS redFechaActualizacion
+                        irs.fechaActualizacion AS redFechaActualizacion,
+                        irs.videoestadisticas as videoEstadisticas
                     FROM UsuarioInfluencer ui
                     JOIN Influencer i ON ui.idInfluencer = i.idInfluencer
                     JOIN InfluencerRedSocial irs ON i.idInfluencer = irs.idInfluencer

@@ -57,8 +57,11 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-app.UseExceptionHandler("/Inicio/Error");
-app.UseHsts();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Inicio/Error");
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -17,6 +17,5 @@ namespace ClubInfluApp.BusinessLogic.Services
         {
             return _categoriaRepository.ObtenerCategorias();
         }
-    }
-   
+    }   
 }

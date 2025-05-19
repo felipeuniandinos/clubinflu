@@ -147,6 +147,7 @@ CREATE TABLE InfluencerRedSocial (
     activo BOOLEAN DEFAULT TRUE,
     fechaCreacion DATE NOT NULL,
     fechaActualizacion DATE NOT NULL,
+    videoEstadisticas VARCHAR(500) NOT NULL,
     FOREIGN KEY (idInfluencer) REFERENCES Influencer(idInfluencer),
     FOREIGN KEY (idRedSocial) REFERENCES RedSocial(idRedSocial)
 );

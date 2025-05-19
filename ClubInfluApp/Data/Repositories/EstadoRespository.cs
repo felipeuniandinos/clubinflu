@@ -26,8 +26,7 @@ namespace ClubInfluApp.Data.Repositories
             catch
             {
                 throw;
-            }
-            
+            }    
         }
 
         public List<Estado> ObtenerEstadosPorPaisYTermino(int idPais, string termino)

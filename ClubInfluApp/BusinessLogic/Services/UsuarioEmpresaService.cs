@@ -105,13 +105,13 @@ namespace ClubInfluApp.BusinessLogic.Services
             return _usuarioEmpresaRepository.ObtenerUsuariosEmpresa();
         }
 
-        public void ModificacionEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
+        public void ActualizarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
         {
             int estadoActualUsuarioEmpresa = _usuarioEmpresaRepository.ObtenerEstadoUsuarioEmpresa(idUsuarioEmpresa);
 
             if (estadoActualUsuarioEmpresa != idNuevoEstadoUsuario)
             {
-                _usuarioEmpresaRepository.ModificarEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
+                _usuarioEmpresaRepository.ActualizarEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
                 EnviarCorreoActualizacionEstadoUsuarioEmpresa(idUsuarioEmpresa);
             }
             else
@@ -122,7 +122,7 @@ namespace ClubInfluApp.BusinessLogic.Services
 
         private void EnviarCorreoActualizacionEstadoUsuarioEmpresa(int idUsuarioEmpresa)
         {
-            DetalleUsuarioEmpresaViewModel usuarioEmpresa = _usuarioEmpresaRepository.ObtenerDetalleUsuarioEmpresa(idUsuarioEmpresa);
+            GestionarUsuarioEmpresaViewModel usuarioEmpresa = _usuarioEmpresaRepository.GestionarUsuarioEmpresa(idUsuarioEmpresa);
             if (usuarioEmpresa == null)
             {
                 throw new Exception("No se encontró el usuario empresa con ese id");
@@ -140,9 +140,9 @@ namespace ClubInfluApp.BusinessLogic.Services
             );
         }
 
-        public DetalleUsuarioEmpresaViewModel ObtenerDetalleUsuarioEmpresa(int idUsuarioEmpresa)
+        public GestionarUsuarioEmpresaViewModel GestionarUsuarioEmpresa(int idUsuarioEmpresa)
         {
-            return _usuarioEmpresaRepository.ObtenerDetalleUsuarioEmpresa(idUsuarioEmpresa);
+            return _usuarioEmpresaRepository.GestionarUsuarioEmpresa(idUsuarioEmpresa);
         }
 
         public Empresa ObtenerEmpresaPorIdUsuarioEmpresa(int idUsuarioEmpresa)

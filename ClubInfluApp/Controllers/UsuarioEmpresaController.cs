@@ -59,16 +59,16 @@ namespace ClubInfluApp.Controllers
         [HttpGet]
         public IActionResult GestionarUsuarioEmpresa(int idUsuarioEmpresa)
         {
-            DetalleUsuarioEmpresaViewModel detalleUsuarioEmpresa = _usuarioEmpresaService.ObtenerDetalleUsuarioEmpresa(idUsuarioEmpresa);
+            GestionarUsuarioEmpresaViewModel detalleUsuarioEmpresa = _usuarioEmpresaService.GestionarUsuarioEmpresa(idUsuarioEmpresa);
             return View(detalleUsuarioEmpresa);
         }
 
         [HttpPut]
-        public IActionResult ModificarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
+        public IActionResult ActualizarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
         {
             try
             {
-                _usuarioEmpresaService.ModificacionEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
+                _usuarioEmpresaService.ActualizarEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
                 return Json(new { exito = true, mensaje = "El usuario empresa esta actualizado con exito" });
             }
             catch (Exception ex)
