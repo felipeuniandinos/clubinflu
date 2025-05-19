@@ -22,7 +22,6 @@ namespace ClubInfluApp.BusinessLogic.Services
             List<InfluencerRedSocial> redesSociales = CrearRedesSocialesInfluencer(nuevoUsuarioInfluencerViewModel);
             UsuarioInfluencer usuario = CrearNuevoUsuario(nuevoUsuarioInfluencerViewModel);
 
-
             if (ExisteUnUsuarioConEseCorreo(usuario.correo))
             {
                 throw new Exception("Ya existe un usuario con ese correo registrado en el sistema");
@@ -30,6 +29,31 @@ namespace ClubInfluApp.BusinessLogic.Services
 
             usuario.clave = HashHelper.GenerarHash(usuario.clave);
             return _usuarioInfluencerRepository.CrearUsuarioInfluencer(usuario, influencer, redesSociales);
+        }
+
+        private string GuardarVideo(IFormFile archivoVideo)
+        {
+            if (archivoVideo == null || archivoVideo.Length == 0)
+            {
+                throw new Exception("No se ha recibido un archivo de video válido.");
+            }
+
+            string nombreArchivo = Guid.NewGuid().ToString() + Path.GetExtension(archivoVideo.FileName);
+            string carpetaDestino = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", "estadisticas");
+
+            if (!Directory.Exists(carpetaDestino))
+            {
+                Directory.CreateDirectory(carpetaDestino);
+            }
+
+            string rutaFisica = Path.Combine(carpetaDestino, nombreArchivo);
+
+            using (FileStream stream = new FileStream(rutaFisica, FileMode.Create))
+            {
+                archivoVideo.CopyTo(stream);
+            }
+
+            return nombreArchivo;
         }
 
         private Influencer CrearInfluencer(NuevoUsuarioInfluencerViewModel nuevoUsuarioInfluencerViewModel)
@@ -53,9 +77,11 @@ namespace ClubInfluApp.BusinessLogic.Services
         {
             DateTime fechaActual = System.DateTime.Now;
             List<InfluencerRedSocial> redesSociales = new List<InfluencerRedSocial>();
-           
-            foreach(NuevoInfluencerRedSocialViewModel redSocial in nuevoUsuarioInfluencerViewModel.redesSociales)
+            string rutaVideo = "";
+
+            foreach (NuevoInfluencerRedSocialViewModel redSocial in nuevoUsuarioInfluencerViewModel.redesSociales)
             {
+                rutaVideo = GuardarVideo(redSocial.videoEstadisticas);
                 redesSociales.Add(new InfluencerRedSocial
                 {
                     idInfluencerRedSocial = 0,
@@ -63,7 +89,8 @@ namespace ClubInfluApp.BusinessLogic.Services
                     idRedSocial = redSocial.idRedSocial,
                     numeroSeguidores = redSocial.numeroSeguidores,
                     fechaCreacion = fechaActual,
-                    fechaActualizacion = fechaActual
+                    fechaActualizacion = fechaActual,
+                    videoEstadisticas = rutaVideo
                 });
             }
             return redesSociales;

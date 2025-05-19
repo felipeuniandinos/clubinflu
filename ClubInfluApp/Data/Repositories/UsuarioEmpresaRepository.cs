@@ -150,7 +150,7 @@ namespace ClubInfluApp.Data.Repositories
             }
         }
 
-        public DetalleUsuarioEmpresaViewModel ObtenerDetalleUsuarioEmpresa(int idUsuarioEmpresa)
+        public GestionarUsuarioEmpresaViewModel GestionarUsuarioEmpresa(int idUsuarioEmpresa)
         {
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
@@ -184,8 +184,8 @@ namespace ClubInfluApp.Data.Repositories
                     WHERE ue.idUsuarioEmpresa = @idUsuarioEmpresa;
                 ";
 
-                DetalleUsuarioEmpresaViewModel detalleUsuarioEmpresa =
-                    connection.QueryFirstOrDefault<DetalleUsuarioEmpresaViewModel>(
+                GestionarUsuarioEmpresaViewModel detalleUsuarioEmpresa =
+                    connection.QueryFirstOrDefault<GestionarUsuarioEmpresaViewModel>(
                     queryDetalleUsuarioEmpresa,
                      new { idUsuarioEmpresa }
                     );
@@ -203,7 +203,7 @@ namespace ClubInfluApp.Data.Repositories
             }
         }
 
-        public void ModificarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
+        public void ActualizarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
         {
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();

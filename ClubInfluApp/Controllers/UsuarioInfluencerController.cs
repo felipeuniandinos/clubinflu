@@ -63,7 +63,7 @@ namespace ClubInfluApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult GestionarSolicitudesUsuarioInfluencer(int idUsuarioInfluencer)
+        public IActionResult GestionarUsuarioInfluencer(int idUsuarioInfluencer)
         {
             GestionarUsuarioInfluencerViewModel detalleUsuarioInfluencer = _usuarioInfluencerService.GestionarUsuarioInfluencer(idUsuarioInfluencer);
 

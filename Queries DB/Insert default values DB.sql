@@ -79,11 +79,11 @@ INSERT INTO UsuarioAdministrador (
 );
 
 INSERT INTO InfluencerRedSocial (
-    idInfluencer, idRedSocial, numeroSeguidores, activo, fechaCreacion, fechaActualizacion
+    idInfluencer, idRedSocial, numeroSeguidores, activo, videoEstadisticas, fechaCreacion, fechaActualizacion
 ) VALUES 
-    (1, 1, 50000, true, '2023-01-01', '2023-01-01'),
-    (1, 2, 120000, true, '2023-02-15', '2023-02-15'),
-    (1, 3, 75000, false, '2023-03-10', '2023-03-10');
+    (1, 1, 50000, true, 'demo.mp4', '2023-01-01', '2023-01-01'),
+    (1, 2, 120000, true, 'demo.mp4', '2023-02-15', '2023-02-15'),
+    (1, 3, 75000, false, 'demo.mp4', '2023-03-10', '2023-03-10');
 
 INSERT INTO EstadoCupon (estadoCupon) VALUES
 ('No redimido'),

@@ -53,6 +53,10 @@
     {
         @await Html.PartialAsync("_NavbarApplicationEmpresa")
     }
+    else if (bodyClass == "acceso-denegado")
+    {
+        @await Html.PartialAsync("_NavbarAccesoDenegado")
+    }
     else
     {
         @await Html.PartialAsync("_NavbarDefault")

@@ -1,4 +1,4 @@
-﻿@model ClubInfluApp.ViewModels.DetalleUsuarioEmpresaViewModel
+﻿@model ClubInfluApp.ViewModels.GestionarUsuarioEmpresaViewModel
 
 @{
     ViewData["BodyClass"] = "application-admin";
@@ -11,7 +11,7 @@
 <input type="hidden" id="estadoUsuarioInicial" value="@Model.estadoUsuario" />
 <input type="hidden" name="idUsuarioEmpresa" value="@Model.idUsuarioEmpresa" />
 <input type="hidden" name="idActualEstadoUsuario" value="@Model.estadoUsuario" />
-<input type="hidden" id="urlActualizarEstadoEmpresa" value="@Url.Action("ModificarEstadoUsuarioEmpresa", "UsuarioEmpresa")" />
+<input type="hidden" id="urlActualizarEstadoEmpresa" value="@Url.Action("ActualizarEstadoUsuarioEmpresa", "UsuarioEmpresa")" />
 
 
 <div class="container mt-5">

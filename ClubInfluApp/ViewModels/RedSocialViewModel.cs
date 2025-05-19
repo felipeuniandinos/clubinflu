@@ -9,5 +9,7 @@
         public DateTime redfechacreacion { get; set; }
         
         public DateTime redfechaactualizacion { get; set; }
+
+        public string videoEstadisticas { get; set; }
     }
 }
