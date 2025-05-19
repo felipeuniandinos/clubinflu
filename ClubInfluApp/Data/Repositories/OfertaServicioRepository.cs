@@ -17,6 +17,30 @@ namespace ClubInfluApp.Data.Repositories
             dbConnectionString = configuration.GetConnectionString("PostgresConnection");
         }
 
+        public List<OfertaServicioViewModel> ObtenerOfertasDeServicioPorEmpresa(int idEmpresa)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+            try
+            {
+                string sql = "SELECT * FROM obtener_ofertas_servicios_por_empresa(@p_id_empresa);";
+                List<OfertaServicioViewModel> listaDeOfertasYServiciosPorEmpresa = connection
+                       .Query<OfertaServicioViewModel>(sql, new
+                       {
+                           p_id_empresa = idEmpresa
+                       }).ToList();
+
+                return listaDeOfertasYServiciosPorEmpresa;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
         public List<OfertaServicioViewModel> ObtenerOfertasDeServicioFiltradas(FiltroOfertasDeServicio filtroOfertasDeServicio)
         {
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);

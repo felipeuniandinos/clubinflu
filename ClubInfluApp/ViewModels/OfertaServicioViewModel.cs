@@ -17,5 +17,7 @@ namespace ClubInfluApp.ViewModels
         public DateTime fechaFin { get; set; }
         public TimeSpan horaInicio { get; set; }
         public TimeSpan horaFin { get; set; }
+        public int cuposDisponibles { get; set; }
+        public DateTime fechaCreacion { get; set; }
     }
 }

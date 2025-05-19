@@ -29,7 +29,8 @@ namespace ClubInfluApp.Controllers
         [Authorize(Roles = "Empresa")]
         public IActionResult HistoricoOfertasDeServicioEmpresa()
         {
-            return View();
+            List<OfertaServicioViewModel> ofertasServiciosPorEmpresa = _ofertaServicioService.ObtenerOfertasDeServicioPorEmpresa();
+            return View(ofertasServiciosPorEmpresa);
         }
 
         [HttpGet]
