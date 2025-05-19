@@ -1,4 +1,5 @@
 -- DROP TABLES (ordenado para evitar conflictos por claves foráneas)
+DROP TABLE IF EXISTS VideoPublicidad;
 DROP TABLE IF EXISTS CuponServico;
 DROP TABLE IF EXISTS OfertaServicio;
 DROP TABLE IF EXISTS CategoriaOferta;
@@ -193,4 +194,10 @@ CREATE TABLE CuponServico (
     FOREIGN KEY (idInfluencer) REFERENCES Influencer(idInfluencer)
 );
 
-
+CREATE TABLE VideoPublicidad (
+	idVideoPublicidad BIGSERIAL PRIMARY KEY,
+	videoPublicidad VARCHAR(200) NOT NULL,
+	fechaCreacion DATE,
+	idCuponServicio BIGINT NOT NULL,
+	FOREIGN KEY (idCuponServicio) REFERENCES CuponServico(idCuponServicio)
+);

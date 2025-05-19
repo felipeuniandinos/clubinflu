@@ -1,9 +1,50 @@
-﻿<a href="@Url.Action("CrearOfertaDeServicio", "OfertaServicio")" class="btn btn-success mt-4 px-4 py-2 rounded-pill">
-    Ir a Crear Oferta de Servicio
-</a>
+﻿@using ClubInfluApp.ViewModels
+@model List<OfertaServicioViewModel>
 
-<div class="container text-center py-5">
-    <img src="https://i.gifer.com/ZZ5H.gif" alt="En construcción" style="max-width: 250px; margin-bottom: 20px;">
-    <h1 class="text-white">¡Estamos trabajando en el historial de ofertas y cupones de servico!</h1>
-    <p class="text-light">Muy pronto estará disponible. Gracias por tu paciencia 🛠️</p>
+@{
+    ViewData["BodyClass"] = "application-admin";
+    ViewData["Title"] = "Usuarios Influencer";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <a href="@Url.Action("CrearOfertaDeServicio", "OfertaServicio")" class="btn btn-success mt-4 px-4 py-2 rounded-pill">
+            Ir a Crear Oferta de Servicio
+        </a>
+    </div>
+    
+</div>
+
+<br />
+<br />
+
+<div class="table-responsive">
+    <table class="table table-bordered" style="background-color: white; color: black;">
+        <thead class="thead-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Categoria</th>
+                <th>Cupos</th>
+                <th>Tiempos</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ofertaServicio in Model)
+            {
+                <tr>
+                    <td>@ofertaServicio.nombre</td>
+                    <td>@ofertaServicio.descripcion</td>
+                    <td>@ofertaServicio.nombreCategoriaOferta</td>
+                    <td>@ofertaServicio.cuposDisponibles</td>
+                    <td>Inicia: @ofertaServicio.fechaInicio - termina: @ofertaServicio.fechaFin</td>
+                    <td>
+                        <a @*href="@Url.Action("GestionarSolicitudesUsuarioInfluencer", "UsuarioInfluencer", new { idUsuarioInfluencer  = usuarioInfluencer.idUsuarioInfluencer })"*@ class="btn btn-primary">Ver Cupones</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
 </div>

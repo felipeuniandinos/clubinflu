@@ -165,7 +165,7 @@ INSERT INTO OfertaServicio (
 
 
 INSERT INTO CuponServico (
-    codigo, fechaRedencion, idOfertaServicio, idEstadoCupon, idInfluencer
+    codigo, fechaRedencion, idOfertaServicio, idEstadoCupon, idinfluencer 
 ) VALUES
 ('CUPON1001', NULL, 1, 1, null),
 ('CUPON1002', '2025-06-12', 2, 2, 1),
@@ -188,4 +188,31 @@ INSERT INTO CuponServico (
 ('CUPON1019', NULL, 19, 1, NULL),
 ('CUPON1020', NULL, 20, 1, NULL),
 ('CUPON1021', NULL, 21, 1, NULL);
+
+INSERT INTO VideoPublicidad (
+	videopublicidad, fechacreacion, idcuponservicio  
+) VALUES 
+('videoDemo.mp4', CURRENT_DATE, 1),
+('videoDemo.mp4', CURRENT_DATE, 2),
+('videoDemo.mp4', CURRENT_DATE, 3),
+('videoDemo.mp4', CURRENT_DATE, 4),
+('videoDemo.mp4', CURRENT_DATE, 5),
+('videoDemo.mp4', CURRENT_DATE, 6),
+('videoDemo.mp4', CURRENT_DATE, 7),
+('videoDemo.mp4', CURRENT_DATE, 8),
+('videoDemo.mp4', CURRENT_DATE, 9),
+('videoDemo.mp4', CURRENT_DATE, 10),
+('videoDemo.mp4', CURRENT_DATE, 11),
+('videoDemo.mp4', CURRENT_DATE, 12),
+('videoDemo.mp4', CURRENT_DATE, 13),
+('videoDemo.mp4', CURRENT_DATE, 14),
+('videoDemo.mp4', CURRENT_DATE, 15),
+('videoDemo.mp4', CURRENT_DATE, 16),
+('videoDemo.mp4', CURRENT_DATE, 17),
+('videoDemo.mp4', CURRENT_DATE, 18),
+('videoDemo.mp4', CURRENT_DATE, 19),
+('videoDemo.mp4', CURRENT_DATE, 20),
+('videoDemo.mp4', CURRENT_DATE, 21);
+
+
 
