@@ -5,6 +5,6 @@ namespace ClubInfluApp.BusinessLogic.Interfaces
 {
     public interface ICuponServicioService
     {
-        public void ReservarCuponOfertaServicio(CuponServicioViewModel cuponServicioViewModel);
+        public void ReservarCuponOfertaServicio(int idOfertaServicio);
     }
 }

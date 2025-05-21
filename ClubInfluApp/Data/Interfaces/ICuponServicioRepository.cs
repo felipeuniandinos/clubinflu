@@ -5,6 +5,6 @@ namespace ClubInfluApp.Data.Interfaces
 {
     public interface ICuponServicioRepository
     {
-        public void ReservarCuponOfertaServicio(CuponServicioViewModel cuponServicioViewModel);
+        public void ReservarCuponOfertaServicio(int idOfertaServicio, int idUsuarioInfluencer);
     }
 }

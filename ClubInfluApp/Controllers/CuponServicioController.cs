@@ -20,12 +20,12 @@ namespace ClubInfluApp.Controllers
 
  
         [HttpPut]
-        public IActionResult ReservarCuponOfertaServicio(CuponServicioViewModel cuponServicioViewModel)
+        public IActionResult ReservarCuponOfertaServicio(int idOfertaServicio)
         {
             try
             {
-                _cuponServicioService.ReservarCuponOfertaServicio(cuponServicioViewModel);
-                return Json(new { exito = true, mensaje = "La reswerva de cupon se ha realizado con exito" });
+                _cuponServicioService.ReservarCuponOfertaServicio(idOfertaServicio);
+                return Json(new { exito = true, mensaje = "La reserva de cupon se ha realizado con exito" });
             }
             catch (Exception ex)
             {

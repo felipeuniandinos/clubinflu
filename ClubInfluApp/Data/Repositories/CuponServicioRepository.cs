@@ -15,33 +15,53 @@ namespace ClubInfluApp.Data.Repositories
             dbConnectionString = configuration.GetConnectionString("PostgresConnection");
         }
 
-        public void ReservarCuponOfertaServicio(CuponServicioViewModel cuponServicioViewModel)
+        public void ReservarCuponOfertaServicio(int idOfertaServicio, int idUsuarioInfluencer)
         {
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
 
-            using var transaction = connection.BeginTransaction();
+            NpgsqlTransaction transaction = connection.BeginTransaction();
 
             try
             {
-                string queryReservarCuponOfertaServicio =
-                    @" UPDATE cuponservico
-                        SET fecharedencion = @fecharedencion,
-                            idestadocupon = @idNuevoEstadoCupon,
-                            idinfluencer = @idUsuarioInfluencer
-                        WHERE idcuponservicio  = @idcuponservicio
-                    ";
+                string queryObtenerPrimerCuponDisponible = @"
+                    SELECT idcuponservicio 
+                    FROM cuponservico 
+                    WHERE idofertaservicio = @idOfertaServicio
+                      AND idinfluencer IS NULL
+                    ORDER BY idcuponservicio
+                    LIMIT 1
+                ";
 
-                connection.Execute(
-                    queryReservarCuponOfertaServicio,new{ cuponServicioViewModel }, transaction );
+                int? idCuponServicio = connection.QueryFirstOrDefault<int?>(queryObtenerPrimerCuponDisponible, new { idOfertaServicio }, transaction);
+
+                if (idCuponServicio == null)
+                {
+                    throw new Exception("No hay cupones disponibles para esta oferta."); //Recuerda lo de BL
+                }
+
+                string queryActualizarCupon = @"
+                    UPDATE cuponservico
+                    SET fecharedencion = @fecharedencion,
+                        idestadocupon = @idEstadoCupon,
+                        idinfluencer = @idUsuarioInfluencer
+                    WHERE idcuponservicio = @idCuponServicio
+                ";
+
+                connection.Execute(queryActualizarCupon, new
+                {
+                    fecharedencion = DateTime.Now,
+                    idEstadoCupon = 2, // Dejarlo como constante REDIMIDO
+                    idUsuarioInfluencer,
+                    idCuponServicio
+                }, transaction);
 
                 transaction.Commit();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 transaction.Rollback();
-                throw new Exception("Error al reservar el cupon servicio.", ex);
-                ;
+                throw new Exception("Error al reservar el cupón servicio."); //Recuerda lo de BL
             }
         }
     }
