@@ -57,7 +57,7 @@ BEGIN
       AND os.activo = TRUE
       AND EXISTS (
           SELECT 1
-          FROM CuponServico cs
+          FROM CuponServicio cs
           WHERE cs.idOfertaServicio = os.idOfertaServicio
             AND cs.idEstadoCupon = 1 
             AND cs.idInfluencer IS NULL 

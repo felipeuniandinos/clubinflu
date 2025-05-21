@@ -1,0 +1,74 @@
+﻿@using ClubInfluApp.ViewModels
+@model List<CuponServicioViewModel>
+
+@{
+    ViewData["BodyClass"] = "application-empresa";
+    ViewData["Title"] = "Detalle Cupones";
+}
+
+<style>
+    h1, label {
+        color: white;
+    }
+
+    .card-img-top {
+        max-height: 220px;
+        object-fit: cover;
+    }
+</style>
+
+<h1 class="text-center mb-5">Detalle Cupones</h1>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+    @foreach (CuponServicioViewModel cuponServicio in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <img src="@Url.Content($"~/imagenes/qr.png")" class="card-img-top" alt="qr" @*style="object-fit: contain; width: 100%; height: 100%;"*@>
+                <div class="card-body">                                       
+                    <p class="mb-1"><strong>Codigo Cupon:</strong>  @cuponServicio.codigo </p>
+                    <p class="mb-1">
+                        <strong>Fecha redención:</strong>
+                        @(cuponServicio.fechaRedencion.HasValue
+                            ? cuponServicio.fechaRedencion.Value.ToString("dd/MM/yyyy")
+                            : "Aún no redimido")
+                    </p>      
+                    <p class="mb-1"><strong>estadocupon:</strong>  @cuponServicio.nombreEstadoCupon</p>
+                    <p>
+                        <strong>Nombre influencer:</strong>
+                        @(string.IsNullOrWhiteSpace(cuponServicio.nombreInfluencer)
+                            ? "No asignado"
+                            : cuponServicio.nombreInfluencer)
+                    </p>
+                    <p class="mb-1"><strong>Videos Publicidad:</strong></p>
+
+                    @if (cuponServicio.videoPublicidad != null && cuponServicio.videoPublicidad.Count > 0)
+                    {
+                        foreach (var video in cuponServicio.videoPublicidad)
+                        {
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <a href="@Url.Content("~/videos/publicidades/" + video)" target="_blank" class="btn btn-success w-100">
+                                        Ver video
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="@Url.Content("~/videos/publicidades/" + video)"
+                                       download="Video cupon @cuponServicio.codigo"
+                                       class="btn btn-outline-primary w-100">
+                                        Descargar video
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">No hay videos registrados</p>
+                    }                    
+                </div>
+            </div>
+        </div>
+    }
+</div>
