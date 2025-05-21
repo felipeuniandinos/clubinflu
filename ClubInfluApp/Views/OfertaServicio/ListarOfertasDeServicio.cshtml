@@ -6,6 +6,11 @@
     ViewData["Title"] = "Ofertas De Servicio";
 }
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<input type="hidden" id="urlReservarCuponOfertaServicio" value="@Url.Action("ReservarCuponOfertaServicio", "CuponServicio")" />
+
 <style>
     h1, label {
         color: white;
@@ -74,7 +79,7 @@
                     <p class="mb-1"><strong>Dirección:</strong> @ofertaServicio.direccion</p>
                     <p class="mb-1"><strong>Válido:</strong> @ofertaServicio.fechaInicio - @ofertaServicio.fechaFin</p>
                     <p><strong>Horario:</strong> @ofertaServicio.horaInicio - @ofertaServicio.horaFin</p>
-                    <a href="#" class="btn btn-success w-100">Reservar Cupón</a>
+                    <a class="btn btn-success w-100 btn-reservar-cupon">Reservar Cupón</a>
                 </div>
             </div>
         </div>
@@ -85,5 +90,6 @@
 <!-- Activa la validación en el cliente -->
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/ofertaservicio/listarofertasdeservicio.js"></script>
 }
