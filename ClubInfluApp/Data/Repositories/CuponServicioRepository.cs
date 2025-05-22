@@ -20,19 +20,19 @@ namespace ClubInfluApp.Data.Repositories
             connection.Open();
             try
             {
-                string sql = "SELECT * FROM obtener_cupones_servicio_por_oferta_servico(@p_id_ofeta_servicio);";
+                string sqlListaDeCuponesPorEmpresa = "SELECT * FROM obtener_cupones_servicio_por_oferta_servico(@p_id_ofeta_servicio);";
                 List<CuponServicioViewModel> listaDeCuponesPorEmpresa = connection
-                       .Query<CuponServicioViewModel>(sql, new
+                       .Query<CuponServicioViewModel>(sqlListaDeCuponesPorEmpresa, new
                        {
                            p_id_ofeta_servicio = idOfertaServicio
                        }).ToList();
 
                 foreach (var cupon in listaDeCuponesPorEmpresa)
                 {
-                    string sql2 = "SELECT videoPublicidad FROM videoPublicidad WHERE idCuponServicio = @idCuponServicio";
-                    List<string> listaDeVideos = connection
-                           .Query<string>(sql2, new { idCuponServicio = cupon.idCuponServicio }).ToList();
-                    cupon.videoPublicidad = listaDeVideos;
+                    string sqllistaDeVideosPorCupon = "SELECT videoPublicidad FROM videoPublicidad WHERE idCuponServicio = @idCuponServicio";
+                    List<string> listaDeVideosPorCupon = connection
+                           .Query<string>(sqllistaDeVideosPorCupon, new { idCuponServicio = cupon.idCuponServicio }).ToList();
+                    cupon.videoPublicidad = listaDeVideosPorCupon;
                 }
 
                     return listaDeCuponesPorEmpresa;
