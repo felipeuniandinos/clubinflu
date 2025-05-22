@@ -22,7 +22,7 @@ BEGIN
     FROM CuponServicio cs
     JOIN EstadoCupon ec ON cs.idestadocupon = ec.idestadocupon
     LEFT JOIN influencer i ON cs.idInfluencer = i.idInfluencer
-    WHERE ( p_id_oferta_servicio = 0 OR cs.idOfertaServicio =  p_id_oferta_servicio );
+    WHERE cs.idOfertaServicio =  p_id_oferta_servicio;
 END;
 $$ LANGUAGE plpgsql;
 

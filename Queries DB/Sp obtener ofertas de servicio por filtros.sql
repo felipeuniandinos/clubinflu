@@ -55,7 +55,7 @@ BEGIN
     WHERE (p_id_categoria_oferta = 0 OR os.idCategoriaOferta = p_id_categoria_oferta) 
       AND (p_id_estado = 0 OR est.idEstado = p_id_estado)
       AND os.activo = TRUE
-     
+	ORDER BY os.idOfertaServicio DESC;  
 END;
 $$ LANGUAGE plpgsql;
 

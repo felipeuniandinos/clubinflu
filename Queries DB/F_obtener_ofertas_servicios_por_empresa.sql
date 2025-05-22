@@ -51,7 +51,9 @@ BEGIN
     JOIN Ciudad c ON e.idCiudad = c.idCiudad
     JOIN Estado est ON c.idEstado = est.idEstado
     JOIN Pais p ON est.idPais = p.idPais
- 	ORDER BY os.fechaCreacion DESC; 
+	WHERE os.idEmpresa = p_id_empresa
+    AND os.activo = TRUE
+ 	ORDER BY os.idOfertaServicio DESC; 
 END;
 $$ LANGUAGE plpgsql;
 
