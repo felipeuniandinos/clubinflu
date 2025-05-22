@@ -32,7 +32,6 @@ builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IGeneroRepository, GeneroRepository>();
 builder.Services.AddScoped<IRedSocialRepository, RedSocialRepository>();
 builder.Services.AddScoped<ICuponServicioRepository, CuponServicioRepository>();
-builder.Services.AddScoped<IVideoPublicidadRepository, VideoPublicidadRepository>();
 
 //Add Helpers to the container.
 NotificacionesCorreoHelper.Configurar(builder.Configuration);
