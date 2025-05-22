@@ -8,6 +8,7 @@ namespace ClubInfluApp.Data.Repositories
 {
     public class CuponServicioRepository: ICuponServicioRepository
     {
+        public const int ESTADO_CUPON_REDIMIDO = 2;
         private readonly string dbConnectionString;
 
         public CuponServicioRepository(IConfiguration configuration)
@@ -37,7 +38,7 @@ namespace ClubInfluApp.Data.Repositories
 
                 if (idCuponServicio == null)
                 {
-                    throw new Exception("No hay cupones disponibles para esta oferta."); //Recuerda lo de BL
+                    throw new Exception("No hay cupones disponibles para esta oferta."); 
                 }
 
                 string queryActualizarCupon = @"
@@ -51,7 +52,7 @@ namespace ClubInfluApp.Data.Repositories
                 connection.Execute(queryActualizarCupon, new
                 {
                     fecharedencion = DateTime.Now,
-                    idEstadoCupon = 2, // Dejarlo como constante REDIMIDO
+                    idEstadoCupon = ESTADO_CUPON_REDIMIDO, 
                     idUsuarioInfluencer,
                     idCuponServicio
                 }, transaction);
@@ -61,7 +62,59 @@ namespace ClubInfluApp.Data.Repositories
             catch (Exception)
             {
                 transaction.Rollback();
-                throw new Exception("Error al reservar el cupón servicio."); //Recuerda lo de BL
+                throw new Exception("Error al reservar el cupón servicio."); 
+            }
+        }
+
+        public string ValidarCuponOfertaServicio(int idOfertaServicio, int idInfluencer)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+            try
+            {
+                string sql = "SELECT validar_reserva_oferta(@p_idOfertaServicio, @p_idInfluencer);";
+                string MensajeValidacion = connection
+                         .Query<string>(sql, new
+                         {
+                             p_idOfertaServicio = idOfertaServicio,
+                             p_idInfluencer = idInfluencer,
+                         }).SingleOrDefault();
+                return MensajeValidacion;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public OfertaServicioViewModel ObtenetCodigoNombreOfertaPorOfertaServicio(int idOfertaServicio)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+
+            try
+            {
+                string query =
+                    @"
+                        SELECT 
+                            cs.codigo,
+                            os.nombre
+                        FROM 
+                            CuponServico cs
+                        JOIN 
+                            OfertaServicio os ON cs.idOfertaServicio = os.idOfertaServicio
+                        WHERE 
+                            cs.idOfertaServicio = @idOfertaServicio;
+                    ";
+                return connection.QueryFirstOrDefault<OfertaServicioViewModel>(query, new { idOfertaServicio });
+            }
+            catch
+            {
+                throw;
             }
         }
     }

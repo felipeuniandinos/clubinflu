@@ -1,6 +1,7 @@
 ﻿using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.Data.Interfaces;
 using ClubInfluApp.Data.Repositories;
+using ClubInfluApp.Helpers;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
 
@@ -11,24 +12,37 @@ namespace ClubInfluApp.BusinessLogic.Services
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICuponServicioRepository _cuponServicioRepository;
+        private readonly IUsuarioInfluencerService _usuarioInfluencerService;
+        private readonly IUsuarioInfluencerRepository _usuarioInfluencerRepository;
 
-        public CuponServicioService(IHttpContextAccessor httpContextAccessor, ICuponServicioRepository cuponServicioRepository)
+        public CuponServicioService(IHttpContextAccessor httpContextAccessor, ICuponServicioRepository cuponServicioRepository, IUsuarioInfluencerService usuarioInfluencerService, IUsuarioInfluencerRepository usuarioInfluencerRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _cuponServicioRepository = cuponServicioRepository;
+            _usuarioInfluencerService = usuarioInfluencerService;
+            _usuarioInfluencerRepository = usuarioInfluencerRepository;
         }
 
         public void ReservarCuponOfertaServicio(int idOfertaServicio)
         {
             int idInfluencer = ObtenerIdInfluencerActual();
-            ValidarSiSePuedeReservarUnCuponParaLaOfertaServicio(idOfertaServicio, idInfluencer);
-            _cuponServicioRepository.ReservarCuponOfertaServicio(idOfertaServicio, idInfluencer);
+            string respuestaValidacion = ValidarSiSePuedeReservarUnCuponParaLaOfertaServicio(idOfertaServicio, idInfluencer);
+            if(respuestaValidacion == "Validación exitosa: Puede redimir el cupón.")
+            {
+                _cuponServicioRepository.ReservarCuponOfertaServicio(idOfertaServicio, idInfluencer);
+                EnviarCorreoReservarCuponOfertaServicio(idInfluencer, idOfertaServicio);
+            }
+            else 
+            { 
+                throw new Exception(respuestaValidacion);
+            } 
         }
 
-        private void ValidarSiSePuedeReservarUnCuponParaLaOfertaServicio(int idOfertaServicio, int idInfluencer)
+        private string ValidarSiSePuedeReservarUnCuponParaLaOfertaServicio(int idOfertaServicio, int idInfluencer)
         {
             // Aquí puedes implementar la lógica para validar si se puede reservar un cupón para la oferta de servicio.
             // Por ejemplo, verificar si hay cupones disponibles o si el usuario ya ha reservado un cupón. --TODO HACERLO CON UNA FUNCION EN LA DB
+            return _cuponServicioRepository.ValidarCuponOfertaServicio(idOfertaServicio, idInfluencer);
         }
 
         private int ObtenerIdInfluencerActual()
@@ -47,8 +61,29 @@ namespace ClubInfluApp.BusinessLogic.Services
             }
 
             int idUsuarioInfluencer = int.Parse(userIdStr);
-            // int idInfluencer = _usuarioInfluencerService.ObtenerInfluencesPorIdUsuarioInfluencer(idUsuarioInfluencer).idInfluencer; //Completar esto
-            return 1; //Luego retornar lo que es
+            int idInfluencer = _usuarioInfluencerService.ObtenerInfluencerPorIdUsuarioInfluencer(idUsuarioInfluencer).idInfluencer;
+            return idInfluencer; 
+        }
+
+        private void EnviarCorreoReservarCuponOfertaServicio(int idUsuarioInfluencer, int idOfertaServicio)
+        {
+            GestionarUsuarioInfluencerViewModel usuarioInfluencer = _usuarioInfluencerRepository.GestionarUsuarioInfluencer(idUsuarioInfluencer);
+            OfertaServicioViewModel codigoNombreOfertaServicio = _cuponServicioRepository.ObtenetCodigoNombreOfertaPorOfertaServicio(idOfertaServicio);
+            if (usuarioInfluencer == null)
+            {
+                throw new Exception("No se encontró el usuario influencer con ese id");
+            }
+
+            NotificacionesCorreoHelper.EnviarCorreo(
+                new List<string> { usuarioInfluencer.correo },
+                "Reserva Cupon Oferta Servicio - ClubInflu",
+                $@" Estimado/a <strong>{usuarioInfluencer.nombre}</strong>,<br /><br />
+                    Le informamos que, la reserva de oferta servicio  <strong>{codigoNombreOfertaServicio.nombre}</strong> se realizo correctamente, su codigo de reserva en
+                    <strong>ClubInflu</strong> es: <strong>{codigoNombreOfertaServicio.codigo}</strong>.
+                    <br /><br /> 
+                    Para más información, por favor contáctese con nosotros al <strong>+1 (555) 123-4567</strong> o escriba a <strong>soporte@clubinflu.com</strong>.
+                "
+            );
         }
     }
 }

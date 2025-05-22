@@ -104,7 +104,7 @@ namespace ClubInfluApp.Controllers
 
         [HttpGet]
         public JsonResult ObtenerEstadosPorPaisYTermino(int idPais, string termino)
-        {
+      {
             try
             {
                 List<Estado> estados = _estadoService.ObtenerEstadosPorPaisYTermino(idPais, termino);

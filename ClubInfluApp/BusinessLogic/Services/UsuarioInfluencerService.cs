@@ -1,5 +1,6 @@
 ﻿using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.Data.Interfaces;
+using ClubInfluApp.Data.Repositories;
 using ClubInfluApp.Helpers;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
@@ -163,6 +164,11 @@ namespace ClubInfluApp.BusinessLogic.Services
                     Para más información, por favor contáctese con nosotros al <strong>+1 (555) 123-4567</strong> o escriba a <strong>soporte@clubinflu.com</strong>.
                 "
             );
+        }
+
+        public Influencer ObtenerInfluencerPorIdUsuarioInfluencer(int idUsuarioInfluencer)
+        {
+            return _usuarioInfluencerRepository.ObtenerInfluencerPorIdUsuarioInfluencer(idUsuarioInfluencer);
         }
     }
 }

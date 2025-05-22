@@ -16,5 +16,7 @@ namespace ClubInfluApp.Data.Interfaces
         public void ActualizarEstadoUsuarioInfluencer(int idUsuarioInfluencer, int idEstadoUsuarioInfluencer);
         
         public int ObtenerEstadoUsuarioInfluencer(int idUsuarioInfluencer);
+
+        public Influencer ObtenerInfluencerPorIdUsuarioInfluencer(int idUsuarioInfluencer);
     }
 }
