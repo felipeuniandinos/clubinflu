@@ -55,13 +55,7 @@ BEGIN
     WHERE (p_id_categoria_oferta = 0 OR os.idCategoriaOferta = p_id_categoria_oferta) 
       AND (p_id_estado = 0 OR est.idEstado = p_id_estado)
       AND os.activo = TRUE
-      AND EXISTS (
-          SELECT 1
-          FROM CuponServico cs
-          WHERE cs.idOfertaServicio = os.idOfertaServicio
-            AND cs.idEstadoCupon = 1 
-            AND cs.idInfluencer IS NULL 
-      );
+	ORDER BY os.idOfertaServicio DESC;  
 END;
 $$ LANGUAGE plpgsql;
 

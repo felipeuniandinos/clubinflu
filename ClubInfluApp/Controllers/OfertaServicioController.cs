@@ -10,11 +10,13 @@ namespace ClubInfluApp.Controllers
     {
         private readonly IOfertaServicioService _ofertaServicioService;
         private readonly ICategoriaService _categoriaService;
+        private readonly ICuponServicioService _cuponServicioService;
 
-        public OfertaServicioController(IOfertaServicioService ofertaServicioService, ICategoriaService categoriaService)
+        public OfertaServicioController(IOfertaServicioService ofertaServicioService, ICategoriaService categoriaService, ICuponServicioService cuponServicioService)
         {
             _ofertaServicioService = ofertaServicioService;
             _categoriaService = categoriaService;
+            _cuponServicioService = cuponServicioService;
         }
 
         [HttpGet]
@@ -31,6 +33,15 @@ namespace ClubInfluApp.Controllers
         {
             List<OfertaServicioViewModel> ofertasServiciosPorEmpresa = _ofertaServicioService.ObtenerOfertasDeServicioPorEmpresa();
             return View(ofertasServiciosPorEmpresa);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Empresa")]
+        public IActionResult DetalleCupones(int idOfertaServicio)
+        {
+            List<CuponServicioViewModel> cuponesServicio = _cuponServicioService.ObtenerCuponesPorOfertaServicio(idOfertaServicio);
+
+            return View(cuponesServicio);
         }
 
         [HttpGet]
