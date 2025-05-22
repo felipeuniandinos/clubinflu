@@ -51,15 +51,6 @@ BEGIN
     JOIN Ciudad c ON e.idCiudad = c.idCiudad
     JOIN Estado est ON c.idEstado = est.idEstado
     JOIN Pais p ON est.idPais = p.idPais
-    WHERE (p_id_empresa = 0 OR os.idEmpresa = p_id_empresa)
-      AND os.activo = TRUE
-      AND EXISTS (
-          SELECT 1
-          FROM CuponServicio cs
-          WHERE cs.idOfertaServicio = os.idOfertaServicio
-            AND cs.idEstadoCupon = 1 
-            AND cs.idInfluencer IS NULL 
-      )
  	ORDER BY os.fechaCreacion DESC; 
 END;
 $$ LANGUAGE plpgsql;

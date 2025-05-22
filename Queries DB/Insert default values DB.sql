@@ -253,8 +253,6 @@ INSERT INTO VideoPublicidad (
 ('videoDemo.mp4', CURRENT_DATE, 17),
 ('videoDemo.mp4', CURRENT_DATE, 20),
 ('videoDemo.mp4', CURRENT_DATE, 20),
-('videoDemo.mp4', CURRENT_DATE, 23),
-('videoDemo.mp4', CURRENT_DATE, 23),
 ('videoDemo.mp4', CURRENT_DATE, 26),
 ('videoDemo.mp4', CURRENT_DATE, 26),
 ('videoDemo.mp4', CURRENT_DATE, 29),
