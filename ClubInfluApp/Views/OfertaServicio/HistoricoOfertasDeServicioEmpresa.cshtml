@@ -2,7 +2,7 @@
 @model List<OfertaServicioViewModel>
 
 @{
-    ViewData["BodyClass"] = "application-admin";
+    ViewData["BodyClass"] = "application-empresa";
     ViewData["Title"] = "Usuarios Influencer";
 }
 
@@ -40,7 +40,7 @@
                     <td>@ofertaServicio.cuposDisponibles</td>
                     <td>Inicia: @ofertaServicio.fechaInicio - termina: @ofertaServicio.fechaFin</td>
                     <td>
-                        <a @*href="@Url.Action("GestionarSolicitudesUsuarioInfluencer", "UsuarioInfluencer", new { idUsuarioInfluencer  = usuarioInfluencer.idUsuarioInfluencer })"*@ class="btn btn-primary">Ver Cupones</a>
+                        <a href="@Url.Action("DetalleCupones", "OfertaServicio", new {idOfertaServicio = ofertaServicio.idOfertaServicio})" class="btn btn-primary">Ver Cupones</a>
                     </td>
                 </tr>
 

@@ -10,8 +10,14 @@ DECLARE
     v_ultimaRedencion DATE;
 BEGIN
     -- Validación 1: Verificar que la oferta existe y no esté expirada
-    SELECT fechaInicio, fechaFin, cuposDisponibles
-    INTO v_fechaInicio, v_fechaFin, v_cuposDisponibles
+	SELECT COUNT(*)
+	INTO v_cuposDisponibles
+	FROM CuponServicio
+	WHERE idOfertaServicio = p_idOfertaServicio
+	  AND idInfluencer IS NULL;
+	
+    SELECT fechaInicio, fechaFin
+    INTO v_fechaInicio, v_fechaFin
     FROM OfertaServicio
     WHERE idOfertaServicio = p_idOfertaServicio;
 
@@ -19,8 +25,12 @@ BEGIN
         RETURN 'Error: La oferta de servicio no existe.';
     END IF;
 
-    IF CURRENT_DATE < v_fechaInicio OR CURRENT_DATE > v_fechaFin THEN
-        RETURN 'Error: La oferta de servicio está expirada o aún no comienza.';
+    IF CURRENT_DATE < v_fechaInicio THEN
+        RETURN 'Error: La oferta de servicio aún no comienza.';
+    END IF;
+
+	IF CURRENT_DATE > v_fechaFin THEN
+        RETURN 'Error: La oferta de servicio está expirada.';
     END IF;
 
     -- Validación 2: Verificar que haya cupos disponibles
@@ -31,7 +41,7 @@ BEGIN
     -- Validación 3: El influencer no puede redimir más de un cupón por mes para la misma oferta
     SELECT MAX(cs.fechaRedencion)
     INTO v_ultimaRedencion
-    FROM CuponServico cs
+    FROM CuponServicio cs
     WHERE cs.idOfertaServicio = p_idOfertaServicio
       AND cs.idInfluencer = p_idInfluencer;
 

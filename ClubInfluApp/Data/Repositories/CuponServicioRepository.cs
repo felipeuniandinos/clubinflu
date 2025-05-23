@@ -6,7 +6,7 @@ using Npgsql;
 
 namespace ClubInfluApp.Data.Repositories
 {
-    public class CuponServicioRepository: ICuponServicioRepository
+    public class CuponServicioRepository : ICuponServicioRepository
     {
         public const int ESTADO_CUPON_REDIMIDO = 2;
         private readonly string dbConnectionString;
@@ -38,7 +38,7 @@ namespace ClubInfluApp.Data.Repositories
 
                 if (idCuponServicio == null)
                 {
-                    throw new Exception("No hay cupones disponibles para esta oferta."); 
+                    throw new Exception("No hay cupones disponibles para esta oferta.");
                 }
 
                 string queryActualizarCupon = @"
@@ -52,7 +52,7 @@ namespace ClubInfluApp.Data.Repositories
                 connection.Execute(queryActualizarCupon, new
                 {
                     fecharedencion = DateTime.Now,
-                    idEstadoCupon = ESTADO_CUPON_REDIMIDO, 
+                    idEstadoCupon = ESTADO_CUPON_REDIMIDO,
                     idUsuarioInfluencer,
                     idCuponServicio
                 }, transaction);
@@ -62,7 +62,7 @@ namespace ClubInfluApp.Data.Repositories
             catch (Exception)
             {
                 transaction.Rollback();
-                throw new Exception("Error al reservar el cupón servicio."); 
+                throw new Exception("Error al reservar el cupón servicio.");
             }
         }
 
@@ -73,7 +73,7 @@ namespace ClubInfluApp.Data.Repositories
             try
             {
                 string sql = "SELECT validar_reserva_oferta(@p_idOfertaServicio, @p_idInfluencer);";
-                string MensajeValidacion = connection.Query<string>(sql, new { p_idOfertaServicio = idOfertaServicio, p_idInfluencer = idInfluencer}).SingleOrDefault();
+                string MensajeValidacion = connection.Query<string>(sql, new { p_idOfertaServicio = idOfertaServicio, p_idInfluencer = idInfluencer }).SingleOrDefault();
 
                 return MensajeValidacion;
             }
@@ -113,5 +113,35 @@ namespace ClubInfluApp.Data.Repositories
                 throw;
             }
         }
+
+        public List<CuponServicioViewModel> ObtenerCuponesPorOfertaServicio(int idOfertaServicio)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+            try
+            {
+                string sqlListaDeCuponesPorEmpresa = "SELECT * FROM obtener_cupones_servicio_por_oferta_servico(@p_id_ofeta_servicio);";
+                List<CuponServicioViewModel> listaDeCuponesPorEmpresa = connection
+                       .Query<CuponServicioViewModel>(sqlListaDeCuponesPorEmpresa, new
+                       {
+                           p_id_ofeta_servicio = idOfertaServicio
+                       }).ToList();
+
+                foreach (var cupon in listaDeCuponesPorEmpresa)
+                {
+                    string sqllistaDeVideosPorCupon = "SELECT videoPublicidad FROM videoPublicidad WHERE idCuponServicio = @idCuponServicio";
+                    List<string> listaDeVideosPorCupon = connection
+                           .Query<string>(sqllistaDeVideosPorCupon, new { idCuponServicio = cupon.idCuponServicio }).ToList();
+                    cupon.videoPublicidad = listaDeVideosPorCupon;
+                }
+
+                return listaDeCuponesPorEmpresa;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
+

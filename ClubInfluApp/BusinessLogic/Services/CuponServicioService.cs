@@ -1,6 +1,7 @@
 ﻿using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.Data.Interfaces;
 using ClubInfluApp.Helpers;
+using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
 
 namespace ClubInfluApp.BusinessLogic.Services
@@ -23,15 +24,15 @@ namespace ClubInfluApp.BusinessLogic.Services
         {
             int idInfluencer = ObtenerIdInfluencerActual();
             string respuestaValidacion = ValidarSiSePuedeReservarUnCuponParaLaOfertaServicio(idOfertaServicio, idInfluencer);
-            if(respuestaValidacion == "Validación exitosa: Puede redimir el cupón.")
+            if (respuestaValidacion == "Validación exitosa: Puede redimir el cupón.")
             {
                 _cuponServicioRepository.ReservarCuponOfertaServicio(idOfertaServicio, idInfluencer);
                 EnviarCorreoReservarCuponOfertaServicio(idInfluencer, idOfertaServicio);
             }
-            else 
-            { 
+            else
+            {
                 throw new Exception(respuestaValidacion);
-            } 
+            }
         }
 
         private string ValidarSiSePuedeReservarUnCuponParaLaOfertaServicio(int idOfertaServicio, int idInfluencer)
@@ -56,7 +57,7 @@ namespace ClubInfluApp.BusinessLogic.Services
 
             int idUsuarioInfluencer = int.Parse(userIdStr);
             int idInfluencer = _usuarioInfluencerService.ObtenerInfluencerPorIdUsuarioInfluencer(idUsuarioInfluencer).idInfluencer;
-            return idInfluencer; 
+            return idInfluencer;
         }
 
         private void EnviarCorreoReservarCuponOfertaServicio(int idUsuarioInfluencer, int idOfertaServicio)
@@ -78,6 +79,11 @@ namespace ClubInfluApp.BusinessLogic.Services
                     Para más información, por favor contáctese con nosotros al <strong>+1 (555) 123-4567</strong> o escriba a <strong>soporte@clubinflu.com</strong>.
                 "
             );
+        }
+
+        public List<CuponServicioViewModel> ObtenerCuponesPorOfertaServicio(int idOfertaServicio)
+        {
+            return _cuponServicioRepository.ObtenerCuponesPorOfertaServicio(idOfertaServicio);
         }
     }
 }

@@ -1,6 +1,6 @@
 -- DROP TABLES (ordenado para evitar conflictos por claves foráneas)
 DROP TABLE IF EXISTS VideoPublicidad;
-DROP TABLE IF EXISTS CuponServico;
+DROP TABLE IF EXISTS CuponServicio;
 DROP TABLE IF EXISTS OfertaServicio;
 DROP TABLE IF EXISTS CategoriaOferta;
 DROP TABLE IF EXISTS EstadoCupon;
@@ -182,7 +182,7 @@ CREATE TABLE EstadoCupon (
     estadoCupon VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE CuponServico (
+CREATE TABLE CuponServicio (
     idCuponServicio BIGSERIAL PRIMARY KEY,
     codigo VARCHAR(200) NOT NULL,
     fechaRedencion DATE,
@@ -199,5 +199,5 @@ CREATE TABLE VideoPublicidad (
 	videoPublicidad VARCHAR(200) NOT NULL,
 	fechaCreacion DATE,
 	idCuponServicio BIGINT NOT NULL,
-	FOREIGN KEY (idCuponServicio) REFERENCES CuponServico(idCuponServicio)
+	FOREIGN KEY (idCuponServicio) REFERENCES CuponServicio(idCuponServicio)
 );
