@@ -7,6 +7,6 @@
         public DateTime? fechaRedencion { get; set; }
         public int idOfertaServicio { get; set; }
         public int idEstadoCupon { get; set; }
-        public int? idInfluencer { get; set; }
+        public int idInfluencer { get; set; }
     }
 }

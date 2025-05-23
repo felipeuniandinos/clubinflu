@@ -18,7 +18,8 @@ builder.Services.AddScoped<IOfertaServicioService, OfertaServicioService>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IGeneroService, GeneroService>();
 builder.Services.AddScoped<IRedSocialService, RedSocialService>();
-builder.Services.AddScoped<ICuponServicioService, CuponServicioService>();
+builder.Services.AddScoped<ICuponServicioService,  CuponServicioService>();
+
 
 //Add repositories to the container.
 builder.Services.AddScoped<IUsuarioEmpresaRepository, UsuarioEmpresaRepository>();
@@ -32,6 +33,7 @@ builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IGeneroRepository, GeneroRepository>();
 builder.Services.AddScoped<IRedSocialRepository, RedSocialRepository>();
 builder.Services.AddScoped<ICuponServicioRepository, CuponServicioRepository>();
+
 
 //Add Helpers to the container.
 NotificacionesCorreoHelper.Configurar(builder.Configuration);

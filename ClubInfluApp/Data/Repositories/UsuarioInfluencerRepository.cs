@@ -238,7 +238,29 @@ namespace ClubInfluApp.Data.Repositories
             {
                 throw;
             }
+        }
 
+        public Influencer ObtenerInfluencerPorIdUsuarioInfluencer(int idUsuarioInfluencer)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+
+            try
+            {
+                string queryObtenerInfluencerPorIdUsuarioInfluencer =
+                  @"
+                     SELECT e.* 
+                     FROM usuarioInfluencer ue
+                     JOIN Influencer e ON ue.idInfluencer = e.idInfluencer
+                     WHERE ue.idUsuarioInfluencer = @idUsuarioInfluencer;
+                  ";
+
+                return connection.QuerySingle<Influencer>(queryObtenerInfluencerPorIdUsuarioInfluencer, new { idUsuarioInfluencer });
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }
