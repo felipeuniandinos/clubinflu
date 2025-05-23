@@ -92,7 +92,7 @@ namespace ClubInfluApp.Data.Repositories
                 int idOfertaCreada = connection.QuerySingle<int>(insertarOferta, ofertaServicio, transaction);
 
                 string insertarCupon = @"
-                    INSERT INTO CuponServico (codigo, fechaRedencion, idOfertaServicio, idEstadoCupon)
+                    INSERT INTO CuponServicio (codigo, fechaRedencion, idOfertaServicio, idEstadoCupon)
                     VALUES (@codigo, NULL, @idOfertaServicio, @idEstadoCupon);
                 ";
 

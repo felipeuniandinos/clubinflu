@@ -27,7 +27,7 @@ namespace ClubInfluApp.Data.Repositories
             {
                 string queryObtenerPrimerCuponDisponible = @"
                     SELECT idcuponservicio 
-                    FROM cuponservico 
+                    FROM cuponservicio 
                     WHERE idofertaservicio = @idOfertaServicio
                       AND idinfluencer IS NULL
                     ORDER BY idcuponservicio
@@ -42,7 +42,7 @@ namespace ClubInfluApp.Data.Repositories
                 }
 
                 string queryActualizarCupon = @"
-                    UPDATE cuponservico
+                    UPDATE cuponservicio
                     SET fecharedencion = @fecharedencion,
                         idestadocupon = @idEstadoCupon,
                         idinfluencer = @idUsuarioInfluencer
@@ -73,12 +73,8 @@ namespace ClubInfluApp.Data.Repositories
             try
             {
                 string sql = "SELECT validar_reserva_oferta(@p_idOfertaServicio, @p_idInfluencer);";
-                string MensajeValidacion = connection
-                         .Query<string>(sql, new
-                         {
-                             p_idOfertaServicio = idOfertaServicio,
-                             p_idInfluencer = idInfluencer,
-                         }).SingleOrDefault();
+                string MensajeValidacion = connection.Query<string>(sql, new { p_idOfertaServicio = idOfertaServicio, p_idInfluencer = idInfluencer}).SingleOrDefault();
+
                 return MensajeValidacion;
             }
             catch
@@ -104,7 +100,7 @@ namespace ClubInfluApp.Data.Repositories
                             cs.codigo,
                             os.nombre
                         FROM 
-                            CuponServico cs
+                            CuponServicio cs
                         JOIN 
                             OfertaServicio os ON cs.idOfertaServicio = os.idOfertaServicio
                         WHERE 

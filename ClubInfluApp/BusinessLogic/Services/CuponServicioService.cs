@@ -1,8 +1,6 @@
 ﻿using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.Data.Interfaces;
-using ClubInfluApp.Data.Repositories;
 using ClubInfluApp.Helpers;
-using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
 
 namespace ClubInfluApp.BusinessLogic.Services
@@ -13,14 +11,12 @@ namespace ClubInfluApp.BusinessLogic.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICuponServicioRepository _cuponServicioRepository;
         private readonly IUsuarioInfluencerService _usuarioInfluencerService;
-        private readonly IUsuarioInfluencerRepository _usuarioInfluencerRepository;
 
-        public CuponServicioService(IHttpContextAccessor httpContextAccessor, ICuponServicioRepository cuponServicioRepository, IUsuarioInfluencerService usuarioInfluencerService, IUsuarioInfluencerRepository usuarioInfluencerRepository)
+        public CuponServicioService(IHttpContextAccessor httpContextAccessor, ICuponServicioRepository cuponServicioRepository, IUsuarioInfluencerService usuarioInfluencerService)
         {
             _httpContextAccessor = httpContextAccessor;
             _cuponServicioRepository = cuponServicioRepository;
             _usuarioInfluencerService = usuarioInfluencerService;
-            _usuarioInfluencerRepository = usuarioInfluencerRepository;
         }
 
         public void ReservarCuponOfertaServicio(int idOfertaServicio)
@@ -40,8 +36,6 @@ namespace ClubInfluApp.BusinessLogic.Services
 
         private string ValidarSiSePuedeReservarUnCuponParaLaOfertaServicio(int idOfertaServicio, int idInfluencer)
         {
-            // Aquí puedes implementar la lógica para validar si se puede reservar un cupón para la oferta de servicio.
-            // Por ejemplo, verificar si hay cupones disponibles o si el usuario ya ha reservado un cupón. --TODO HACERLO CON UNA FUNCION EN LA DB
             return _cuponServicioRepository.ValidarCuponOfertaServicio(idOfertaServicio, idInfluencer);
         }
 
@@ -67,7 +61,7 @@ namespace ClubInfluApp.BusinessLogic.Services
 
         private void EnviarCorreoReservarCuponOfertaServicio(int idUsuarioInfluencer, int idOfertaServicio)
         {
-            GestionarUsuarioInfluencerViewModel usuarioInfluencer = _usuarioInfluencerRepository.GestionarUsuarioInfluencer(idUsuarioInfluencer);
+            GestionarUsuarioInfluencerViewModel usuarioInfluencer = _usuarioInfluencerService.GestionarUsuarioInfluencer(idUsuarioInfluencer);
             OfertaServicioViewModel codigoNombreOfertaServicio = _cuponServicioRepository.ObtenetCodigoNombreOfertaPorOfertaServicio(idOfertaServicio);
             if (usuarioInfluencer == null)
             {

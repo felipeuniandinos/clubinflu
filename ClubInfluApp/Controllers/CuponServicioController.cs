@@ -25,7 +25,7 @@ namespace ClubInfluApp.Controllers
             try
             {
                 _cuponServicioService.ReservarCuponOfertaServicio(idOfertaServicio);
-                return Json(new { exito = true, mensaje = "La reserva de cupon se ha realizado con exito" });
+                return Json(new { exito = true, mensaje = "La reserva de cupon se ha realizado con exito, el código de reserva se ha enviado a su correo" });
             }
             catch (Exception ex)
             {
