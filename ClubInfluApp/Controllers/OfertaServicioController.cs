@@ -70,5 +70,14 @@ namespace ClubInfluApp.Controllers
             ViewBag.Mensaje = "La oferta fue creada correctamente.";
             return View(nuevaOfertaServicioViewModel);
         }
+        
+        [HttpGet]
+        [Authorize(Roles = "Influencer")]
+        public IActionResult ListarCuponesServicio(int idInfluencer)
+        {
+            List<CuponServicioViewModel> cuponesServicio = _cuponServicioService.ListarCuponesServicioPorInfluencer();
+            return View(cuponesServicio);
+        }
+        
     }
 }

@@ -8,5 +8,7 @@ namespace ClubInfluApp.BusinessLogic.Interfaces
         public void ReservarCuponOfertaServicio(int idOfertaServicio);
 
         public List<CuponServicioViewModel> ObtenerCuponesPorOfertaServicio(int idOfertaServicio);
+
+        public List<CuponServicioViewModel> ListarCuponesServicioPorInfluencer();
     }
 }

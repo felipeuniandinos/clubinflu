@@ -1,0 +1,37 @@
+﻿@using ClubInfluApp.ViewModels
+@model List<CuponServicioViewModel>
+
+@{
+    ViewData["BodyClass"] = "application-influencer";
+    ViewData["Title"] = "Usuarios Influencer";
+}
+
+
+<div class="table-responsive">
+    <table class="table table-bordered" style="background-color: white; color: black;">
+        <thead class="thead-light">
+            <tr>
+                <th>Nombre Oferta Servicio</th>
+                <th>Código Cupon</th>
+                <th>Fecha de redención</th>
+                <th>Estado Cupon</th>
+                <th>Gestionar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cuponServicioViewModel in Model)
+            {
+                <tr>
+                    <td>@cuponServicioViewModel.nombreOfertaServicio</td>
+                    <td>@cuponServicioViewModel.codigo</td>
+                    <td>@cuponServicioViewModel.fechaRedencion</td>
+                    <td>@cuponServicioViewModel.nombreEstadoCupon</td>
+                    <td>
+                        <a href="#" class="btn btn-primary">Gestionar</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>

@@ -85,5 +85,11 @@ namespace ClubInfluApp.BusinessLogic.Services
         {
             return _cuponServicioRepository.ObtenerCuponesPorOfertaServicio(idOfertaServicio);
         }
+
+        public List<CuponServicioViewModel> ListarCuponesServicioPorInfluencer()
+        {
+            int idInfluencer = ObtenerIdInfluencerActual();
+            return _cuponServicioRepository.ListarCuponesServicioPorInfluencer(idInfluencer);
+        }
     }
 }

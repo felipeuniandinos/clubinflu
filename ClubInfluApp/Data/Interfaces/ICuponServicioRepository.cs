@@ -12,5 +12,7 @@ namespace ClubInfluApp.Data.Interfaces
         public OfertaServicioViewModel ObtenetCodigoNombreOfertaPorOfertaServicio(int idOfertaServicio);
 
         public List<CuponServicioViewModel> ObtenerCuponesPorOfertaServicio(int idOfertaServicio);
+
+        public List<CuponServicioViewModel> ListarCuponesServicioPorInfluencer(int idInfluencer);
     }
 }
