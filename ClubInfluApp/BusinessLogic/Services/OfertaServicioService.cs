@@ -121,5 +121,10 @@ namespace ClubInfluApp.BusinessLogic.Services
             int idEmpresa = _usuarioEmpresaService.ObtenerEmpresaPorIdUsuarioEmpresa(idUsuarioEmpresa).idEmpresa;
             return idEmpresa;
         }
+
+        public string validarCuponDeServicioPorCodigo(string codigoDeCuponAValidar)
+        {
+            return _ofertaServicioRepository.validarCuponDeServicioPorCodigo(codigoDeCuponAValidar);
+        }
     }
 }

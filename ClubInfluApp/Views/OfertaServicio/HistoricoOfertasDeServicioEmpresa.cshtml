@@ -5,6 +5,9 @@
     ViewData["BodyClass"] = "application-empresa";
     ViewData["Title"] = "Usuarios Influencer";
 }
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<input type="hidden" id="urlvalidarCuponDeServicioPorCodigo" value="@Url.Action("validarCuponDeServicioPorCodigo", "OfertaServicioController")" />
+
 
 <div class="row">
     <div class="col-md-3">
@@ -12,7 +15,12 @@
             Ir a Crear Oferta de Servicio
         </a>
     </div>
-    
+    <div class="col-md-3">
+        <button type="button" class="btn btn-success mt-4 px-4 py-2 rounded-pill" onclick="validarCupon()">
+            Validar Cupón
+        </button>
+    </div>
+
 </div>
 
 <br />
@@ -48,3 +56,7 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script src="~/js/OfertaServicio/HistoricoOfertasDeServicioEmpresa.js"></script>
+}

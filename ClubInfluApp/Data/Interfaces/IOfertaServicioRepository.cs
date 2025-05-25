@@ -7,6 +7,7 @@ namespace ClubInfluApp.Data.Interfaces
     {
         public List<OfertaServicioViewModel> ObtenerOfertasDeServicioFiltradas(FiltroOfertasDeServicio filtroOfertasDeServicio);
         public List<OfertaServicioViewModel> ObtenerOfertasDeServicioPorEmpresa(int idEmpresa);
-        public int CrearOfertaDeServicio(OfertaServicio ofertaServicio);        
+        public int CrearOfertaDeServicio(OfertaServicio ofertaServicio);
+        public string validarCuponDeServicioPorCodigo(string codigoDeCuponAValidar);
     }
 }

@@ -8,5 +8,6 @@ namespace ClubInfluApp.BusinessLogic.Interfaces
         public OfertasServiciosViewModel ObtenerOfertasDeServicioFiltradas(FiltroOfertasDeServicio filtroOfertasDeServicio);
         public List<OfertaServicioViewModel> ObtenerOfertasDeServicioPorEmpresa();
         public int CrearOfertaServicio(NuevaOfertaServicioViewModel nuevaOfertaServicioViewModel);
+        public string validarCuponDeServicioPorCodigo(string codigoDeCuponAValidar);
     }
 }
