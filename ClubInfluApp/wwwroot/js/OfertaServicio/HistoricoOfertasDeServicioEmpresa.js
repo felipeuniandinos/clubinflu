@@ -11,34 +11,39 @@
         confirmButtonText: "Validar",
         showLoaderOnConfirm: true,
         allowOutsideClick: () => !Swal.isLoading(),
-        preConfirm: (codigoCupon) => {
-            return new Promise((resolve, reject) => {
-                $.ajax({
-                    url: url,
-                    type: "PUT",
-                    contentType: "application/json",
-                    data: JSON.stringify({ codigoDeCuponAValidar: codigoCupon }),
-                    success: function (response) {
-                        if (response.success) {
-                            resolve(response.message);
-                        } else {
-                            reject("Error: " + response.message);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        reject("Error del servidor: " + xhr.responseText);
-                    }
-                });
-            }).catch((errorMessage) => {
-                Swal.showValidationMessage(errorMessage);
-            });
-        }
     }).then((result) => {
         if (result.isConfirmed && result.value) {
-            Swal.fire({
-                title: "Resultado",
-                text: result.value,
-                icon: "info"
+
+            const codigoCupon = String(result.value).trim();
+
+            $.ajax({
+                url: url,
+                type: "PUT",
+                data: {
+                    codigoDeCuponAValidar: codigoCupon
+                },
+                success: function (response) {
+                    if (response.exito) {
+                        Swal.fire({
+                            title: "Validar Cupón",
+                            text: response.mensaje,
+                            icon: "success"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Hubo un error",
+                            text: response.error,
+                            icon: "info"
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        title: "Hubo un error - Validar Cupón",
+                        text: "No se valido el cupón.",
+                        icon: "info"
+                    });
+                }
             });
         }
     });

@@ -33,5 +33,19 @@ namespace ClubInfluApp.Controllers
             }
         }
 
+        [HttpPut]
+        public IActionResult validarCuponDeServicioPorCodigo(string codigoDeCuponAValidar)
+        {
+            try
+            {
+                string mensaje = _cuponServicioService.validarCuponDeServicioPorCodigo(codigoDeCuponAValidar);
+                return Json(new { exito = true, mensaje = mensaje });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { exito = false, error = ex.Message });
+            }
+        }
+
     }
 }

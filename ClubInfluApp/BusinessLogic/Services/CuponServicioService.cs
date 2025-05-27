@@ -1,5 +1,6 @@
 ﻿using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.Data.Interfaces;
+using ClubInfluApp.Data.Repositories;
 using ClubInfluApp.Helpers;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
@@ -84,6 +85,16 @@ namespace ClubInfluApp.BusinessLogic.Services
         public List<CuponServicioViewModel> ObtenerCuponesPorOfertaServicio(int idOfertaServicio)
         {
             return _cuponServicioRepository.ObtenerCuponesPorOfertaServicio(idOfertaServicio);
+        }
+
+        public string validarCuponDeServicioPorCodigo(string codigoDeCuponAValidar)
+        {
+            string validacionCupon = _cuponServicioRepository.validarCuponDeServicioPorCodigo(codigoDeCuponAValidar);
+            if (!validacionCupon.Equals("El cupón ha sido validado correctamente."))
+            {
+                throw new Exception(validacionCupon);
+            }
+            return validacionCupon;
         }
     }
 }

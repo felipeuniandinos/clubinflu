@@ -5,8 +5,8 @@
     ViewData["BodyClass"] = "application-empresa";
     ViewData["Title"] = "Usuarios Influencer";
 }
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<input type="hidden" id="urlvalidarCuponDeServicioPorCodigo" value="@Url.Action("validarCuponDeServicioPorCodigo", "OfertaServicioController")" />
+
+<input type="hidden" id="urlvalidarCuponDeServicioPorCodigo" value="@Url.Action("validarCuponDeServicioPorCodigo", "CuponServicio")" />
 
 
 <div class="row">
@@ -58,5 +58,6 @@
 </div>
 
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/OfertaServicio/HistoricoOfertasDeServicioEmpresa.js"></script>
 }
