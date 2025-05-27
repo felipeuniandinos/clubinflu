@@ -2,6 +2,7 @@
 using ClubInfluApp.BusinessLogic.Services;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace ClubInfluApp.Controllers
 
  
         [HttpPut]
+        [Authorize(Roles = "Influencer")]
         public IActionResult ReservarCuponOfertaServicio(int idOfertaServicio)
         {
             try
@@ -34,6 +36,7 @@ namespace ClubInfluApp.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Empresa")]
         public IActionResult validarCuponDeServicioPorCodigo(string codigoDeCuponAValidar)
         {
             try
@@ -45,6 +48,14 @@ namespace ClubInfluApp.Controllers
             {
                 return Json(new { exito = false, error = ex.Message });
             }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Influencer")]
+        public IActionResult ListarCuponesServicio(int idInfluencer)
+        {
+            List<CuponServicioViewModel> cuponesServicio = _cuponServicioService.ListarCuponesServicioPorInfluencer();
+            return View(cuponesServicio);
         }
 
     }

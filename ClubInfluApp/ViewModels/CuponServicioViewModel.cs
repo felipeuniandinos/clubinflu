@@ -9,5 +9,6 @@
         public string nombreEstadoCupon { get; set; }
         public string? nombreInfluencer { get; set; }
         public List<string> videoPublicidad { get; set; }
+        public string nombreOfertaServicio { get; set; }
     }
 }

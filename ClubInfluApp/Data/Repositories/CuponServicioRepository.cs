@@ -169,6 +169,27 @@ namespace ClubInfluApp.Data.Repositories
                 connection.Close();
             }
         }
+
+        public List<CuponServicioViewModel> ListarCuponesServicioPorInfluencer(int idInfluencer)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+            try
+            {
+                string sqlObtenerCuponerPorInfluencer = "SELECT * FROM obtener_cupones_por_influencer(@p_id_influencer);;";
+                List<CuponServicioViewModel> cuponesServicio = connection.Query<CuponServicioViewModel>(sqlObtenerCuponerPorInfluencer, new { p_id_influencer = idInfluencer }).ToList();
+
+                return cuponesServicio;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }
 
