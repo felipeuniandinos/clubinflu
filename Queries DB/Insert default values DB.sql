@@ -88,7 +88,8 @@ INSERT INTO InfluencerRedSocial (
 INSERT INTO EstadoCupon (estadoCupon) VALUES
 ('No redimido'),
 ('Redimido'),
-('Expirado');
+('Expirado'),
+('Validado');
 
 INSERT INTO CategoriaOferta (nombre) VALUES
 ('Gastronomía'),

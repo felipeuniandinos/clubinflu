@@ -143,6 +143,33 @@ namespace ClubInfluApp.Data.Repositories
             }
         }
 
+        public string validarCuponDeServicioPorCodigo(string codigoDeCuponAValidar)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+
+            try
+            {
+                string validarCuponQuery = "SELECT * FROM validar_cupon_servicio_por_codigo(@p_codigoCuponServicio);";
+
+                string mensajeDeRespuesta = connection
+                    .Query<string>(validarCuponQuery, new
+                    {
+                        p_codigoCuponServicio = codigoDeCuponAValidar
+                    }).FirstOrDefault() ?? "Error en base de datos";
+
+                return mensajeDeRespuesta;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
         public List<CuponServicioViewModel> ListarCuponesServicioPorInfluencer(int idInfluencer)
         {
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);

@@ -70,6 +70,6 @@ namespace ClubInfluApp.Controllers
             ViewBag.Mensaje = "La oferta fue creada correctamente.";
             return View(nuevaOfertaServicioViewModel);
         }
-        
+
     }
 }

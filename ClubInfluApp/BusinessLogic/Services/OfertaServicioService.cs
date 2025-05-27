@@ -15,7 +15,7 @@ namespace ClubInfluApp.BusinessLogic.Services
         private readonly ICategoriaService _categoriaService;
         private readonly IUsuarioEmpresaService _usuarioEmpresaService;
 
-        public OfertaServicioService(IHttpContextAccessor httpContextAccessor , IOfertaServicioRepository ofertaServicioRepository, IPaisService paisService, ICategoriaService categoriaService, IUsuarioEmpresaService usuarioEmpresaService)
+        public OfertaServicioService(IHttpContextAccessor httpContextAccessor, IOfertaServicioRepository ofertaServicioRepository, IPaisService paisService, ICategoriaService categoriaService, IUsuarioEmpresaService usuarioEmpresaService)
         {
             _httpContextAccessor = httpContextAccessor;
             _ofertaServicioRepository = ofertaServicioRepository;
@@ -37,7 +37,7 @@ namespace ClubInfluApp.BusinessLogic.Services
         {
             int idEmpresaActual = ObtenerIdEmpresaActual();
             List<OfertaServicioViewModel> ofertasDeServicioFiltradasPorEmpresa = _ofertaServicioRepository.ObtenerOfertasDeServicioPorEmpresa(idEmpresaActual);
-     
+
             return ofertasDeServicioFiltradasPorEmpresa;
         }
 
@@ -48,7 +48,7 @@ namespace ClubInfluApp.BusinessLogic.Services
 
             OfertaServicio nuevaOferta = CrearNuevaOfertaServicio(nuevaOfertaServicioViewModel, rutaImagen, idEmpresaActual);
 
-            if(nuevaOferta.cuposDisponibles <= 0)
+            if (nuevaOferta.cuposDisponibles <= 0)
             {
                 throw new Exception("|BL|:El número de cupos disponibles debe ser mayor a cero.");
             }
@@ -69,7 +69,7 @@ namespace ClubInfluApp.BusinessLogic.Services
             if (!Directory.Exists(carpetaDestino))
             {
                 Directory.CreateDirectory(carpetaDestino);
-            } 
+            }
 
             string rutaFisica = Path.Combine(carpetaDestino, nombreArchivo);
 
@@ -115,11 +115,12 @@ namespace ClubInfluApp.BusinessLogic.Services
             if (string.IsNullOrEmpty(userIdStr))
             {
                 throw new Exception("No se encontró el ID del usuario en las claims.");
-            }            
+            }
 
             int idUsuarioEmpresa = int.Parse(userIdStr);
             int idEmpresa = _usuarioEmpresaService.ObtenerEmpresaPorIdUsuarioEmpresa(idUsuarioEmpresa).idEmpresa;
             return idEmpresa;
         }
+
     }
 }
