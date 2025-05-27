@@ -149,8 +149,8 @@ namespace ClubInfluApp.Data.Repositories
             connection.Open();
             try
             {
-                string sql = "SELECT * FROM obtener_cupones_por_influencer(@p_id_influencer);;";
-                List<CuponServicioViewModel> cuponesServicio = connection.Query<CuponServicioViewModel>(sql, new { p_id_influencer = idInfluencer }).ToList();
+                string sqlObtenerCuponerPorInfluencer = "SELECT * FROM obtener_cupones_por_influencer(@p_id_influencer);;";
+                List<CuponServicioViewModel> cuponesServicio = connection.Query<CuponServicioViewModel>(sqlObtenerCuponerPorInfluencer, new { p_id_influencer = idInfluencer }).ToList();
 
                 return cuponesServicio;
             }

@@ -71,13 +71,5 @@ namespace ClubInfluApp.Controllers
             return View(nuevaOfertaServicioViewModel);
         }
         
-        [HttpGet]
-        [Authorize(Roles = "Influencer")]
-        public IActionResult ListarCuponesServicio(int idInfluencer)
-        {
-            List<CuponServicioViewModel> cuponesServicio = _cuponServicioService.ListarCuponesServicioPorInfluencer();
-            return View(cuponesServicio);
-        }
-        
     }
 }
