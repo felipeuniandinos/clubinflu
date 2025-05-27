@@ -122,5 +122,6 @@ namespace ClubInfluApp.Data.Repositories
             cupon.idEstadoCupon = ESTADO_CUPON_SERVICIO_PENDIENTE;
             return cupon;
         }
+
     }
 }
