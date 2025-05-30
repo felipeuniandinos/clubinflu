@@ -102,5 +102,12 @@ namespace ClubInfluApp.BusinessLogic.Services
             int idInfluencer = ObtenerIdInfluencerActual();
             return _cuponServicioRepository.ListarCuponesServicioPorInfluencer(idInfluencer);
         }
+        public List<string> ObtenerCuponesPorFinalizar()
+        {
+            int idInfluencer = ObtenerIdInfluencerActual();
+            List<string> cuponesPorFinalizar = _cuponServicioRepository.ObtenerCuponesPorFinalizar(idInfluencer);
+          
+            return cuponesPorFinalizar;
+        }
     }
 }

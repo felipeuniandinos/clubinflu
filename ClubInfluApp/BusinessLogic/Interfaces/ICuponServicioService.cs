@@ -8,5 +8,6 @@ namespace ClubInfluApp.BusinessLogic.Interfaces
         public List<CuponServicioViewModel> ObtenerCuponesPorOfertaServicio(int idOfertaServicio);
         public string validarCuponDeServicioPorCodigo(string codigoDeCuponAValidar);
         public List<CuponServicioViewModel> ListarCuponesServicioPorInfluencer();
+        public List<string> ObtenerCuponesPorFinalizar();
     }
 }

@@ -1,4 +1,5 @@
-﻿using ClubInfluApp.BusinessLogic.Interfaces;
+﻿using System.Text.Json;
+using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.BusinessLogic.Services;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
@@ -52,8 +53,16 @@ namespace ClubInfluApp.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Influencer")]
-        public IActionResult ListarCuponesServicio(int idInfluencer)
+        public IActionResult ListarCuponesServicio()
         {
+            if (TempData["CuponesPorFinalizar"] != null)
+            {
+                List<string> cuponesPorFinalizar  = JsonSerializer.Deserialize<List<string>>(TempData["CuponesPorFinalizar"].ToString());
+                ViewData["CuponesPendientes"] = "Tiene cupones de servicio por finalizar, por favor finalice los cupones antes de reservar nuevos:   " +
+                    string.Join(", ", cuponesPorFinalizar);
+            }
+
+           
             List<CuponServicioViewModel> cuponesServicio = _cuponServicioService.ListarCuponesServicioPorInfluencer();
             return View(cuponesServicio);
         }

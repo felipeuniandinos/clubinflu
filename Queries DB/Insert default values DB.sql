@@ -15,6 +15,7 @@ INSERT INTO Genero (genero) VALUES
 ('No Binario');
 
 INSERT INTO RedSocial (redSocial) VALUES 
+('YouTube')
 ('Facebook'),
 ('Twitter'),
 ('Instagram');

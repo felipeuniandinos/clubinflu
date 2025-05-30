@@ -5,6 +5,12 @@
     ViewData["BodyClass"] = "application-influencer";
     ViewData["Title"] = "Usuarios Influencer";
 }
+@if (ViewData["CuponesPendientes"] != null)
+{
+    <div class="alert alert-warning">
+        @ViewData["CuponesPendientes"]
+    </div>
+}
 
 
 <div class="table-responsive">
