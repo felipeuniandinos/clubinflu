@@ -4,7 +4,8 @@ RETURNS TABLE (
     nombreOfertaServicio VARCHAR,
     codigo VARCHAR,
     fechaRedencion DATE,
-    nombreEstadoCupon VARCHAR
+    nombreEstadoCupon VARCHAR,
+    idCuponServicio BIGINT  
 ) AS $$
 BEGIN
     RETURN QUERY
@@ -12,7 +13,8 @@ BEGIN
         os.nombre AS nombreOfertaServicio,
         cs.codigo AS codigo,
         cs.fechaRedencion AS fechaRedencion,
-        ec.estadoCupon AS nombreEstadoCupon
+        ec.estadoCupon AS nombreEstadoCupon,
+        cs.idCuponServicio AS idCuponServicio
     FROM CuponServicio cs
     JOIN OfertaServicio os ON cs.idOfertaServicio = os.idOfertaServicio
     JOIN EstadoCupon ec ON cs.idEstadoCupon = ec.idEstadoCupon

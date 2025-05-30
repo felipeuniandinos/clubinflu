@@ -1,0 +1,82 @@
+﻿@using ClubInfluApp.ViewModels
+@model CuponServicioViewModel
+
+@{
+    ViewData["BodyClass"] = "_NavbarApplicationInfluencer";
+    ViewData["Title"] = "Gestionar Cupon";
+}
+
+<style>
+    h1, label {
+        color: white;
+    }
+
+    .card-img-top {
+        max-height: 220px;
+        object-fit: cover;
+    }
+</style>
+
+<h1 class="text-center mb-5">Gestionar Cupón</h1>
+
+@if(!Model.condicionesPendientes.Equals("Correcto"))
+{
+    <div class="alert alert-danger text-center mt-3">
+        @Model.condicionesPendientes
+    </div>
+
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <img src="@Url.Content($"~/imagenes/qr.png")" class="card-img-top" alt="qr" style="object-fit: contain; width: 100%; height: 100%;">
+            <div class="card-body">
+                <p class="mb-1"><strong>Código Cupón:</strong> @Model.codigo</p>
+                <p class="mb-1">
+                    <strong>Fecha redención:</strong>
+                    @(Model.fechaRedencion.HasValue
+                        ? Model.fechaRedencion.Value.ToString("dd/MM/yyyy")
+                        : "Aún no redimido")
+                </p>
+                <p class="mb-1"><strong>Estado cupón:</strong> @Model.nombreEstadoCupon</p>
+                <p>
+                    <strong>Nombre influencer:</strong>
+                    @(string.IsNullOrWhiteSpace(Model.nombreInfluencer)
+                        ? "No asignado"
+                        : Model.nombreInfluencer)
+                </p>
+                <p class="mb-1"><strong>Videos Publicidad:</strong></p>
+
+                @if (Model.videoCupones != null && Model.videoCupones.Count > 0)
+                {
+                    foreach (var video in Model.videoCupones)
+                    {
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <a href="@Url.Content("~/videos/cupones/" + video)" target="_blank" class="btn btn-success w-100">
+                                    Ver video
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-muted">No hay videos registrados</p>
+                }
+                @if(Model.nombreEstadoCupon.Equals("Validado"))
+                {
+                    <form asp-action="SubirVideoCuponServicio" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="idCuponServicio" value="@Model.idCuponServicio" />
+                        <div class="mb-3">
+                            <label for="video" class="form-label text-white">Subir nuevo video</label>
+                            <input type="file" name="video" accept="video/*" class="form-control" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Subir Video</button>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

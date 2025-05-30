@@ -1,4 +1,6 @@
-﻿using ClubInfluApp.Data.Interfaces;
+﻿using System.Data.Common;
+using System.Transactions;
+using ClubInfluApp.Data.Interfaces;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
 using Dapper;
@@ -190,6 +192,94 @@ namespace ClubInfluApp.Data.Repositories
                 connection.Close();
             }
         }
+
+        public CuponServicioViewModel ObtenerCuponServicioPorIdCuponServicio(int idCuponServicio)
+        {
+            return ObtenerInformacionCuponServicioPorIdCuponServicio(idCuponServicio);
+
+        }
+
+        private CuponServicioViewModel ObtenerInformacionCuponServicioPorIdCuponServicio(int idCuponServicio)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+
+            try
+            {
+                string query = 
+                @"
+                    SELECT 
+                        cs.idcuponservicio, 
+                        cs.codigo,
+                        cs.fechaRedencion,
+                        ec.estadoCupon AS nombreEstadoCupon,
+                        i.nombre AS nombreInfluencer
+                    FROM 
+                        CuponServicio cs
+                    JOIN 
+                        EstadoCupon ec ON cs.idEstadoCupon = ec.idEstadoCupon
+                    LEFT JOIN 
+                        Influencer i ON cs.idInfluencer = i.idInfluencer
+                    WHERE 
+                        cs.idCuponServicio = @idCuponServicio;
+                ";
+
+                CuponServicioViewModel respuestaObtenerCuponServicion = connection.QueryFirstOrDefault<CuponServicioViewModel>(query, new { idCuponServicio });
+
+                if (respuestaObtenerCuponServicion == null)
+                    return null;
+
+                string queryVideos = 
+                @"
+                    SELECT videoCupon 
+                    FROM VideoCupon 
+                    WHERE idCuponServicio = @idCuponServicio;
+                ";
+
+                var videos = connection.Query<string>(queryVideos, new { idCuponServicio }).ToList();
+                respuestaObtenerCuponServicion.videoCupones = videos;
+                // Agregar funcion de validacion
+                string sqlObtenerCondicionesPendientes = "SELECT validar_videos_cupon(@id_cupon_servicio);;";
+                string respuestaObtenerCondicionPendiente = connection.Query<string>(sqlObtenerCondicionesPendientes, new { id_cupon_servicio = idCuponServicio }).FirstOrDefault();
+                // Simulación temporal de las condiciones pendientes
+                //string sqlObtenerCondicionesPendientes = "Falta dos videos";
+                respuestaObtenerCuponServicion.condicionesPendientes = respuestaObtenerCondicionPendiente;
+
+                return respuestaObtenerCuponServicion;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+        public CuponServicioViewModel SubirVideoCuponServicio(int idCuponServicio, VideoCupon videoCupon)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+            using NpgsqlTransaction transaction = connection.BeginTransaction();
+
+            try
+            {
+                string queryIsertarVideo =
+                    @"
+                        INSERT INTO VideoCupon (videoCupon, fechaCreacion, idCuponServicio)
+                        VALUES (@videoCupon, @fechaCreacion, @idCuponServicio);
+                    ";
+                connection.Execute(queryIsertarVideo, videoCupon, transaction);
+                transaction.Commit();
+                return ObtenerInformacionCuponServicioPorIdCuponServicio(idCuponServicio);
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
     }
 }
 
+     
+
+       

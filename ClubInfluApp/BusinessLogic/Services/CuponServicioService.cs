@@ -102,5 +102,62 @@ namespace ClubInfluApp.BusinessLogic.Services
             int idInfluencer = ObtenerIdInfluencerActual();
             return _cuponServicioRepository.ListarCuponesServicioPorInfluencer(idInfluencer);
         }
+
+        public CuponServicioViewModel ObtenerCuponServicioPorIdCuponServicio(int idCuponServicio)
+        {
+            return _cuponServicioRepository.ObtenerCuponServicioPorIdCuponServicio(idCuponServicio);
+
+        }
+
+        public CuponServicioViewModel SubirVideoCuponServicio(int idCuponServicio, IFormFile video)
+        {
+            //var user = _httpContextAccessor.HttpContext?.User;
+            //if(user)
+            VideoCupon videoCupon = CrearVideoCupon(idCuponServicio, video);
+            return _cuponServicioRepository.SubirVideoCuponServicio(idCuponServicio, videoCupon);
+
+        }
+
+        private string GuardarVideo(IFormFile archivoVideo)
+        {
+            if (archivoVideo == null || archivoVideo.Length == 0)
+            {
+                throw new Exception("No se ha recibido un archivo de video válido.");
+            }
+
+            string nombreArchivo = Guid.NewGuid().ToString() + Path.GetExtension(archivoVideo.FileName);
+            string carpetaDestino = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", "cupones");
+
+            if (!Directory.Exists(carpetaDestino))
+            {
+                Directory.CreateDirectory(carpetaDestino);
+            }
+
+            string rutaFisica = Path.Combine(carpetaDestino, nombreArchivo);
+
+            using (FileStream stream = new FileStream(rutaFisica, FileMode.Create))
+            {
+                archivoVideo.CopyTo(stream);
+            }
+
+            return nombreArchivo;
+        }
+
+        private VideoCupon CrearVideoCupon(int idCuponServicio, IFormFile video)
+        {
+            DateTime fechaActual = System.DateTime.Now;
+            string rutaVideo = GuardarVideo(video);
+
+            VideoCupon cuponServicio = new VideoCupon
+            {
+                idVideoCupon = 0,
+                videoCupon = rutaVideo,
+                fechaCreacion = fechaActual,
+                idCuponServicio = idCuponServicio
+            };
+
+            return cuponServicio;
+        }
+
     }
 }
