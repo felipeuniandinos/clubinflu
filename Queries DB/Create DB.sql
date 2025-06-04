@@ -1,4 +1,5 @@
 -- DROP TABLES (ordenado para evitar conflictos por claves foráneas)
+DROP TABLE IF EXISTS VideoCupon;
 DROP TABLE IF EXISTS VideoPublicidad;
 DROP TABLE IF EXISTS CuponServicio;
 DROP TABLE IF EXISTS OfertaServicio;
@@ -200,4 +201,12 @@ CREATE TABLE VideoPublicidad (
 	fechaCreacion DATE,
 	idCuponServicio BIGINT NOT NULL,
 	FOREIGN KEY (idCuponServicio) REFERENCES CuponServicio(idCuponServicio)
+);
+
+CREATE TABLE VideoCupon (
+    idVideoCupon BIGSERIAL PRIMARY KEY,
+    videoCupon VARCHAR(255) NOT NULL,
+    fechaCreacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    idCuponServicio BIGINT NOT NULL,
+    FOREIGN KEY (idCuponServicio) REFERENCES CuponServicio(idCuponServicio)
 );

@@ -35,7 +35,8 @@ BEGIN
         RETURN 'El cupón ya se encuentra validado.';
     ELSIF v_idEstadoCupon = v_idEstadoCuponRedimido THEN
         UPDATE CuponServicio
-        SET idEstadoCupon = v_idEstadoCuponValidado
+        SET idEstadoCupon = v_idEstadoCuponValidado,
+			fechaRedencion = NOW
         WHERE codigo = p_codigoCuponServicio;
     END IF;
 

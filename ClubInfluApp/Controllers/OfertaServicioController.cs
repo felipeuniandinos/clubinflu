@@ -32,8 +32,6 @@ namespace ClubInfluApp.Controllers
             }
             else
             {
-               
-                TempData["CuponesPorFinalizar"] = JsonSerializer.Serialize(cuponesPorFinalizar);
                 return RedirectToAction("ListarCuponesServicio", "CuponServicio");
             }
 

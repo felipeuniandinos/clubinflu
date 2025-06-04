@@ -4,7 +4,8 @@ RETURNS TABLE (
     nombreOfertaServicio VARCHAR,
     codigo VARCHAR,
     fechaRedencion DATE,
-    nombreEstadoCupon VARCHAR
+    nombreEstadoCupon VARCHAR,
+    idCuponServicio BIGINT  
 ) AS $$
 BEGIN
     RETURN QUERY
@@ -12,16 +13,17 @@ BEGIN
         os.nombre AS nombreOfertaServicio,
         cs.codigo AS codigo,
         cs.fechaRedencion AS fechaRedencion,
-        ec.estadoCupon AS nombreEstadoCupon
+        ec.estadoCupon AS nombreEstadoCupon,
+        cs.idCuponServicio AS idCuponServicio
     FROM CuponServicio cs
     JOIN OfertaServicio os ON cs.idOfertaServicio = os.idOfertaServicio
     JOIN EstadoCupon ec ON cs.idEstadoCupon = ec.idEstadoCupon
     WHERE cs.idInfluencer = p_id_influencer
    ORDER BY 
     CASE LOWER(ec.estadoCupon)
-        WHEN 'no redimido' THEN 1
+        WHEN 'validado' THEN 1
         WHEN 'redimido' THEN 2
-        WHEN 'expirado' THEN 3
+        WHEN 'finalizado' THEN 3
         ELSE 4
     END,
     cs.fechaRedencion NULLS LAST;

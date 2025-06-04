@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.5" pages="3">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.9" pages="3">
   <diagram name="Modelo de despliegue" id="0hsVdCAAq3OftANJVyfm">
     <mxGraphModel dx="1678" dy="879" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
@@ -598,6 +598,23 @@
         </mxCell>
         <mxCell id="KAFgpocHhWLh3dNQ4qsq-6" value="*" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="485" y="-410" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="NgHUXsQQSKKhbIdLiuiT-1" value="VideoCupon" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="-520" width="210" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="NgHUXsQQSKKhbIdLiuiT-2" value="+idVideoCupon: int - pk - auto&lt;div&gt;+videoCupon: varchar(200)&lt;br&gt;&lt;div&gt;+fechaCreacion: datetime - nullable&lt;/div&gt;&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="NgHUXsQQSKKhbIdLiuiT-1">
+          <mxGeometry y="50" width="210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="NgHUXsQQSKKhbIdLiuiT-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.001;entryY=0.386;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="HkqGlPLz3eniEGu5DsyG-91">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="-410" as="sourcePoint" />
+            <mxPoint x="240" y="-265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NgHUXsQQSKKhbIdLiuiT-4" value="idCuponServicio" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="NgHUXsQQSKKhbIdLiuiT-3">
+          <mxGeometry x="-0.5448" y="2" relative="1" as="geometry">
+            <mxPoint x="-1" y="80" as="offset" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

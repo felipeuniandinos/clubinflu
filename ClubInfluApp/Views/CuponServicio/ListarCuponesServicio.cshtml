@@ -30,10 +30,13 @@
                 <tr>
                     <td>@cuponServicioViewModel.nombreOfertaServicio</td>
                     <td>@cuponServicioViewModel.codigo</td>
-                    <td>@cuponServicioViewModel.fechaRedencion</td>
+                    <td>
+                        @cuponServicioViewModel.fechaRedencion?.ToString("yyyy-MM-dd")
+                    </td>
                     <td>@cuponServicioViewModel.nombreEstadoCupon</td>
                     <td>
-                        <a href="#" class="btn btn-primary">Gestionar</a>
+                        <a href="@Url.Action("GestionarCuponServicio", "CuponServicio", new { idCuponServicio  = cuponServicioViewModel.idCuponServicio })" class="btn btn-primary">Gestionar </a>
+                      
                     </td>
                 </tr>
 
@@ -41,3 +44,8 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <partial name="_ValidationScriptsPartial" />
+}
