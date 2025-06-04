@@ -1,4 +1,5 @@
-﻿using ClubInfluApp.BusinessLogic.Interfaces;
+﻿using System.Text.Json;
+using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -22,9 +23,18 @@ namespace ClubInfluApp.Controllers
         [HttpGet]
         [Authorize(Roles = "Influencer")]
         public IActionResult ListarOfertasDeServicio(FiltroOfertasDeServicio filtroOfertasDeServicio)
-        {
-            OfertasServiciosViewModel ofertasServicios = _ofertaServicioService.ObtenerOfertasDeServicioFiltradas(filtroOfertasDeServicio);
-            return View(ofertasServicios);
+        {   
+            List<string> cuponesPorFinalizar = _cuponServicioService.ObtenerCuponesPorFinalizar();
+            if(cuponesPorFinalizar.Count == 0)
+            {
+                OfertasServiciosViewModel ofertasServicios = _ofertaServicioService.ObtenerOfertasDeServicioFiltradas(filtroOfertasDeServicio);
+                return View(ofertasServicios);
+            }
+            else
+            {
+                return RedirectToAction("ListarCuponesServicio", "CuponServicio");
+            }
+
         }
 
         [HttpGet]

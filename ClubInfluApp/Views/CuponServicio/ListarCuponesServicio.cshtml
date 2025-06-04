@@ -5,6 +5,12 @@
     ViewData["BodyClass"] = "application-influencer";
     ViewData["Title"] = "Usuarios Influencer";
 }
+@if (ViewData["CuponesPendientes"] != null)
+{
+    <div class="alert alert-warning">
+        @ViewData["CuponesPendientes"]
+    </div>
+}
 
 
 <div class="table-responsive">
@@ -24,7 +30,9 @@
                 <tr>
                     <td>@cuponServicioViewModel.nombreOfertaServicio</td>
                     <td>@cuponServicioViewModel.codigo</td>
-                    <td>@cuponServicioViewModel.fechaRedencion</td>
+                    <td>
+                        @cuponServicioViewModel.fechaRedencion?.ToString("yyyy-MM-dd")
+                    </td>
                     <td>@cuponServicioViewModel.nombreEstadoCupon</td>
                     <td>
                         <a href="@Url.Action("GestionarCuponServicio", "CuponServicio", new { idCuponServicio  = cuponServicioViewModel.idCuponServicio })" class="btn btn-primary">Gestionar </a>

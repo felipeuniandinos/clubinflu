@@ -24,7 +24,7 @@ BEGIN
     -- Verificar si tiene Youtube y el maximo de los seguidores
     SELECT 
         MAX(numeroSeguidores),
-        BOOL_OR(rs.redSocial ILIKE 'Youtube')
+        BOOL_OR(rs.redSocial ILIKE 'YouTube')
     INTO suma_seguidores, tiene_youtube
     FROM InfluencerRedSocial irs
     JOIN RedSocial rs ON rs.idRedSocial = irs.idRedSocial

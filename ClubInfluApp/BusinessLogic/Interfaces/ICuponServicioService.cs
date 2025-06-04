@@ -10,5 +10,6 @@ namespace ClubInfluApp.BusinessLogic.Interfaces
         public List<CuponServicioViewModel> ListarCuponesServicioPorInfluencer();
         public CuponServicioViewModel ObtenerCuponServicioPorIdCuponServicio(int idCuponServicio);
         public CuponServicioViewModel SubirVideoCuponServicio(int idCuponServicio, IFormFile video);
+        public List<string> ObtenerCuponesPorFinalizar();
     }
 }

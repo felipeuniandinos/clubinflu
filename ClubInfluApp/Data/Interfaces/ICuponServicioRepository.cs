@@ -13,5 +13,6 @@ namespace ClubInfluApp.Data.Interfaces
         public List<CuponServicioViewModel> ListarCuponesServicioPorInfluencer(int idInfluencer);
         public CuponServicioViewModel ObtenerCuponServicioPorIdCuponServicio(int idCuponServicio);
         public CuponServicioViewModel SubirVideoCuponServicio(int idCuponServicio, VideoCupon videoCupon);
+        public List<string> ObtenerCuponesPorFinalizar(int idInfluencer);
     }
 }

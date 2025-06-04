@@ -290,9 +290,29 @@ namespace ClubInfluApp.Data.Repositories
                 throw;
             }
         }
+
+        public List<string> ObtenerCuponesPorFinalizar(int idInfluencer)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
+            connection.Open();
+            try
+            {
+                string sqlObtenerCuponesPorFinalizar = @"SELECT * FROM obtener_cupones_por_finalizar(@idInfluencer);";
+
+                List<string> cuponesPorFinalizar = connection
+                    .Query<string>(sqlObtenerCuponesPorFinalizar, new { idInfluencer })
+                    .ToList();
+
+                return cuponesPorFinalizar;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }
-
-     
-
-       

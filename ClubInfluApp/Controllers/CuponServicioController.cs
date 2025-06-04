@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Text.Json;
+using System.Runtime.InteropServices;
 using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.BusinessLogic.Services;
 using ClubInfluApp.Models;
@@ -53,8 +54,16 @@ namespace ClubInfluApp.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Influencer")]
-        public IActionResult ListarCuponesServicio(int idInfluencer)
+        public IActionResult ListarCuponesServicio()
         {
+            List<string> cuponesPorFinalizar = _cuponServicioService.ObtenerCuponesPorFinalizar();
+
+            if (cuponesPorFinalizar.Count > 0)
+            {
+                ViewData["CuponesPendientes"] = "Tiene cupones de servicio por finalizar, por favor finalice los cupones antes de reservar nuevos:   " +
+                    string.Join(", ", cuponesPorFinalizar);
+            }
+           
             List<CuponServicioViewModel> cuponesServicio = _cuponServicioService.ListarCuponesServicioPorInfluencer();
             return View(cuponesServicio);
         }
