@@ -1,4 +1,5 @@
-﻿using ClubInfluApp.BusinessLogic.Interfaces;
+﻿using System.Runtime.InteropServices;
+using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.BusinessLogic.Services;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
@@ -56,6 +57,29 @@ namespace ClubInfluApp.Controllers
         {
             List<CuponServicioViewModel> cuponesServicio = _cuponServicioService.ListarCuponesServicioPorInfluencer();
             return View(cuponesServicio);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Influencer")]
+        public IActionResult GestionarCuponServicio(int idCuponServicio, IFormFile video)
+        {
+            CuponServicioViewModel cuponServicioPorIdCuponServicio = _cuponServicioService.ObtenerCuponServicioPorIdCuponServicio(idCuponServicio);
+            if (cuponServicioPorIdCuponServicio == null)
+            {
+                return NotFound();
+            }
+            return View(cuponServicioPorIdCuponServicio);
+        }
+
+    
+        public IActionResult SubirVideoCuponServicio(int idCuponServicio, IFormFile video)
+        {
+            CuponServicioViewModel cuponServicioVideo = _cuponServicioService.SubirVideoCuponServicio(idCuponServicio, video);
+            if (cuponServicioVideo == null)
+            {
+                return NotFound();
+            }
+            return RedirectToAction("GestionarCuponServicio", new { idCuponServicio = cuponServicioVideo.idCuponServicio });
         }
 
     }

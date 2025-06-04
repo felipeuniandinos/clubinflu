@@ -17,7 +17,8 @@ INSERT INTO Genero (genero) VALUES
 INSERT INTO RedSocial (redSocial) VALUES 
 ('Facebook'),
 ('Twitter'),
-('Instagram');
+('Instagram'),
+('YouTube');
 
 INSERT INTO Estado (idPais, estado) VALUES 
 (1, 'Andalucía'),
@@ -89,7 +90,8 @@ INSERT INTO EstadoCupon (estadoCupon) VALUES
 ('No redimido'),
 ('Redimido'),
 ('Expirado'),
-('Validado');
+('Validado'),
+('Finalizado');
 
 INSERT INTO CategoriaOferta (nombre) VALUES
 ('Gastronomía'),

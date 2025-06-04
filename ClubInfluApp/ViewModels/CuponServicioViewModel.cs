@@ -1,4 +1,7 @@
-﻿namespace ClubInfluApp.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+using ClubInfluApp.Models;
+
+namespace ClubInfluApp.ViewModels
 {
     public class CuponServicioViewModel
     {
@@ -10,5 +13,7 @@
         public string? nombreInfluencer { get; set; }
         public List<string> videoPublicidad { get; set; }
         public string nombreOfertaServicio { get; set; }
+        public string condicionesPendientes { get; set; }
+        public List<string> videoCupones { get; set; } = new List<string>();
     }
 }
