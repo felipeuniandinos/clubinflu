@@ -111,11 +111,8 @@ namespace ClubInfluApp.BusinessLogic.Services
 
         public CuponServicioViewModel SubirVideoCuponServicio(int idCuponServicio, IFormFile video)
         {
-            //var user = _httpContextAccessor.HttpContext?.User;
-            //if(user)
             VideoCupon videoCupon = CrearVideoCupon(idCuponServicio, video);
             return _cuponServicioRepository.SubirVideoCuponServicio(idCuponServicio, videoCupon);
-
         }
 
         private string GuardarVideo(IFormFile archivoVideo)

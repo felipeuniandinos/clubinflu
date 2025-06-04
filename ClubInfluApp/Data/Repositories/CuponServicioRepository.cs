@@ -11,6 +11,7 @@ namespace ClubInfluApp.Data.Repositories
     public class CuponServicioRepository : ICuponServicioRepository
     {
         public const int ESTADO_CUPON_REDIMIDO = 2;
+        public const int ESTADO_CUPON_FINALIZADO = 5;
         private readonly string dbConnectionString;
 
         public CuponServicioRepository(IConfiguration configuration)
@@ -238,11 +239,9 @@ namespace ClubInfluApp.Data.Repositories
 
                 var videos = connection.Query<string>(queryVideos, new { idCuponServicio }).ToList();
                 respuestaObtenerCuponServicion.videoCupones = videos;
-                // Agregar funcion de validacion
+
                 string sqlObtenerCondicionesPendientes = "SELECT validar_videos_cupon(@id_cupon_servicio);;";
                 string respuestaObtenerCondicionPendiente = connection.Query<string>(sqlObtenerCondicionesPendientes, new { id_cupon_servicio = idCuponServicio }).FirstOrDefault();
-                // Simulación temporal de las condiciones pendientes
-                //string sqlObtenerCondicionesPendientes = "Falta dos videos";
                 respuestaObtenerCuponServicion.condicionesPendientes = respuestaObtenerCondicionPendiente;
 
                 return respuestaObtenerCuponServicion;
@@ -268,6 +267,20 @@ namespace ClubInfluApp.Data.Repositories
                         VALUES (@videoCupon, @fechaCreacion, @idCuponServicio);
                     ";
                 connection.Execute(queryIsertarVideo, videoCupon, transaction);
+
+                string sqlObtenerCondicionesPendientes = "SELECT validar_videos_cupon(@id_cupon_servicio);;";
+                string respuestaObtenerCondicionPendiente = connection.Query<string>(sqlObtenerCondicionesPendientes, new { id_cupon_servicio = idCuponServicio }).FirstOrDefault();
+
+                if(respuestaObtenerCondicionPendiente == "Correcto")
+                {
+                    string queryActualizarEstadoCupon = @"
+                        UPDATE CuponServicio
+                        SET idEstadoCupon = @idEstadoCupon
+                        WHERE idCuponServicio = @idCuponServicio;
+                    ";
+                    connection.Execute(queryActualizarEstadoCupon, new { idEstadoCupon = ESTADO_CUPON_FINALIZADO, idCuponServicio }, transaction);
+                }
+
                 transaction.Commit();
                 return ObtenerInformacionCuponServicioPorIdCuponServicio(idCuponServicio);
             }

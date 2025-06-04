@@ -2,7 +2,7 @@
 @model CuponServicioViewModel
 
 @{
-    ViewData["BodyClass"] = "_NavbarApplicationInfluencer";
+    ViewData["BodyClass"] = "application-influencer";
     ViewData["Title"] = "Gestionar Cupon";
 }
 
@@ -19,7 +19,7 @@
 
 <h1 class="text-center mb-5">Gestionar Cupón</h1>
 
-@if(!Model.condicionesPendientes.Equals("Correcto"))
+@if (Model.nombreEstadoCupon.Equals("Validado") && !Model.condicionesPendientes.Equals("Correcto"))
 {
     <div class="alert alert-danger text-center mt-3">
         @Model.condicionesPendientes

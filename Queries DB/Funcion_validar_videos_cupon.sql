@@ -21,9 +21,9 @@ BEGIN
         RETURN 'El cupón no tiene un influencer asociado';
     END IF;
 
-    -- Verificar si tiene Youtube y sumar los seguidores
+    -- Verificar si tiene Youtube y el maximo de los seguidores
     SELECT 
-        SUM(numeroSeguidores),
+        MAX(numeroSeguidores),
         BOOL_OR(rs.redSocial ILIKE 'Youtube')
     INTO suma_seguidores, tiene_youtube
     FROM InfluencerRedSocial irs
@@ -36,11 +36,11 @@ BEGIN
     IF tiene_youtube THEN
         videos_requeridos := 1;
     ELSE
-        IF suma_seguidores BETWEEN 10000 AND 39999 THEN
+        IF suma_seguidores BETWEEN 0 AND 40000 THEN
             videos_requeridos := 3;
-        ELSIF suma_seguidores BETWEEN 40000 AND 99999 THEN
+        ELSIF suma_seguidores BETWEEN 40001 AND 100000 THEN
             videos_requeridos := 2;
-        ELSIF suma_seguidores >= 100000 THEN
+        ELSIF suma_seguidores >= 100001 THEN
             videos_requeridos := 1;
         ELSE
             RETURN 'El influencer no cumple con el mínimo de seguidores';

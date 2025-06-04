@@ -21,9 +21,9 @@ BEGIN
     WHERE cs.idInfluencer = p_id_influencer
    ORDER BY 
     CASE LOWER(ec.estadoCupon)
-        WHEN 'no redimido' THEN 1
+        WHEN 'validado' THEN 1
         WHEN 'redimido' THEN 2
-        WHEN 'expirado' THEN 3
+        WHEN 'finalizado' THEN 3
         ELSE 4
     END,
     cs.fechaRedencion NULLS LAST;
