@@ -14,14 +14,14 @@ namespace ClubInfluApp.Data.Repositories
             dbConnectionString = configuration.GetConnectionString("PostgresConnection");
         }
 
-        public List<Ciudad> ObtenerCiudadesPorPaisYTermino(int idPais, string termino)
+        public List<Ciudad> ObtenerCiudadesPorEstadoYTermino(int idEstado, string termino)
         {
             using NpgsqlConnection connection = new NpgsqlConnection(dbConnectionString);
             connection.Open();
             try
             {
-                string query = "SELECT * FROM Ciudad WHERE idPais = @idPais AND LOWER(ciudad) LIKE @termino ORDER BY ciudad LIMIT 20";
-                return connection.Query<Ciudad>(query, new { idPais, termino = $"%{termino.ToLower()}%" }).ToList();
+                string query = "SELECT * FROM Ciudad WHERE idEstado = @idEstado AND LOWER(ciudad) LIKE @termino ORDER BY ciudad LIMIT 20";
+                return connection.Query<Ciudad>(query, new { idEstado, termino = $"%{termino.ToLower()}%" }).ToList();
             }
             catch
             {

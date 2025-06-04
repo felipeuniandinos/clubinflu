@@ -1,5 +1,6 @@
 ﻿using ClubInfluApp.BusinessLogic.Interfaces;
 using ClubInfluApp.Data.Interfaces;
+using ClubInfluApp.Data.Repositories;
 using ClubInfluApp.Helpers;
 using ClubInfluApp.Models;
 using ClubInfluApp.ViewModels;
@@ -22,7 +23,6 @@ namespace ClubInfluApp.BusinessLogic.Services
             List<InfluencerRedSocial> redesSociales = CrearRedesSocialesInfluencer(nuevoUsuarioInfluencerViewModel);
             UsuarioInfluencer usuario = CrearNuevoUsuario(nuevoUsuarioInfluencerViewModel);
 
-
             if (ExisteUnUsuarioConEseCorreo(usuario.correo))
             {
                 throw new Exception("Ya existe un usuario con ese correo registrado en el sistema");
@@ -30,6 +30,31 @@ namespace ClubInfluApp.BusinessLogic.Services
 
             usuario.clave = HashHelper.GenerarHash(usuario.clave);
             return _usuarioInfluencerRepository.CrearUsuarioInfluencer(usuario, influencer, redesSociales);
+        }
+
+        private string GuardarVideo(IFormFile archivoVideo)
+        {
+            if (archivoVideo == null || archivoVideo.Length == 0)
+            {
+                throw new Exception("No se ha recibido un archivo de video válido.");
+            }
+
+            string nombreArchivo = Guid.NewGuid().ToString() + Path.GetExtension(archivoVideo.FileName);
+            string carpetaDestino = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", "estadisticas");
+
+            if (!Directory.Exists(carpetaDestino))
+            {
+                Directory.CreateDirectory(carpetaDestino);
+            }
+
+            string rutaFisica = Path.Combine(carpetaDestino, nombreArchivo);
+
+            using (FileStream stream = new FileStream(rutaFisica, FileMode.Create))
+            {
+                archivoVideo.CopyTo(stream);
+            }
+
+            return nombreArchivo;
         }
 
         private Influencer CrearInfluencer(NuevoUsuarioInfluencerViewModel nuevoUsuarioInfluencerViewModel)
@@ -53,9 +78,11 @@ namespace ClubInfluApp.BusinessLogic.Services
         {
             DateTime fechaActual = System.DateTime.Now;
             List<InfluencerRedSocial> redesSociales = new List<InfluencerRedSocial>();
-           
-            foreach(NuevoInfluencerRedSocialViewModel redSocial in nuevoUsuarioInfluencerViewModel.redesSociales)
+            string rutaVideo = "";
+
+            foreach (NuevoInfluencerRedSocialViewModel redSocial in nuevoUsuarioInfluencerViewModel.redesSociales)
             {
+                rutaVideo = GuardarVideo(redSocial.videoEstadisticas);
                 redesSociales.Add(new InfluencerRedSocial
                 {
                     idInfluencerRedSocial = 0,
@@ -63,10 +90,10 @@ namespace ClubInfluApp.BusinessLogic.Services
                     idRedSocial = redSocial.idRedSocial,
                     numeroSeguidores = redSocial.numeroSeguidores,
                     fechaCreacion = fechaActual,
-                    fechaActualizacion = fechaActual
+                    fechaActualizacion = fechaActual,
+                    videoEstadisticas = rutaVideo
                 });
             }
-
             return redesSociales;
         }
 
@@ -107,8 +134,16 @@ namespace ClubInfluApp.BusinessLogic.Services
 
         public void ActualizarEstadoUsuarioInfluencer(int idUsuarioInfluencer, int idEstadoUsuarioInfluencer)
         {
-            _usuarioInfluencerRepository.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
-            EnviarCorreoActualizacionEstadoUsuarioInfluencer(idUsuarioInfluencer);
+            int estadoActualUsuarioInfluencer = _usuarioInfluencerRepository.ObtenerEstadoUsuarioInfluencer(idUsuarioInfluencer);
+
+            if (estadoActualUsuarioInfluencer != idEstadoUsuarioInfluencer)
+            {
+                _usuarioInfluencerRepository.ActualizarEstadoUsuarioInfluencer(idUsuarioInfluencer, idEstadoUsuarioInfluencer);
+                EnviarCorreoActualizacionEstadoUsuarioInfluencer(idUsuarioInfluencer);
+            } else {
+                throw new Exception("No se ha cambiado el estado de usuario influencer");
+            }
+            
         }
 
         private void EnviarCorreoActualizacionEstadoUsuarioInfluencer(int idUsuarioInfluencer)
@@ -126,8 +161,14 @@ namespace ClubInfluApp.BusinessLogic.Services
                     Le informamos que, tras la correspondiente verificación, su cuenta en
                     <strong>ClubInflu</strong> se encuentra actualmente en estado <strong>{usuarioInfluencer.estadoUsuario}</strong>.
                     <br /><br /> 
-                    Para más información, por favor contáctese con nosotros al <strong>+1 (555) 123-4567</strong> o escriba a <strong>soporte@clubinflu.com</strong>."
+                    Para más información, por favor contáctese con nosotros al <strong>+1 (555) 123-4567</strong> o escriba a <strong>soporte@clubinflu.com</strong>.
+                "
             );
+        }
+
+        public Influencer ObtenerInfluencerPorIdUsuarioInfluencer(int idUsuarioInfluencer)
+        {
+            return _usuarioInfluencerRepository.ObtenerInfluencerPorIdUsuarioInfluencer(idUsuarioInfluencer);
         }
     }
 }

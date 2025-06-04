@@ -9,12 +9,10 @@ namespace ClubInfluApp.BusinessLogic.Interfaces
 
         public List<UsuarioEmpresaViewModel> ObtenerUsuariosEmpresa();
 
-        public void ModificacionEstadoUsuarioEmpresa(
-            int idUsuarioEmpresa,
-            int idActualEstadoUsuario,
-            int idNuevoEstadoUsuario
-        );
+        public void ActualizarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario);
 
-        public DetalleUsuarioEmpresaViewModel ObtenerDetalleUsuarioEmpresa(int idUsuarioEmpresa);
+        public GestionarUsuarioEmpresaViewModel GestionarUsuarioEmpresa(int idUsuarioEmpresa);
+
+        public Empresa ObtenerEmpresaPorIdUsuarioEmpresa(int idUsuarioEmpresa);
     }
 }

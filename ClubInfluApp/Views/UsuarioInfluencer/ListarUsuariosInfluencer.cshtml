@@ -6,7 +6,7 @@
     ViewData["Title"] = "Usuarios Influencer";
 }
 
-<div class="container mt-5">
+<div class="table-responsive">
     <table class="table table-bordered" style="background-color: white; color: black;">
         <thead class="thead-light">
             <tr>
@@ -26,7 +26,7 @@
                     <td>@usuarioInfluencer.estadoUsuario</td>
                     <td>@usuarioInfluencer.fechaCreacion</td>
                     <td>
-                        <a href="@Url.Action("GestionarSolicitudesUsuarioInfluencer", "UsuarioInfluencer", new { idUsuarioInfluencer  = usuarioInfluencer.idUsuarioInfluencer })" class="btn btn-primary">Gestionar Estado Usuario</a>
+                        <a href="@Url.Action("GestionarUsuarioInfluencer", "UsuarioInfluencer", new { idUsuarioInfluencer  = usuarioInfluencer.idUsuarioInfluencer })" class="btn btn-primary">Gestionar Estado Usuario</a>
                     </td>
                 </tr>
 

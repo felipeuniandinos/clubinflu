@@ -11,11 +11,13 @@ namespace ClubInfluApp.Controllers
     {
         private readonly ILogger<InicioController> _logger;
         private readonly IUsuarioService _usuarioService;
+        private readonly IEstadoService _estadoService;
 
-        public SesionController(ILogger<InicioController> logger, IUsuarioService usuarioService)
+        public SesionController(ILogger<InicioController> logger, IUsuarioService usuarioService, IEstadoService estadoService)
         {
             _logger = logger;
             _usuarioService = usuarioService;
+            _estadoService = estadoService;
         }
 
         [HttpGet]
@@ -32,7 +34,7 @@ namespace ClubInfluApp.Controllers
                 return View(usuarioViewModel);
             }
 
-             int idUsuarioAutenticado = _usuarioService.ObtenerIdUsuario(usuarioViewModel);
+            int idUsuarioAutenticado = _usuarioService.ObtenerIdUsuario(usuarioViewModel);
             if (idUsuarioAutenticado == 0)
             {
                 ViewBag.Mensaje = "Usuario incorrecto";
@@ -60,9 +62,15 @@ namespace ClubInfluApp.Controllers
             switch (usuarioViewModel.tipo)
             {
                 case TipoUsuario.Empresa:
-                    return RedirectToAction("HistoricoCuponesDeServicio", "CuponServicio");
+                    return RedirectToAction("HistoricoOfertasDeServicioEmpresa", "OfertaServicio");
                 case TipoUsuario.Influencer:
-                    return RedirectToAction("ListarCuponesDeServicioOfertados", "CuponServicio");
+                    Estado estadoPrincipalInfluencer = _estadoService.ObtenerEstadoPrincipalPorIdUsuarioInfluencer(idUsuarioAutenticado);
+                    FiltroOfertasDeServicio filtroOfertasDeServicio = new FiltroOfertasDeServicio
+                    {
+                        idEstado = estadoPrincipalInfluencer.idEstado
+                    };
+                 
+                    return RedirectToAction("ListarOfertasDeServicio", "OfertaServicio", filtroOfertasDeServicio);
                 case TipoUsuario.Administrador:
                     return RedirectToAction("ListarUsuariosInfluencer", "UsuarioInfluencer");
                 default:

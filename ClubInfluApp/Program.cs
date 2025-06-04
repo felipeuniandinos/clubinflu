@@ -13,6 +13,12 @@ builder.Services.AddScoped<IUsuarioInfluencerService, UsuarioInfluencerService>(
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<ICiudadService, CiudadService>();
 builder.Services.AddScoped<IPaisService, PaisService>();
+builder.Services.AddScoped<IEstadoService, EstadoService>();
+builder.Services.AddScoped<IOfertaServicioService, OfertaServicioService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IGeneroService, GeneroService>();
+builder.Services.AddScoped<IRedSocialService, RedSocialService>();
+builder.Services.AddScoped<ICuponServicioService,  CuponServicioService>();
 
 
 //Add repositories to the container.
@@ -21,10 +27,19 @@ builder.Services.AddScoped<IUsuarioInfluencerRepository, UsuarioInfluencerReposi
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ICiudadRepository, CiudadRepository>();
 builder.Services.AddScoped<IPaisRepository, PaisRepository>();
+builder.Services.AddScoped<IEstadoRepository, EstadoRepository>();
+builder.Services.AddScoped<IOfertaServicioRepository, OfertaServicioRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IGeneroRepository, GeneroRepository>();
+builder.Services.AddScoped<IRedSocialRepository, RedSocialRepository>();
+builder.Services.AddScoped<ICuponServicioRepository, CuponServicioRepository>();
+
 
 //Add Helpers to the container.
 NotificacionesCorreoHelper.Configurar(builder.Configuration);
 
+// Add HttpContextAccessor
+builder.Services.AddHttpContextAccessor();
 
 // Add authentication
 builder.Services.AddAuthentication("CookieAuth")
@@ -45,7 +60,7 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

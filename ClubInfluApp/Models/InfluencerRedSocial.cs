@@ -9,5 +9,6 @@
         public bool activo { get; set; }
         public DateTime fechaCreacion { get; set; }
         public DateTime fechaActualizacion { get; set; }
+        public string videoEstadisticas { get; set; }
     }
 }

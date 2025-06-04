@@ -1,0 +1,102 @@
+﻿@using ClubInfluApp.ViewModels
+@model NuevaOfertaServicioViewModel
+
+@{
+    ViewData["BodyClass"] = "application-empresa";
+    ViewData["Title"] = "Crear Oferta de Servicio";
+}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card p-4 shadow-lg rounded-4" style="max-width: 700px; width: 100%;">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="fw-bold">Crear nueva oferta de servicio</h3>
+            <button type="button" class="btn-close" onclick="window.location.href='@Url.Action("HistoricoCuponesDeServicio", "OfertaServicio")'"></button>
+        </div>
+
+        @if (ViewBag.Mensaje != null)
+        {
+            <div class="alert alert-success text-center mt-3">
+                @ViewBag.Mensaje
+            </div>
+        }
+
+        <form asp-action="CrearOfertaDeServicio" method="post" enctype="multipart/form-data" class="mt-3">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label asp-for="nombre" class="form-label">Nombre de la oferta</label>
+                <input asp-for="nombre" class="form-control rounded-3" />
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="direccion" class="form-label">Dirección</label>
+                <input asp-for="direccion" class="form-control rounded-3" />
+                <span asp-validation-for="direccion" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="archivoImagen" class="form-label">Imagen</label>
+                <input asp-for="archivoImagen" type="file" accept=".jpg,.jpeg,.png" class="form-control rounded-3" />
+                <span asp-validation-for="archivoImagen" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="descripcion" class="form-label">Descripción</label>
+                <textarea asp-for="descripcion" class="form-control rounded-3" rows="4"></textarea>
+                <span asp-validation-for="descripcion" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="fechaInicio" class="form-label">Fecha de inicio</label>
+                <input asp-for="fechaInicio" type="date" class="form-control rounded-3" value="" />
+                <span asp-validation-for="fechaInicio" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="fechaFin" class="form-label">Fecha de fin</label>
+                <input asp-for="fechaFin" type="date" class="form-control rounded-3" value="" />
+                <span asp-validation-for="fechaFin" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="horaInicio" class="form-label">Hora de inicio</label>
+                <input asp-for="horaInicio" type="time" class="form-control rounded-3" value="" />
+                <span asp-validation-for="horaInicio" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="horaFin" class="form-label">Hora de fin</label>
+                <input asp-for="horaFin" type="time" class="form-control rounded-3" value="" />
+                <span asp-validation-for="horaFin" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="cuposDisponibles" class="form-label">Cupos disponibles</label>
+                <input asp-for="cuposDisponibles" type="number" class="form-control rounded-3" min="1" />
+                <span asp-validation-for="cuposDisponibles" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="idCategoriaOferta" class="form-label">Categoría</label>
+                <select asp-for="idCategoriaOferta" class="form-select rounded-3">
+                    <option value="">Selecciona una categoría</option>
+                    @foreach (CategoriaOferta categoria in Model.categorias)
+                    {
+                        <option value="@categoria.idCategoriaOferta">@categoria.nombre</option>
+                    }
+                </select>
+                <span asp-validation-for="idCategoriaOferta" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 py-2 rounded-pill fw-bold mt-2">
+                Crear Oferta
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -24,6 +24,15 @@ namespace ClubInfluApp.ViewModels
 
         public int? idCiudad4 { get; set; }
 
+        [Required(ErrorMessage = "El estado de la empresa es obligatoria.")]
+        public int idEstado { get; set; }
+        
+        public int? idEstado2 { get; set; }
+        
+        public int? idEstado3 { get; set; }
+        
+        public int? idEstado4 { get;set; }
+
         [Required(ErrorMessage = "El genero es obligatorio.")]
         public int idGenero { get; set; }
 
@@ -40,6 +49,8 @@ namespace ClubInfluApp.ViewModels
         public List<NuevoInfluencerRedSocialViewModel> redesSociales { get; set; }
 
         public List<Pais> paises { get; set; }
+
+        public List<Genero> generos { get; set; }
 
     }
 }

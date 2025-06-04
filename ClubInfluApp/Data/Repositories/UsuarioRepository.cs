@@ -29,8 +29,6 @@ namespace ClubInfluApp.Data.Repositories
                 {
                     return 0;
                 }
-
-
                 bool esClaveValida = HashHelper.VerificarHash(clave, usuario.clave);
                 return esClaveValida ? usuario.idUsuarioAdministrador : 0;
             }
@@ -54,8 +52,6 @@ namespace ClubInfluApp.Data.Repositories
                 {
                     return 0;
                 }
-
-
                 bool esClaveValida = HashHelper.VerificarHash(clave, usuario.clave);
                 return esClaveValida ? usuario.idUsuarioEmpresa : 0;
             }
@@ -79,8 +75,6 @@ namespace ClubInfluApp.Data.Repositories
                 {
                     return 0;
                 }
-
-
                 bool esClaveValida = HashHelper.VerificarHash(clave, usuario.clave);
                 return esClaveValida ? usuario.idUsuarioInfluencer : 0;
             }

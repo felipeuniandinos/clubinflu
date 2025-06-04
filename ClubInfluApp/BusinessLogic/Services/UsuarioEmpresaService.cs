@@ -24,9 +24,7 @@ namespace ClubInfluApp.BusinessLogic.Services
 
             if (ExisteUnUsuarioConEseCorreoYEmpresa(usuario.correo, empresa.idEmpresa))
             {
-                throw new Exception(
-                    "Ya existe un usuario asociado a la empresa con ese correo registrado en el sistema"
-                );
+                throw new Exception("|BL|:Ya existe un usuario asociado a la empresa con ese correo registrado en el sistema");
             }
 
             usuario.clave = HashHelper.GenerarHash(usuario.clave);
@@ -42,7 +40,6 @@ namespace ClubInfluApp.BusinessLogic.Services
             {
                 empresa.idEmpresa = empresaEnSistema.idEmpresa;
             }
-
             return empresa;
         }
 
@@ -59,7 +56,6 @@ namespace ClubInfluApp.BusinessLogic.Services
                 
             };
         }
-
 
         private UsuarioEmpresa CrearNuevoUsuario(NuevoUsuarioEmpresaViewModel nuevoUsuarioEmpresaViewModel, int idEmpresa)
         {
@@ -81,9 +77,6 @@ namespace ClubInfluApp.BusinessLogic.Services
             {
                 idEmpresa = 0,
                 idCiudad = nuevoUsuarioEmpresaViewModel.idCiudad,
-                idCiudad2 = nuevoUsuarioEmpresaViewModel.idCiudad2,
-                idCiudad3 = nuevoUsuarioEmpresaViewModel.idCiudad3,
-                idCiudad4 = nuevoUsuarioEmpresaViewModel.idCiudad4,
                 nif = nuevoUsuarioEmpresaViewModel.nif,
                 nombre = nuevoUsuarioEmpresaViewModel.nombre,
                 url = nuevoUsuarioEmpresaViewModel.url,
@@ -112,23 +105,24 @@ namespace ClubInfluApp.BusinessLogic.Services
             return _usuarioEmpresaRepository.ObtenerUsuariosEmpresa();
         }
 
-        public void ModificacionEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idActualEstadoUsuario, int idNuevoEstadoUsuario)
+        public void ActualizarEstadoUsuarioEmpresa(int idUsuarioEmpresa, int idNuevoEstadoUsuario)
         {
-            //TODO: Validar que el estado nuevo sea diferente al actual
-            if (idActualEstadoUsuario != idNuevoEstadoUsuario)
+            int estadoActualUsuarioEmpresa = _usuarioEmpresaRepository.ObtenerEstadoUsuarioEmpresa(idUsuarioEmpresa);
+
+            if (estadoActualUsuarioEmpresa != idNuevoEstadoUsuario)
             {
-                _usuarioEmpresaRepository.ModificarEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
+                _usuarioEmpresaRepository.ActualizarEstadoUsuarioEmpresa(idUsuarioEmpresa, idNuevoEstadoUsuario);
                 EnviarCorreoActualizacionEstadoUsuarioEmpresa(idUsuarioEmpresa);
             }
             else
             {
-                throw new Exception("El estado actual y el nuevo estado son iguales");
-            }
+                throw new Exception("No se ha cambiado el estado de usuario empresa");
+            }  
         }
 
         private void EnviarCorreoActualizacionEstadoUsuarioEmpresa(int idUsuarioEmpresa)
         {
-            DetalleUsuarioEmpresaViewModel usuarioEmpresa = _usuarioEmpresaRepository.ObtenerDetalleUsuarioEmpresa(idUsuarioEmpresa);
+            GestionarUsuarioEmpresaViewModel usuarioEmpresa = _usuarioEmpresaRepository.GestionarUsuarioEmpresa(idUsuarioEmpresa);
             if (usuarioEmpresa == null)
             {
                 throw new Exception("No se encontró el usuario empresa con ese id");
@@ -141,13 +135,19 @@ namespace ClubInfluApp.BusinessLogic.Services
                     Le informamos que, tras la correspondiente verificación, su cuenta en
                     <strong>ClubInflu</strong> se encuentra actualmente en estado <strong>{usuarioEmpresa.estadoUsuario}</strong>.
                     <br /><br /> 
-                    Para más información, por favor contáctese con nosotros al <strong>+1 (555) 123-4567</strong> o escriba a <strong>soporte@clubinflu.com</strong>."
+                    Para más información, por favor contáctese con nosotros al <strong>+1 (555) 123-4567</strong> o escriba a <strong>soporte@clubinflu.com</strong>.
+                "
             );
         }
 
-        public DetalleUsuarioEmpresaViewModel ObtenerDetalleUsuarioEmpresa(int idUsuarioEmpresa)
+        public GestionarUsuarioEmpresaViewModel GestionarUsuarioEmpresa(int idUsuarioEmpresa)
         {
-            return _usuarioEmpresaRepository.ObtenerDetalleUsuarioEmpresa(idUsuarioEmpresa);
+            return _usuarioEmpresaRepository.GestionarUsuarioEmpresa(idUsuarioEmpresa);
+        }
+
+        public Empresa ObtenerEmpresaPorIdUsuarioEmpresa(int idUsuarioEmpresa)
+        {
+            return _usuarioEmpresaRepository.ObtenerEmpresaPorIdUsuarioEmpresa(idUsuarioEmpresa);
         }
     }
 }

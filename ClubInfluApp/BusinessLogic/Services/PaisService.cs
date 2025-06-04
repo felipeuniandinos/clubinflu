@@ -6,14 +6,16 @@ namespace ClubInfluApp.BusinessLogic.Services
 {
     public class PaisService : IPaisService
     {
-        private readonly IPaisRepository paisRepository;
+        private readonly IPaisRepository _paisRepository;
+
         public PaisService(IPaisRepository paisRepository)
         {
-            this.paisRepository = paisRepository;
+            _paisRepository = paisRepository;
         }
+
         public List<Pais> ObtenerPaises()
         {
-            return paisRepository.ObtenerPaises();
+            return _paisRepository.ObtenerPaises();
         }
     }
 }
