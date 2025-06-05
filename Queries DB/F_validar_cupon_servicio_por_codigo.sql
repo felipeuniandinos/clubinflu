@@ -36,7 +36,7 @@ BEGIN
     ELSIF v_idEstadoCupon = v_idEstadoCuponRedimido THEN
         UPDATE CuponServicio
         SET idEstadoCupon = v_idEstadoCuponValidado,
-			fechaRedencion = NOW
+			fechaRedencion = CURRENT_DATE
         WHERE codigo = p_codigoCuponServicio;
     END IF;
 

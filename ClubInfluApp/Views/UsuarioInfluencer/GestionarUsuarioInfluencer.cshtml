@@ -104,7 +104,7 @@
                             <td>
                                 @if (!string.IsNullOrEmpty(red.videoEstadisticas))
                                 {
-                                    <a href="https://localhost:44357/videos/estadisticas/@red.videoEstadisticas"
+                                    <a href="@Url.Content("~/videos/cupones/" + @red.videoEstadisticas)"
                                        target="_blank"
                                        class="btn btn-primary btn-sm">
                                         Ver Video
@@ -134,5 +134,5 @@
 
 
 @section Scripts {
-    <script src="~/js/usuarioinfluencer/gestionarusuarioinfluencer.js"></script>
+    <script src="~/js/UsuarioInfluencer/GestionarUsuarioInfluencer.js"></script>
 }
